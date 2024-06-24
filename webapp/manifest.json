@@ -84,7 +84,7 @@
         },
         {
           "name": "StandardTableManagement",
-          "pattern": "functionality.standardTableManagement",
+          "pattern": "page.standardTableManagement",
           "target": ["StandardTableManagement"]
         }
       ],
@@ -101,7 +101,7 @@
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "StandardTableManagement",
-          "viewName": "functionality.standardTableManagement"
+          "viewName": "page.standardTableManagement"
         }
       }
     },

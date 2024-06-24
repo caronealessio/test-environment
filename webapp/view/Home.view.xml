@@ -1,0 +1,20 @@
+<mvc:View
+	controllerName="testenvironment.controller.Home"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+	<Page title="{i18n>title}">
+		<Panel>
+			<SelectList
+				items="{Functionality>/}"
+				itemPress="onFunctionality"
+			>
+				<c:Item
+					key="{Functionality>Route}"
+					text="{Functionality>Text}"
+				/>
+			</SelectList>
+		</Panel>
+	</Page>
+</mvc:View>

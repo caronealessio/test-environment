@@ -84,8 +84,13 @@
         },
         {
           "name": "StandardTableManagement",
-          "pattern": "page.standardTableManagement",
+          "pattern": "functionality.StandardTableManagement.Dashboard",
           "target": ["StandardTableManagement"]
+        },
+        {
+          "name": "CustomTableManagement",
+          "pattern": "functionality.CustomTableManagement.Dashboard",
+          "target": ["CustomTableManagement"]
         }
       ],
       "targets": {
@@ -101,7 +106,14 @@
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "StandardTableManagement",
-          "viewName": "page.standardTableManagement"
+          "viewName": "functionality.StandardTableManagement.Dashboard"
+        },
+        "CustomTableManagement": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "CustomTableManagement",
+          "viewName": "functionality.CustomTableManagement.Dashboard"
         }
       }
     },

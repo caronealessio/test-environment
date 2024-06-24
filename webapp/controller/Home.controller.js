@@ -3,7 +3,7 @@ sap.ui.define(
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "testenvironment/model/mockdata",
-    "testenvironment/controller/functionality/StandardTableManagement.controller",
+    "testenvironment/controller/functionality/StandardTableManagement/library.controller",
   ],
 
   function (BaseController, JSONModel, mockdata, StandardTableManagement) {

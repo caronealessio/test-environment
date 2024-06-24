@@ -1,0 +1,89 @@
+<c:FragmentDefinition xmlns="sap.m"
+  xmlns:c="sap.ui.core"
+  xmlns:ui="sap.ui.table"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+  <Dialog contentWidth="30%"
+    contentHeight="45%"
+    title="{i18n>labelLayoutSettings}">
+    <content>
+      <ui:Table id="layout_tblSettings"
+        rows="{TableSettings>/cols}"
+        selectionMode="Multi"
+        class="removeLineColumn"
+        rowSelectionChange=".CustomTableManagement.onTableSettingsChange">
+        <ui:extension>
+          <OverflowToolbar>
+            <SearchField width="100%"
+              liveChange=".CustomTableManagement.onTableSettingsSearch" />
+          </OverflowToolbar>
+        </ui:extension>
+        <ui:columns>
+          <ui:Column resizable="false">
+            <Label text="{TableSettings>/title}" />
+            <ui:template>
+              <Text text="{TableSettings>label}" />
+            </ui:template>
+          </ui:Column>
+          <ui:Column width="2.5rem"
+            resizable="false"
+            id="layout_clnBeginning">
+            <ui:template>
+              <Button icon="sap-icon://collapse-group"
+                type="Transparent"
+                visible="{TableSettings>visible}"
+                enabled="{= ${TableSettings>/cols/0/key} === ${TableSettings>key} ? false : true}"
+                app:Move="Beginning"
+                press=".CustomTableManagement.onMoveColumn"/>
+            </ui:template>
+          </ui:Column>
+          <ui:Column width="2.5rem"
+            resizable="false"
+            id="layout_clnUp">
+            <ui:template>
+              <Button icon="sap-icon://arrow-top"
+                type="Transparent"
+                visible="{TableSettings>visible}"
+                enabled="{= ${TableSettings>/cols/0/key} === ${TableSettings>key} ? false : true}"
+                app:Move="Up"
+                press=".CustomTableManagement.onMoveColumn"/>
+            </ui:template>
+          </ui:Column>
+          <ui:Column width="2.5rem"
+            resizable="false"
+            id="layout_clnDown">
+            <ui:template>
+              <Button icon="sap-icon://arrow-bottom"
+                type="Transparent"
+                visible="{TableSettings>visible}"
+                enabled="{parts:[{ path: 'TableSettings>/cols' },{ path: 'TableSettings>key' }], formatter:'.formatter.disableLastButtonsFromArray'}"
+                app:Move="Down"
+                press=".CustomTableManagement.onMoveColumn"/>
+            </ui:template>
+          </ui:Column>
+          <ui:Column width="2.5rem"
+            resizable="false"
+            id="layout_clnEnd">
+            <ui:template >
+              <Button icon="sap-icon://expand-group"
+                type="Transparent"
+                visible="{TableSettings>visible}"
+                enabled="{parts:[{ path: 'TableSettings>/cols' },{ path: 'TableSettings>key' }], formatter:'.formatter.disableLastButtonsFromArray'}"
+                app:Move="End"
+                press=".CustomTableManagement.onMoveColumn"/>
+            </ui:template>
+          </ui:Column>
+        </ui:columns>
+      </ui:Table>
+    </content>
+    <footer>
+      <OverflowToolbar style="Clear">
+        <ToolbarSpacer/>
+        <Button text="{i18n>btnOk}"
+          press=".CustomTableManagement.onTableSettingsOk"
+          type="Emphasized"/>
+        <Button text="{i18n>btnClose}"
+          press=".CustomTableManagement.onTableSettingsClose"/>
+      </OverflowToolbar>
+    </footer>
+  </Dialog>
+</c:FragmentDefinition>

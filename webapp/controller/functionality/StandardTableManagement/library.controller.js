@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "../BaseController",
+    "../../BaseController",
     "sap/m/p13n/MetadataHelper",
     "sap/m/p13n/Engine",
     "sap/m/p13n/SelectionController",
@@ -23,7 +23,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    return BaseController.extend("testenvironment.controller.functionality.StandardTableManagement", {
+    return BaseController.extend("testenvironment.controller.functionality.StandardTableManagement.library", {
       onTableSettings: function (oEvent) {
         this.sIdTable = oEvent.getSource().data("idTable");
         var oTable = this.getView().byId(this.sIdTable);

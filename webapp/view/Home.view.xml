@@ -1,10 +1,7 @@
 <mvc:View controllerName="testenvironment.controller.Home"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
-	xmlns:c="sap.ui.core"
-	xmlns:ui="sap.ui.table"
-	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	xmlns:sap.ui.fl="sap.ui.fl">
+	xmlns:c="sap.ui.core">
 	<Page title="{i18n>title}">
 		<Panel>
 			<SelectList items="{Functionality>/}"
@@ -12,73 +9,6 @@
 				<c:Item key="{Functionality>Route}"
 					text="{Functionality>Text}" />
 			</SelectList>
-		</Panel>
-		<Panel>
-			<ui:Table id="tblHome"
-				rows="{Home>/}"
-				sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
-				sort="onSort">
-				<ui:extension>
-					<OverflowToolbar>
-						<ToolbarSpacer />
-						<Button icon="sap-icon://action-settings"
-							press=".StandardTableManagement.onTableSettings"
-							app:idTable="tblHome" />
-					</OverflowToolbar>
-				</ui:extension>
-				<ui:columns>
-					<ui:Column id="home_clnId"
-						autoResizable="true"
-						filterProperty="Id"
-						sortProperty="Id">
-						<Label text="{i18n>labelId}" />
-						<ui:template>
-							<Text text="{Home>Id}" />
-						</ui:template>
-					</ui:Column>
-					<ui:Column id="home_clnName"
-						autoResizable="true"
-						filterProperty="Name"
-						sortProperty="Name">
-						<Label text="{i18n>labelName}" />
-						<ui:template>
-							<Text text="{Home>Name}" />
-						</ui:template>
-					</ui:Column>
-					<ui:Column id="home_clnSurname"
-						autoResizable="true"
-						filterProperty="Surname"
-						sortProperty="Surname">
-						<Label text="{i18n>labelSurname}" />
-						<ui:template>
-							<Text text="{Home>Surname}" />
-						</ui:template>
-					</ui:Column>
-					<ui:Column id="home_clnBirthDate"
-						autoResizable="true"
-						sortProperty="BirthDate">
-						<Label text="{i18n>labelBirthDate}" />
-						<ui:template>
-							<Text text="{
-                  path: 'Home>BirthDate',
-                  type: 'sap.ui.model.type.Date',
-                  formatOptions: {
-                    pattern: 'dd.MM.yyyy'
-                  }
-                }" />
-						</ui:template>
-					</ui:Column>
-					<ui:Column id="home_clnCity"
-						autoResizable="true"
-						filterProperty="City"
-						sortProperty="City">
-						<Label text="{i18n>labelCity}" />
-						<ui:template>
-							<Text text="{Home>City}" />
-						</ui:template>
-					</ui:Column>
-				</ui:columns>
-			</ui:Table>
 		</Panel>
 	</Page>
 </mvc:View>

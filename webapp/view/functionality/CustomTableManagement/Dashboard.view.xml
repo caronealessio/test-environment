@@ -1,4 +1,4 @@
-<mvc:View controllerName="testenvironment.controller.page.StandardTableManagement"
+<mvc:View controllerName="testenvironment.controller.functionality.CustomTableManagement.Dashboard"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
@@ -9,13 +9,13 @@
     <f:title>
       <f:DynamicPageTitle>
         <f:heading>
-          <Title text="{i18n>labelStandardTableManagement}" />
+          <Title text="{i18n>labelCustomTableManagement}" />
         </f:heading>
       </f:DynamicPageTitle>
     </f:title>
     <f:content>
       <VBox>
-        <ui:Table id="tblDefault"
+        <ui:Table id="tblUsers"
           rows="{Users>/}"
           sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
           sort="onSort">
@@ -23,8 +23,8 @@
             <OverflowToolbar>
               <ToolbarSpacer />
               <Button icon="sap-icon://action-settings"
-                press=".StandardTableManagement.onTableSettings"
-                app:idTable="tblDefault" />
+                press=".CustomTableManagement.onTableSettings"
+                app:idTable="tblUsers" />
             </OverflowToolbar>
           </ui:extension>
           <ui:columns>
@@ -88,7 +88,7 @@
             <OverflowToolbar>
               <ToolbarSpacer />
               <Button icon="sap-icon://action-settings"
-                press=".StandardTableManagement.onTableSettings"
+                press=".CustomTableManagement.onTableSettings"
                 app:idTable="tblItems" />
             </OverflowToolbar>
           </ui:extension>

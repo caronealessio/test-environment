@@ -5,7 +5,7 @@ sap.ui.define([], function () {
     Functionality: function () {
       return [
         { Text: "Formattazione Standard Tabelle", Route: "StandardTableManagement" },
-        { Text: "Formattazione Custom Tabelle", Route: "" },
+        { Text: "Formattazione Custom Tabelle", Route: "CustomTableManagement" },
       ];
     },
 

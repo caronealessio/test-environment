@@ -25,5 +25,19 @@
     "unit-tests": "fiori run --open 'test/unit/unitTests.qunit.html'",
     "int-tests": "fiori run --open 'test/integration/opaTests.qunit.html'"
   },
-  "sapuxLayer": "CUSTOMER_BASE"
+  "sapuxLayer": "CUSTOMER_BASE",
+  "ui5": {
+    "ui5linter": {
+      "usage": {
+        "WrongFieldMethodLinter": false,
+        "WrongImportLinter": false,
+        "TagAttributeLinter": false,
+        "UnusedMemberLinter": false,
+        "PublicMemberLinter": false,
+        "WrongParametersLinter": false
+      },
+      "idNamingPattern": "",
+      "eventNamingPattern": ""
+    }
+  }
 }

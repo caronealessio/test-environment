@@ -14,11 +14,11 @@ sap.ui.define(
       /**
        * Quando si vuole aggiungere la formattazione custom delle colonne di una UI Table
        * bisogna aggiungere:
-       * formatter: disableLastButtonsFromArray
-       * css: removeLineColumn
-       * i18n: labelLayoutSettings, labelField, btnOk, btnClose
-       * BaseController: loadFragment
-       * constants: BEGINNING, UP, DOWN, END
+       * - formatter: disableLastButtonsFromArray
+       * - css: removeLineColumn
+       * - i18n: labelLayoutSettings, labelField, btnOk, btnClose
+       * - BaseController: loadFragment
+       * - constants: BEGINNING, UP, DOWN, END
        */
 
       onTableSettings: async function (oEvent) {

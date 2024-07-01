@@ -2,10 +2,11 @@ sap.ui.define([], function () {
   "use strict";
 
   return {
-    Functionality: function () {
+    Functionalities: function () {
       return [
         { Text: "Formattazione Standard Tabelle", Route: "StandardTableManagement" },
         { Text: "Formattazione Custom Tabelle", Route: "CustomTableManagement" },
+        { Text: "Esporta", Route: "Export" },
       ];
     },
 
@@ -18,6 +19,27 @@ sap.ui.define([], function () {
 
     Items: function () {
       return [];
+    },
+
+    Export: function () {
+      return [
+        {
+          String: "Ciao",
+          Date: new Date(),
+          Time: { ms: 64596000, __edmType: "Edm.Time" },
+          Currency: "256.36",
+          Boolean: true,
+          Integer: "00000",
+        },
+        {
+          String: "Sium",
+          Date: new Date(),
+          Time: { ms: 32731000, __edmType: "Edm.Time" },
+          Currency: "12658942.00",
+          Boolean: false,
+          Integer: "0009966",
+        },
+      ];
     },
   };
 });

@@ -91,6 +91,11 @@
           "name": "CustomTableManagement",
           "pattern": "functionality.CustomTableManagement.Dashboard",
           "target": ["CustomTableManagement"]
+        },
+        {
+          "name": "Export",
+          "pattern": "functionality.Export.Dashboard",
+          "target": ["Export"]
         }
       ],
       "targets": {
@@ -114,6 +119,13 @@
           "clearControlAggregation": false,
           "viewId": "CustomTableManagement",
           "viewName": "functionality.CustomTableManagement.Dashboard"
+        },
+        "Export": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Export",
+          "viewName": "functionality.Export.Dashboard"
         }
       }
     },

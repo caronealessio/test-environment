@@ -14,12 +14,8 @@ sap.ui.define(
       StandardTableManagement: new StandardTableManagement(this),
 
       onInit: function () {
-        this.setModel(new JSONModel(mockdata.Functionality()), "Functionality");
+        this.setModel(new JSONModel(mockdata.Functionalities()), "Functionalities");
         this.setModel(new JSONModel(mockdata.Users()), "Home");
-      },
-
-      onAfterRendering: function () {
-        this.StandardTableManagement.registerForP13n(this, ["tblHome"]);
       },
 
       onFunctionality: function (oEvent) {

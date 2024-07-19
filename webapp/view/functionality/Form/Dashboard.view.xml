@@ -13,43 +13,67 @@
       </f:DynamicPageTitle>
     </f:title>
     <f:content>
-      <Panel>
-        <headerToolbar>
-          <OverflowToolbar>
-            <Title text="{i18n>labelCurrency}"/>
-          </OverflowToolbar>
-        </headerToolbar>
-        <l:Grid>
-          <my:Currency value="{
-              parts: ['Form>/Currency', 'EUR'],
-              type: 'sap.ui.model.type.Currency',
-              formatOptions: {
-                showMeasure: false
-              }
-            }"
-            label="Custom"
-            maxIntegerDigits="5"
-            maxDecimalDigits="2"
-            enableNull="true">
-            <my:layoutData>
-              <l:GridData span="XL3 L4 M6"/>
-            </my:layoutData>
-          </my:Currency>
-          <VBox>
-            <Label text="Standard" />
-            <Input value="{
-              parts: ['Form>/Currency', 'EUR'],
-              type: 'sap.ui.model.type.Currency',
-              formatOptions: {
-                showMeasure: false
-              }
-            }" />
-            <layoutData>
-              <l:GridData span="XL3 L4 M6"/>
-            </layoutData>
-          </VBox>
-        </l:Grid>
-      </Panel>
+      <VBox>
+        <Panel>
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>labelCurrency}" />
+            </OverflowToolbar>
+          </headerToolbar>
+          <l:Grid>
+            <my:Currency value="{
+                parts: ['Form>/Currency', 'EUR'],
+                type: 'sap.ui.model.type.Currency',
+                formatOptions: {
+                  showMeasure: false
+                }
+              }"
+              label="Custom"
+              maxIntegerDigits="5"
+              maxDecimalDigits="2"
+              enableNull="true">
+              <my:layoutData>
+                <l:GridData span="XL3 L4 M6" />
+              </my:layoutData>
+            </my:Currency>
+            <VBox>
+              <Label text="Standard" />
+              <Input value="{
+                parts: ['Form>/Currency', 'EUR'],
+                type: 'sap.ui.model.type.Currency',
+                formatOptions: {
+                  showMeasure: false
+                }
+              }" />
+              <layoutData>
+                <l:GridData span="XL3 L4 M6" />
+              </layoutData>
+            </VBox>
+          </l:Grid>
+        </Panel>
+        <Panel>
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>labelInput}" />
+            </OverflowToolbar>
+          </headerToolbar>
+          <l:Grid>
+            <my:Input value="{Form>/Input}"
+              label="Custom">
+              <my:layoutData>
+                <l:GridData span="XL3 L4 M6" />
+              </my:layoutData>
+            </my:Input>
+            <VBox>
+              <Label text="Standard" />
+              <Input value="{Form>/Input}" />
+              <layoutData>
+                <l:GridData span="XL3 L4 M6" />
+              </layoutData>
+            </VBox>
+          </l:Grid>
+        </Panel>
+      </VBox>
     </f:content>
     <f:footer>
       <OverflowToolbar>

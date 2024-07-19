@@ -118,6 +118,7 @@ sap.ui.define([], function () {
     Form: function () {
       return {
         Currency: "256.65",
+        Input: "Testiamo l'input",
       };
     },
   };

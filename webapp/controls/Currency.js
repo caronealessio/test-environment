@@ -64,7 +64,6 @@ sap.ui.define(["sap/m/Input", "sap/m/Label", "sap/ui/core/format/NumberFormat"],
 
       //Se è abilitato a null una volta cancellato non viene messo in automatico a 0,00
       if (this.getEnableNull() && !sValue) {
-        // this.setValue(null);
         this.getModel(sModel).setProperty(sPath, null);
         return;
       }

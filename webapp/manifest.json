@@ -96,6 +96,11 @@
           "name": "Export",
           "pattern": "functionality.Export.Dashboard",
           "target": ["Export"]
+        },
+        {
+          "name": "Form",
+          "pattern": "functionality.Form.Dashboard",
+          "target": ["Form"]
         }
       ],
       "targets": {
@@ -126,6 +131,13 @@
           "clearControlAggregation": false,
           "viewId": "Export",
           "viewName": "functionality.Export.Dashboard"
+        },
+        "Form": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Form",
+          "viewName": "functionality.Form.Dashboard"
         }
       }
     },

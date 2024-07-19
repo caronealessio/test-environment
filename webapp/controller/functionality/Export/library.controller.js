@@ -40,8 +40,8 @@ sap.ui.define(
         aColumns.map((oColumn) => {
           var oConfig, sProperty;
 
-          var sType = this._getType(oColumn);
-          var sProperty = this._getPoperty(oColumn);
+          var sType = this.getFieldType(oColumn.getTemplate());
+          var sProperty = this.getFieldProperty(oColumn.getTemplate());
 
           var oFormattedColumn = {
             label: oColumn.getLabel().getText(),
@@ -113,49 +113,6 @@ sap.ui.define(
         });
 
         return aConfig;
-      },
-
-      _getType: function (oColumn) {
-        var oBinding;
-        var oTemplate = oColumn.getTemplate();
-        var sComponent = oTemplate.getMetadata().getName();
-
-        if (oColumn?.data("type")) {
-          return oColumn?.data("type");
-        }
-
-        oBinding = oBinding ?? oTemplate.getBindingInfo("text");
-        oBinding = oBinding ?? oTemplate.getBindingInfo("value");
-
-        var oType = oBinding?.type;
-
-        if (oType) {
-          if (oType?.oFormat?.type) {
-            return oType?.oFormat?.type; //time
-          } else if (oType?.getName()) {
-            return oType?.getName().toLowerCase(); //date - currency
-          }
-        }
-
-        if (sComponent === "sap.m.CheckBox") {
-          return "boolean";
-        }
-
-        return null;
-      },
-
-      _getPoperty: function (oColumn) {
-        var sProperty;
-        var oTemplate = oColumn.getTemplate();
-
-        sProperty = sProperty ?? oTemplate.getBindingPath("value");
-        sProperty = sProperty ?? oTemplate.getBindingPath("selectedKey");
-        sProperty = sProperty ?? oTemplate.getBindingPath("text");
-        sProperty = sProperty ?? oTemplate.getBindingPath("selected");
-        sProperty = sProperty ?? oTemplate.getBindingPath("src");
-        sProperty = sProperty ?? oColumn?.data("property");
-
-        return sProperty;
       },
     });
   }

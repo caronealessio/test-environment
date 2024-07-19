@@ -13,75 +13,73 @@
       </f:DynamicPageTitle>
     </f:title>
     <f:content>
-      <VBox>
-        <ui:Table id="tblExport"
-          rows="{Export>/}">
-          <ui:extension>
-            <OverflowToolbar>
-              <ToolbarSpacer />
-              <Button icon="sap-icon://excel-attachment"
-                tooltip="{i18n>btnExport}"
-                press="onExport" />
-            </OverflowToolbar>
-          </ui:extension>
-          <ui:columns>
-            <ui:Column autoResizable="true">
-              <Label text="{i18n>labelString}" />
-              <ui:template>
-                <Text text="{Export>String}" />
-              </ui:template>
-            </ui:Column>
-            <ui:Column autoResizable="true">
-              <Label text="{i18n>labelDate}" />
-              <ui:template>
-                <Text text="{
+      <ui:Table id="tblExport"
+        rows="{Export>/}">
+        <ui:extension>
+          <OverflowToolbar>
+            <ToolbarSpacer />
+            <Button icon="sap-icon://excel-attachment"
+              tooltip="{i18n>btnExport}"
+              press="onExport" />
+          </OverflowToolbar>
+        </ui:extension>
+        <ui:columns>
+          <ui:Column autoResizable="true">
+            <Label text="{i18n>labelString}" />
+            <ui:template>
+              <Text text="{Export>String}" />
+            </ui:template>
+          </ui:Column>
+          <ui:Column autoResizable="true">
+            <Label text="{i18n>labelDate}" />
+            <ui:template>
+              <Text text="{
                   path: 'Export>Date',
                   type: 'sap.ui.model.type.Date',
                   formatOptions: {
                     pattern: 'dd.MM.yyyy'
                   }
                 }" />
-              </ui:template>
-            </ui:Column>
-            <ui:Column autoResizable="true">
-              <Label text="{i18n>labelTime}" />
-              <ui:template>
-                <Text text="{
+            </ui:template>
+          </ui:Column>
+          <ui:Column autoResizable="true">
+            <Label text="{i18n>labelTime}" />
+            <ui:template>
+              <Text text="{
                   path: 'Export>Time',
                   type: 'sap.ui.model.odata.type.Time'
                 }" />
-              </ui:template>
-            </ui:Column>
-            <ui:Column autoResizable="true">
-              <Label text="{i18n>labelCurrency}" />
-              <ui:template>
-                <Text text="{
-                  parts: ['Export>Currency', 'EUR'],
-                  type: 'sap.ui.model.type.Currency',
-                  formatOptions: {
-                    showMeasure: false
-                  }
-                }" />
-              </ui:template>
-            </ui:Column>
-
-            <ui:Column autoResizable="true">
-              <Label text="{i18n>labelBoolean}" />
-              <ui:template>
-                <CheckBox selected="{Export>Boolean}"
-                  editable="false" />
-              </ui:template>
-            </ui:Column>
-            <ui:Column autoResizable="true"
-              app:type="integer">
-              <Label text="{i18n>labelInteger}" />
-              <ui:template>
-                <Text text="{Export>Integer}" />
-              </ui:template>
-            </ui:Column>
-          </ui:columns>
-        </ui:Table>
-      </VBox>
+            </ui:template>
+          </ui:Column>
+          <ui:Column autoResizable="true">
+            <Label text="{i18n>labelCurrency}" />
+            <ui:template>
+              <Input id="export_iptCurrency"
+                value="{
+                    parts: ['Export>Currency', 'EUR'],
+                    type: 'sap.ui.model.type.Currency',
+                    formatOptions: {
+                      showMeasure: false
+                    }
+                  }" />
+            </ui:template>
+          </ui:Column>
+          <ui:Column autoResizable="true">
+            <Label text="{i18n>labelBoolean}" />
+            <ui:template>
+              <CheckBox selected="{Export>Boolean}"
+                editable="false" />
+            </ui:template>
+          </ui:Column>
+          <ui:Column autoResizable="true">
+            <Label text="{i18n>labelInteger}" />
+            <ui:template>
+              <Text text="{Export>Integer}"
+                app:type="integer" />
+            </ui:template>
+          </ui:Column>
+        </ui:columns>
+      </ui:Table>
     </f:content>
     <f:footer>
       <OverflowToolbar>

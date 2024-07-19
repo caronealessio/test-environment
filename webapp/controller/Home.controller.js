@@ -4,9 +4,10 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "testenvironment/model/mockdata",
     "testenvironment/controller/functionality/StandardTableManagement/library.controller",
+    "testenvironment/model/formatter",
   ],
 
-  function (BaseController, JSONModel, mockdata, StandardTableManagement) {
+  function (BaseController, JSONModel, mockdata, StandardTableManagement, formatter) {
     "use strict";
 
     return BaseController.extend("testenvironment.controller.Home", {
@@ -14,6 +15,7 @@ sap.ui.define(
       StandardTableManagement: new StandardTableManagement(this),
 
       onInit: function () {
+        this.setModel(new JSONModel({}));
         this.setModel(new JSONModel(mockdata.Functionalities()), "Functionalities");
         this.setModel(new JSONModel(mockdata.Users()), "Home");
       },

@@ -4,10 +4,6 @@ sap.ui.define(["sap/m/Input", "sap/m/Label", "sap/ui/core/format/NumberFormat"],
   return Input.extend("testenvironment.controls.Currency", {
     metadata: {
       properties: {
-        value: {
-          type: "string",
-          defaultValue: "",
-        },
         label: {
           type: "string",
           defaultValue: "",

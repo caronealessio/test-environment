@@ -3,7 +3,8 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
   xmlns:my="testenvironment.controls"
-  xmlns:l="sap.ui.layout">
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>
@@ -69,6 +70,35 @@
               <Input value="{Form>/Input}" />
               <layoutData>
                 <l:GridData span="XL3 L4 M6" />
+              </layoutData>
+            </VBox>
+          </l:Grid>
+        </Panel>
+        <Panel>
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>labelDialog}" />
+            </OverflowToolbar>
+          </headerToolbar>
+          <l:Grid>
+            <VBox>
+              <Label text="Custom" />
+              <Button text="{i18n>labelOpen}"
+                press="onDialogCustom"
+                width="100%"
+                app:button="Open"/>
+              <layoutData>
+                <l:GridData span="XL2 L4 M6" />
+              </layoutData>
+            </VBox>
+            <VBox>
+              <Label text="Standard" />
+              <Button text="{i18n>labelOpen}"
+                press="onDialogStandard"
+                width="100%"
+                app:button="Open"/>
+              <layoutData>
+                <l:GridData span="XL2 L4 M6" />
               </layoutData>
             </VBox>
           </l:Grid>

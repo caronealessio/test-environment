@@ -1,4 +1,4 @@
-<mvc:View controllerName="testenvironment.controller.functionality.Form.Dashboard"
+<mvc:View controllerName="testenvironment.controller.functionality.Form.Form"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
@@ -59,7 +59,8 @@
             </OverflowToolbar>
           </headerToolbar>
           <l:Grid>
-            <my:Input value="{Form>/Input}"
+            <my:Input id="inputCustom"
+              value="{Form>/Input}"
               label="Custom">
               <my:layoutData>
                 <l:GridData span="XL3 L4 M6" />
@@ -99,6 +100,44 @@
                 app:button="Open"/>
               <layoutData>
                 <l:GridData span="XL2 L4 M6" />
+              </layoutData>
+            </VBox>
+          </l:Grid>
+        </Panel>
+        <Panel>
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>labelPaginator}" />
+            </OverflowToolbar>
+          </headerToolbar>
+          <l:Grid>
+            <VBox>
+              <my:Paginator  />
+              <layoutData>
+                <l:GridData span="XL6 L6 M6" />
+              </layoutData>
+            </VBox>
+            <VBox>
+              <OverflowToolbar id="paginatorStandard"
+                style="Clear"
+                visible="{RiaPdgPaginator>/visible}"
+                app:backFunction="onRiaPdgPaginator"
+                app:nextFunction="onRiaPdgPaginator"
+                app:paginatorName="RiaPdgPaginator">
+                <ToolbarSpacer />
+                <ToggleButton icon="sap-icon://slim-arrow-left"
+                  enabled="{RiaPdgPaginator>/backEnabled}"
+                  press="onPaginatorBack"
+                  tooltip="{i18n>btnNext}" />
+                <Label text="{RiaPdgPaginator>/start} - {RiaPdgPaginator>/end}" />
+                <ToggleButton icon="sap-icon://slim-arrow-right"
+                  enabled="{RiaPdgPaginator>/nextEnabled}"
+                  press="onPaginatorNext"
+                  tooltip="{i18n>btnBack}" />
+                <ToolbarSpacer />
+              </OverflowToolbar>
+              <layoutData>
+                <l:GridData span="XL6 L6 M6" />
               </layoutData>
             </VBox>
           </l:Grid>

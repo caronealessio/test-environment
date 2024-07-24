@@ -99,7 +99,7 @@
         },
         {
           "name": "Form",
-          "pattern": "functionality.Form.Dashboard",
+          "pattern": "functionality.Form.Form",
           "target": ["Form"]
         }
       ],
@@ -137,7 +137,7 @@
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "Form",
-          "viewName": "functionality.Form.Dashboard"
+          "viewName": "functionality.Form.Form"
         }
       }
     },

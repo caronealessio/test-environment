@@ -3,10 +3,17 @@ sap.ui.define(
   function (BaseController, JSONModel, mockdata) {
     "use strict";
 
-    return BaseController.extend("testenvironment.controller.functionality.Form.Dashboard", {
+    return BaseController.extend("testenvironment.controller.functionality.Form.Form", {
       onInit: function () {
         this.setModel(new JSONModel({}));
         this.setModel(new JSONModel(mockdata.Form()), "Form");
+      },
+
+      /**
+       * @override
+       */
+      onAfterRendering: function () {
+        console.log("paginatorStandard", this.byId("paginatorStandard"));
       },
 
       onBack: function () {
@@ -14,6 +21,9 @@ sap.ui.define(
       },
 
       onDialogCustom: async function (oEvent) {
+        this.byId("inputCustom").setRequired(true);
+        this.byId("inputCustom").setLabel(">Ciaone");
+
         switch (oEvent.getSource().data("button")) {
           case "Open":
             this._oDialogCustom = await this.loadFragment("testenvironment.view.functionality.Form.DialogCustom");

@@ -27,6 +27,10 @@ sap.ui.define(["sap/m/Input", "sap/m/Label", "sap/ui/core/format/NumberFormat"],
           type: "boolean",
           defaultValue: false,
         },
+        required: {
+          type: "boolean",
+          defaultValue: false,
+        },
       },
       aggregations: {
         _label: { type: "sap.m.Label", multiple: false, visibility: "hidden" },
@@ -95,21 +99,8 @@ sap.ui.define(["sap/m/Input", "sap/m/Label", "sap/ui/core/format/NumberFormat"],
       return this.getProperty("maxDecimalDigits");
     },
 
-    getLabel: function () {
-      return this.getProperty("label");
-    },
-
     getEnableNull: function () {
       return this.getProperty("enableNull");
-    },
-
-    _createLabel: function (oRm, oInput) {
-      if (!oInput.getAggregation("_label").getText() && oInput.getLabel()) {
-        oInput.getAggregation("_label").setVisible(oInput.getLabel() ? true : false);
-        oInput.getAggregation("_label").setText(oInput.getLabel());
-
-        oRm.renderControl(oInput.getAggregation("_label"));
-      }
     },
 
     _checkLength: function (sValue) {
@@ -130,6 +121,34 @@ sap.ui.define(["sap/m/Input", "sap/m/Label", "sap/ui/core/format/NumberFormat"],
       }
 
       return true;
+    },
+
+    getLabel: function () {
+      return this.getProperty("label");
+    },
+
+    getRequired: function () {
+      return this.getProperty("required");
+    },
+
+    setLabel: function (sValue) {
+      this.setProperty("label", sValue);
+      return this;
+    },
+
+    setRequired: function (sValue) {
+      this.setProperty("required", sValue);
+      return this;
+    },
+
+    _createLabel: function (oRm, oInput) {
+      if (!oInput.getAggregation("_label").getText() && oInput.getLabel()) {
+        oRm.renderControl(oInput.getAggregation("_label"));
+      }
+
+      oInput.getAggregation("_label").setRequired(oInput.getRequired());
+      oInput.getAggregation("_label").setVisible(oInput.getLabel() ? true : false);
+      oInput.getAggregation("_label").setText(oInput.getLabel());
     },
   });
 });

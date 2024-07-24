@@ -20,7 +20,7 @@ sap.ui.define(
       },
 
       onBack: function () {
-        window.history.go(-1);
+        this.getRouter().navTo("RouteHome");
       },
     });
   }

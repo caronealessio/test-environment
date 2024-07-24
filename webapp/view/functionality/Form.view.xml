@@ -1,4 +1,4 @@
-<mvc:View controllerName="testenvironment.controller.functionality.Form.Form"
+<mvc:View controllerName="testenvironment.controller.functionality.Form"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"

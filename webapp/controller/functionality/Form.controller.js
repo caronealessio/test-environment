@@ -1,9 +1,9 @@
 sap.ui.define(
-  ["../../BaseController", "sap/ui/model/json/JSONModel", "testenvironment/model/mockdata"],
+  ["../BaseController", "sap/ui/model/json/JSONModel", "testenvironment/model/mockdata"],
   function (BaseController, JSONModel, mockdata) {
     "use strict";
 
-    return BaseController.extend("testenvironment.controller.functionality.Form.Form", {
+    return BaseController.extend("testenvironment.controller.functionality.Form", {
       onInit: function () {
         this.setModel(new JSONModel({}));
         this.setModel(new JSONModel(mockdata.Form()), "Form");

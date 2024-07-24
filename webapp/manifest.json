@@ -99,12 +99,12 @@
         },
         {
           "name": "Form",
-          "pattern": "functionality.Form.Form",
+          "pattern": "functionality.Form",
           "target": ["Form"]
         },
         {
           "name": "Paginator",
-          "pattern": "functionality.Paginator.Paginator",
+          "pattern": "functionality.Paginator",
           "target": ["Paginator"]
         }
       ],
@@ -142,14 +142,14 @@
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "Form",
-          "viewName": "functionality.Form.Form"
+          "viewName": "functionality.Form"
         },
         "Paginator": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "Paginator",
-          "viewName": "functionality.Paginator.Paginator"
+          "viewName": "functionality.Paginator"
         }
       }
     },

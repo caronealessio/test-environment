@@ -1,0 +1,90 @@
+<mvc:View controllerName="testenvironment.controller.functionality.Paginator.Paginator"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:f="sap.f"
+  xmlns:my="testenvironment.controls"
+  xmlns:ui="sap.ui.table">
+  <f:DynamicPage showFooter="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>labelForm}" />
+        </f:heading>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:content>
+      <VBox>
+        <ui:Table id="tblUsers"
+          rows="{PaginatorList>/}">
+          <ui:columns>
+            <ui:Column id="users_clnId"
+              autoResizable="true"
+              filterProperty="Id"
+              sortProperty="Id">
+              <Label text="{i18n>labelId}" />
+              <ui:template>
+                <Text text="{PaginatorList>Id}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column id="users_clnName"
+              autoResizable="true"
+              filterProperty="Name"
+              sortProperty="Name">
+              <Label text="{i18n>labelName}" />
+              <ui:template>
+                <Text text="{PaginatorList>Name}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column id="users_clnSurname"
+              autoResizable="true"
+              filterProperty="Surname"
+              sortProperty="Surname">
+              <Label text="{i18n>labelSurname}" />
+              <ui:template>
+                <Text text="{PaginatorList>Surname}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column id="users_clnBirthDate"
+              autoResizable="true"
+              sortProperty="BirthDate">
+              <Label text="{i18n>labelBirthDate}" />
+              <ui:template>
+                <Text text="{
+                  path: 'PaginatorList>BirthDate',
+                  type: 'sap.ui.model.type.Date',
+                  formatOptions: {
+                    pattern: 'dd.MM.yyyy'
+                  }
+                }" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column id="users_clnCity"
+              autoResizable="true"
+              filterProperty="City"
+              sortProperty="City">
+              <Label text="{i18n>labelCity}" />
+              <ui:template>
+                <Text text="{PaginatorList>City}" />
+              </ui:template>
+            </ui:Column>
+          </ui:columns>
+          <ui:footer>
+            <my:Paginator id="paginator"
+              top="{Paginator>/Top}"
+              skip="{Paginator>/Skip}"
+              records="{Paginator>/Records}"
+              press="onPaginatorChange"/>
+          </ui:footer>
+        </ui:Table>
+      </VBox>
+    </f:content>
+    <f:footer>
+      <OverflowToolbar>
+        <Button type="Back"
+          text="{i18n>btnBack}"
+          press="onBack" />
+        <ToolbarSpacer />
+      </OverflowToolbar>
+    </f:footer>
+  </f:DynamicPage>
+</mvc:View>

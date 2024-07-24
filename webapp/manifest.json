@@ -101,6 +101,11 @@
           "name": "Form",
           "pattern": "functionality.Form.Form",
           "target": ["Form"]
+        },
+        {
+          "name": "Paginator",
+          "pattern": "functionality.Paginator.Paginator",
+          "target": ["Paginator"]
         }
       ],
       "targets": {
@@ -138,6 +143,13 @@
           "clearControlAggregation": false,
           "viewId": "Form",
           "viewName": "functionality.Form.Form"
+        },
+        "Paginator": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Paginator",
+          "viewName": "functionality.Paginator.Paginator"
         }
       }
     },

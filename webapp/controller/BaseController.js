@@ -84,6 +84,21 @@ sap.ui.define(
 
         return sProperty;
       },
+
+      copyWithoutRef: function (oArray) {
+        function json_deserialize_helper(key, value) {
+          if (typeof value === "string") {
+            var regexp;
+            regexp = /^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d\d\dZ$/.exec(value);
+            if (regexp) {
+              return new Date(value);
+            }
+          }
+          return value;
+        }
+
+        return JSON.parse(JSON.stringify(oArray), json_deserialize_helper);
+      },
     });
   }
 );

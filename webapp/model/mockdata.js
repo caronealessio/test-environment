@@ -8,6 +8,7 @@ sap.ui.define([], function () {
         { Text: "Formattazione Custom Tabelle", Route: "CustomTableManagement" },
         { Text: "Esporta", Route: "Export" },
         { Text: "Form", Route: "Form" },
+        { Text: "Paginatore", Route: "Paginator" },
       ];
     },
 

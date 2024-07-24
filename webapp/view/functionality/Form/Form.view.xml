@@ -104,44 +104,6 @@
             </VBox>
           </l:Grid>
         </Panel>
-        <Panel>
-          <headerToolbar>
-            <OverflowToolbar>
-              <Title text="{i18n>labelPaginator}" />
-            </OverflowToolbar>
-          </headerToolbar>
-          <l:Grid>
-            <VBox>
-              <my:Paginator  />
-              <layoutData>
-                <l:GridData span="XL6 L6 M6" />
-              </layoutData>
-            </VBox>
-            <VBox>
-              <OverflowToolbar id="paginatorStandard"
-                style="Clear"
-                visible="{RiaPdgPaginator>/visible}"
-                app:backFunction="onRiaPdgPaginator"
-                app:nextFunction="onRiaPdgPaginator"
-                app:paginatorName="RiaPdgPaginator">
-                <ToolbarSpacer />
-                <ToggleButton icon="sap-icon://slim-arrow-left"
-                  enabled="{RiaPdgPaginator>/backEnabled}"
-                  press="onPaginatorBack"
-                  tooltip="{i18n>btnNext}" />
-                <Label text="{RiaPdgPaginator>/start} - {RiaPdgPaginator>/end}" />
-                <ToggleButton icon="sap-icon://slim-arrow-right"
-                  enabled="{RiaPdgPaginator>/nextEnabled}"
-                  press="onPaginatorNext"
-                  tooltip="{i18n>btnBack}" />
-                <ToolbarSpacer />
-              </OverflowToolbar>
-              <layoutData>
-                <l:GridData span="XL6 L6 M6" />
-              </layoutData>
-            </VBox>
-          </l:Grid>
-        </Panel>
       </VBox>
     </f:content>
     <f:footer>

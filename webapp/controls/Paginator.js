@@ -22,9 +22,6 @@ sap.ui.define(
             type: "int",
           },
         },
-        aggregations: {
-          content: { singleName: "content" },
-        },
         events: {
           press: {},
         },
@@ -33,25 +30,23 @@ sap.ui.define(
       init: function () {
         OverflowToolbar.prototype.init.call(this);
 
-        this.insertAggregation("content", new ToolbarSpacer());
-        this.insertAggregation(
-          "content",
-          new ToggleButton("nextButton", {
-            icon: "sap-icon://slim-arrow-right",
-            tooltip: "{i18n>labelNext}",
-            press: this._onNext.bind(this),
-          })
-        );
-        this.insertAggregation("content", new Label("label"));
-        this.insertAggregation(
-          "content",
+        this.addContent(new ToolbarSpacer());
+        this.addContent(
           new ToggleButton("backButton", {
             icon: "sap-icon://slim-arrow-left",
             tooltip: "{i18n>labelBack}",
             press: this._onBack.bind(this),
           })
         );
-        this.insertAggregation("content", new ToolbarSpacer());
+        this.addContent(new Label("label"));
+        this.addContent(
+          new ToggleButton("nextButton", {
+            icon: "sap-icon://slim-arrow-right",
+            tooltip: "{i18n>labelNext}",
+            press: this._onNext.bind(this),
+          })
+        );
+        this.addContent(new ToolbarSpacer());
       },
 
       renderer: function (oRm, oToolbar) {
@@ -60,8 +55,6 @@ sap.ui.define(
         oToolbar._setLabel();
         oToolbar._setBackEnabled();
         oToolbar._setNextEnabled();
-
-        console.log();
       },
 
       getTop: function () {

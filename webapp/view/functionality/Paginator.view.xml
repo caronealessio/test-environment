@@ -73,7 +73,7 @@
               top="{Paginator>/Top}"
               skip="{Paginator>/Skip}"
               records="{Paginator>/Records}"
-              press="onPaginatorChange"/>
+              press="onPaginatorChange" />
           </ui:footer>
         </ui:Table>
       </VBox>

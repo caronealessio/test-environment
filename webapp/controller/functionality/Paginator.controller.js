@@ -9,7 +9,7 @@ sap.ui.define(
 
         var aArray = [];
 
-        for (let i = 0; i < 195; i++) {
+        for (let i = 0; i < 205; i++) {
           aArray.push({
             Id: i + 1,
             Name: this.createRandomString(),
@@ -26,7 +26,7 @@ sap.ui.define(
         var oPaginator = {
           Top: 50,
           Skip: 0,
-          Records: 195,
+          Records: 205,
         };
 
         this.setModel(new JSONModel(oPaginator), "Paginator");

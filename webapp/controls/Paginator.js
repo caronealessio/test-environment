@@ -1,6 +1,6 @@
 sap.ui.define(
-  ["sap/m/OverflowToolbar", "sap/m/ToolbarSpacer", "sap/m/Label", "sap/m/ToggleButton"],
-  function (OverflowToolbar, ToolbarSpacer, Label, ToggleButton) {
+  ["sap/m/OverflowToolbar", "sap/m/ToolbarSpacer", "sap/m/Label", "sap/m/Button"],
+  function (OverflowToolbar, ToolbarSpacer, Label, Button) {
     "use strict";
 
     return OverflowToolbar.extend("testenvironment.controls.Paginator", {
@@ -21,6 +21,14 @@ sap.ui.define(
           records: {
             type: "int",
           },
+          pages: {
+            type: "boolean",
+            defaultValue: true,
+          },
+          align: {
+            type: "string",
+            defaultValue: "End",
+          },
         },
         events: {
           press: {},
@@ -30,9 +38,16 @@ sap.ui.define(
       init: function () {
         OverflowToolbar.prototype.init.call(this);
 
-        this.addContent(new ToolbarSpacer());
+        this.addContent(new ToolbarSpacer("beginSpacer"));
         this.addContent(
-          new ToggleButton("backButton", {
+          new Button("firstButton", {
+            icon: "sap-icon://close-command-field",
+            tooltip: "{i18n>labelFirst}",
+            press: this._onFirst.bind(this),
+          })
+        );
+        this.addContent(
+          new Button("backButton", {
             icon: "sap-icon://slim-arrow-left",
             tooltip: "{i18n>labelBack}",
             press: this._onBack.bind(this),
@@ -40,21 +55,30 @@ sap.ui.define(
         );
         this.addContent(new Label("label"));
         this.addContent(
-          new ToggleButton("nextButton", {
+          new Button("nextButton", {
             icon: "sap-icon://slim-arrow-right",
             tooltip: "{i18n>labelNext}",
             press: this._onNext.bind(this),
           })
         );
-        this.addContent(new ToolbarSpacer());
+        this.addContent(
+          new Button("lastButton", {
+            icon: "sap-icon://open-command-field",
+            tooltip: "{i18n>labelLast}",
+            press: this._onLast.bind(this),
+          })
+        );
+        this.addContent(new ToolbarSpacer("endSpacer"));
       },
 
       renderer: function (oRm, oToolbar) {
         sap.m.OverflowToolbarRenderer.render(oRm, oToolbar);
 
+        oToolbar._setVisibleByRecords();
         oToolbar._setLabel();
         oToolbar._setBackEnabled();
         oToolbar._setNextEnabled();
+        oToolbar._setToolbarAlign();
       },
 
       getTop: function () {
@@ -79,36 +103,96 @@ sap.ui.define(
         return this;
       },
 
+      getPages: function () {
+        return this.getProperty("pages");
+      },
+
+      getAlign: function () {
+        return this.getProperty("align");
+      },
+
+      _setVisibleByRecords: function () {
+        var bVisible = this.getRecords() ? true : false;
+
+        this.setVisible(bVisible);
+      },
+
       _setLabel: function () {
         var oLabel = this.getContent().filter((x) => x.getId() === "label")[0];
+        var sLabel = "";
 
-        var sFrom = this.getSkip() + 1;
-        var sTo = this.getSkip() + this.getTop();
-        sTo = sTo < this.getRecords() ? sTo : this.getRecords();
+        if (this.getPages()) {
+          var sCurrentPage = this.getSkip() / this.getTop() + 1;
+          var sTotalPage = Math.floor(this.getRecords() / this.getTop());
+          var sRemainder = this.getRecords() % this.getTop();
 
-        oLabel.setText(sFrom + " - " + sTo);
+          sTotalPage = sRemainder !== 0 ? sTotalPage + 1 : sTotalPage;
+          sLabel = sCurrentPage + " di " + sTotalPage;
+        } else {
+          var sFrom = this.getSkip() + 1;
+          var sTo = this.getSkip() + this.getTop();
+
+          sTo = sTo < this.getRecords() ? sTo : this.getRecords();
+          sLabel = sFrom + " - " + sTo;
+        }
+
+        oLabel.setText(sLabel);
       },
 
       _setBackEnabled: function () {
         var oButton = this.getContent().filter((x) => x.getId() === "backButton")[0];
+        oButton.setEnabled(this.getSkip() > 0);
 
+        oButton = this.getContent().filter((x) => x.getId() === "firstButton")[0];
         oButton.setEnabled(this.getSkip() > 0);
       },
 
       _setNextEnabled: function () {
         var oButton = this.getContent().filter((x) => x.getId() === "nextButton")[0];
+        oButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
 
+        oButton = this.getContent().filter((x) => x.getId() === "lastButton")[0];
         oButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
       },
 
-      _onNext: function (oEvent) {
+      _onNext: function () {
         this.setSkip(this.getSkip() + this.getTop());
-        this.firePress(oEvent);
+        this.firePress();
       },
 
-      _onBack: function (oEvent) {
+      _onBack: function () {
         this.setSkip(this.getSkip() - this.getTop());
-        this.firePress(oEvent);
+        this.firePress();
+      },
+
+      _onFirst: function () {
+        this.setSkip(0);
+        this.firePress();
+      },
+
+      _onLast: function () {
+        this.setSkip(Math.floor(this.getRecords() / this.getTop()) * this.getTop());
+        this.firePress();
+      },
+
+      _setToolbarAlign: function () {
+        var oBeginSpacer = this.getContent().filter((x) => x.getId() === "beginSpacer")[0];
+        var oEndSpacer = this.getContent().filter((x) => x.getId() === "endSpacer")[0];
+
+        switch (this.getAlign()) {
+          case "Begin":
+            oBeginSpacer.setVisible(false);
+            oEndSpacer.setVisible(true);
+            break;
+          case "Center":
+            oBeginSpacer.setVisible(true);
+            oEndSpacer.setVisible(true);
+            break;
+          default:
+            oBeginSpacer.setVisible(true);
+            oEndSpacer.setVisible(false);
+            break;
+        }
       },
     });
   }

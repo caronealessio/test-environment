@@ -18,8 +18,7 @@
         <ui:Table id="tblUsers"
           rows="{PaginatorList>/}">
           <ui:rowMode>
-            <rowmodes:Fixed xmlns:rowmodes="sap.ui.table.rowmodes"
-              rowCount="20"/>
+            <rowmodes:Fixed rowCount="20"/>
           </ui:rowMode>
           <!-- Se si mette AUTO mettere il growFactor a 1 e mettere l'height a 100% della VBox -->
           <!-- <ui:layoutData>

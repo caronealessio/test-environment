@@ -34,7 +34,8 @@
         "TagAttributeLinter": false,
         "UnusedMemberLinter": false,
         "PublicMemberLinter": false,
-        "WrongParametersLinter": false
+        "WrongParametersLinter": false,
+        "TagLinter": false
       },
       "idNamingPattern": "",
       "eventNamingPattern": ""

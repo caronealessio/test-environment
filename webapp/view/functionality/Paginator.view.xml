@@ -3,12 +3,13 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
   xmlns:my="testenvironment.controls"
-  xmlns:ui="sap.ui.table">
+  xmlns:ui="sap.ui.table"
+  xmlns:rowmodes="sap.ui.table.rowmodes">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>
         <f:heading>
-          <Title text="{i18n>labelForm}" />
+          <Title text="{i18n>labelPaginator}" />
         </f:heading>
       </f:DynamicPageTitle>
     </f:title>
@@ -16,6 +17,14 @@
       <VBox>
         <ui:Table id="tblUsers"
           rows="{PaginatorList>/}">
+          <ui:rowMode>
+            <rowmodes:Fixed xmlns:rowmodes="sap.ui.table.rowmodes"
+              rowCount="20"/>
+          </ui:rowMode>
+          <!-- Se si mette AUTO mettere il growFactor a 1 e mettere l'height a 100% della VBox -->
+          <!-- <ui:layoutData>
+            <FlexItemData growFactor="1" />
+          </ui:layoutData> -->
           <ui:columns>
             <ui:Column id="users_clnId"
               autoResizable="true"

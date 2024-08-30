@@ -15,8 +15,9 @@
     </f:title>
     <f:content>
       <VBox>
-        <ui:Table id="tblUsers"
-          rows="{PaginatorList>/}">
+        <ui:Table id="tblPaginator"
+          rows="{PaginatorList>/}"
+          rowSelectionChange="onSelectionItem">
           <ui:rowMode>
             <rowmodes:Fixed rowCount="20"/>
           </ui:rowMode>
@@ -25,7 +26,7 @@
             <FlexItemData growFactor="1" />
           </ui:layoutData> -->
           <ui:columns>
-            <ui:Column id="users_clnId"
+            <ui:Column id="paginator_clnId"
               autoResizable="true"
               filterProperty="Id"
               sortProperty="Id">
@@ -34,7 +35,7 @@
                 <Text text="{PaginatorList>Id}" />
               </ui:template>
             </ui:Column>
-            <ui:Column id="users_clnName"
+            <ui:Column id="paginator_clnName"
               autoResizable="true"
               filterProperty="Name"
               sortProperty="Name">
@@ -43,7 +44,7 @@
                 <Text text="{PaginatorList>Name}" />
               </ui:template>
             </ui:Column>
-            <ui:Column id="users_clnSurname"
+            <ui:Column id="paginator_clnSurname"
               autoResizable="true"
               filterProperty="Surname"
               sortProperty="Surname">
@@ -52,7 +53,7 @@
                 <Text text="{PaginatorList>Surname}" />
               </ui:template>
             </ui:Column>
-            <ui:Column id="users_clnBirthDate"
+            <ui:Column id="paginator_clnBirthDate"
               autoResizable="true"
               sortProperty="BirthDate">
               <Label text="{i18n>labelBirthDate}" />
@@ -66,7 +67,7 @@
                 }" />
               </ui:template>
             </ui:Column>
-            <ui:Column id="users_clnCity"
+            <ui:Column id="paginator_clnCity"
               autoResizable="true"
               filterProperty="City"
               sortProperty="City">

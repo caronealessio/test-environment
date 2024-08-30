@@ -46,11 +46,69 @@ sap.ui.define(
         return result;
       },
 
-      onPaginatorChange: function (oEvent) {
+      onPaginatorChange: async function (oEvent) {
         var oPaginator = this.getModel("Paginator").getData();
-
         var aCopy = this.copyWithoutRef(this._aArray);
+
         this.setModel(new JSONModel(aCopy.splice(oPaginator.Skip, oPaginator.Top)), "PaginatorList");
+
+        var sId = oEvent.getSource().getParent().getId().split("-").pop();
+        var oTable = this.byId(sId);
+        sId = sId.charAt(0).toUpperCase() + sId.slice(1);
+        var sName = "_a" + sId;
+
+        if (!this[sName]) {
+          return;
+        }
+
+        var sModelName = oTable.getBindingInfo("rows").model;
+        var aModel = await this.getModel(sModelName).getData();
+
+        oTable.setSelectionInterval(-1, -1);
+
+        this[sName].map(async function (oItem) {
+          var oItem1 = aModel.filter((oModelItem) => {
+            if (
+              oModelItem.Id === oItem.Id &&
+              oModelItem.Name === oItem.Name &&
+              oModelItem.Surname === oItem.Surname &&
+              oModelItem.City === oItem.City
+            ) {
+              return oModelItem;
+            }
+          })[0];
+
+          var iIndex = aModel.indexOf(oItem1);
+
+          if (aModel.includes(oItem1)) {
+            oTable.addSelectionInterval(iIndex, iIndex);
+          }
+        });
+      },
+
+      onSelectionItem: function (oEvent) {
+        var sId = oEvent.getParameter("id").split("-").pop();
+        var oTable = this.byId(sId);
+        sId = sId.charAt(0).toUpperCase() + sId.slice(1);
+        var sName = "_a" + sId;
+        var iIndex = oEvent.getParameter("rowIndex");
+
+        if (!this[sName]) {
+          this[sName] = [];
+        }
+
+        if (oEvent.getParameter("selectAll") || iIndex === -1) {
+          return;
+        }
+
+        var oItem = oTable.getContextByIndex(iIndex).getObject();
+
+        if (this[sName].includes(oItem)) {
+          iIndex = this[sName].indexOf(oItem);
+          this[sName].splice(iIndex, 1);
+          return;
+        }
+        this[sName].push(oItem);
       },
     });
   }

@@ -32,7 +32,7 @@ sap.ui.define(
         aCols.map((oCol) => {
           aColsFormatted.push({
             key: oCol.getId().split("-").pop(),
-            label: oCol.getAggregation("label").getText(),
+            label: oCol.getAggregation("label")?.getText() ?? "",
             visible: oCol.getProperty("visible"),
           });
         });

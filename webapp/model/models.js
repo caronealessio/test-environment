@@ -14,6 +14,27 @@ function (JSONModel, Device) {
             oModel.setDefaultBindingMode("OneWay");
             return oModel;
         }
+
+        //Aggiungere la destination nel file xs-app.json
+        createUserModel: async function () {
+            var oUser, oResponse;
+            var sUrl = window.location.href;
+      
+            if (!sUrl.includes("workspaces-ws-")) {
+              sUrl = sUrl.split("/index.html")[0];
+      
+              var sUrlCurrentUser = sUrl + "/user-api/currentUser";
+      
+              try {
+                oResponse = await fetch(sUrlCurrentUser);
+                oUser = await oResponse.json();
+              } catch (error) {
+                console.log(error);
+              }
+      
+              return new JSONModel(oUser);
+            }
+          },
     };
 
 });

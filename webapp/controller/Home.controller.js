@@ -28,7 +28,7 @@ sap.ui.define(
       },
 
       onTest: function (oEvent) {
-        const test = this.getOwnerComponent().getModel("utentiModel");
+        const test = this.getOwnerComponent().getModel("users");
 
         console.log(test.getData());
       },

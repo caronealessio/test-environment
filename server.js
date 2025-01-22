@@ -9,8 +9,8 @@ const PORT = 3000;
 app.use(cors());
 
 // Endpoint per recuperare gli utenti
-app.get("/utenti", (req, res) => {
-  db.query("SELECT * FROM utenti", (err, results) => {
+app.get("/users", (req, res) => {
+  db.query("SELECT * FROM users", (err, results) => {
     if (err) {
       console.error("Errore durante la query:", err.stack);
       res.status(500).send("Errore del server");

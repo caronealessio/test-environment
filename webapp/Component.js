@@ -29,8 +29,8 @@ sap.ui.define(
 
         // // Creazione di un modello JSON dal servizio
         var oModel = new JSONModel();
-        oModel.loadData("http://localhost:3000/utenti/");
-        this.setModel(oModel, "utentiModel");
+        oModel.loadData("http://localhost:3000/users/");
+        this.setModel(oModel, "users");
       },
     });
   }

@@ -5,114 +5,50 @@ sap.ui.define(
 
     return BaseController.extend("testenvironment.controller.functionality.Export.library", {
       setExportSettings: async function (self, sIdTable, sFileName, aData) {
-        var oSheet;
-
-        if (!sIdTable) {
-          return;
-        }
-
-        var oTable = self.getView().byId(sIdTable);
-
-        if (!aData.length) {
+        if (!sIdTable || !aData.length) {
+          if (!sIdTable) return;
           MessageBox.error(self.getResourceBundle().getText("msgNoData"));
           return;
         }
 
+        var oTable = self.getView().byId(sIdTable);
         var aCols = self.Export.createMcColumnConfig(oTable.getColumns());
-        var oSettings = {
-          workbook: {
-            columns: aCols,
-          },
+
+        var oSheet = new Spreadsheet({
+          workbook: { columns: aCols },
           dataSource: aData,
           fileName: sFileName,
-        };
-
-        oSheet = new Spreadsheet(oSettings);
-        oSheet.build().finally(function () {
-          oSheet.destroy();
         });
+
+        oSheet.build().finally(() => oSheet.destroy());
       },
 
       createMcColumnConfig: function (aColumns) {
         const EDM_TYPE = ExportType.EdmType;
+        const configMap = {
+          date: { type: EDM_TYPE.Date, format: "dd.mm.yyyy" },
+          currency: { type: EDM_TYPE.Number, delimiter: true, scale: 2 },
+          boolean: { type: EDM_TYPE.Boolean, trueValue: "X", falseValue: " " },
+          time: { type: EDM_TYPE.Time },
+          integer: { type: EDM_TYPE.Number },
+          default: { type: EDM_TYPE.String },
+        };
 
-        var aConfig = [];
-        aColumns.map((oColumn) => {
-          var oConfig, sProperty;
-
-          var sType = this.getFieldType(oColumn.getTemplate());
+        return aColumns.reduce((aConfig, oColumn) => {
           var sProperty = this.getFieldProperty(oColumn.getTemplate());
+          var sType = this.getFieldType(oColumn.getTemplate());
 
-          var oFormattedColumn = {
+          if (!sProperty) return aConfig;
+
+          var oConfig = {
             label: oColumn.getLabel().getText(),
             property: sProperty,
-            type: sType,
+            ...(configMap[sType] || configMap.default),
           };
 
-          if (!oFormattedColumn.property) {
-            return;
-          }
-
-          switch (oFormattedColumn.type) {
-            case "date": {
-              oConfig = {
-                label: oFormattedColumn.label,
-                property: oFormattedColumn.property,
-                type: EDM_TYPE.Date,
-                format: "dd.mm.yyyy",
-              };
-              break;
-            }
-            case "currency": {
-              oConfig = {
-                label: oFormattedColumn.label,
-                property: oFormattedColumn.property,
-                type: EDM_TYPE.Number,
-                delimiter: true,
-                scale: 2,
-              };
-              break;
-            }
-            case "boolean": {
-              oConfig = {
-                label: oFormattedColumn.label,
-                property: oFormattedColumn.property,
-                type: EDM_TYPE.Boolean,
-                trueValue: "X",
-                falseValue: " ",
-              };
-              break;
-            }
-            case "time": {
-              oConfig = {
-                label: oFormattedColumn.label,
-                property: oFormattedColumn.property,
-                type: EDM_TYPE.Time,
-              };
-              break;
-            }
-            case "integer": {
-              oConfig = {
-                label: oFormattedColumn.label,
-                property: oFormattedColumn.property,
-                type: EDM_TYPE.Number,
-              };
-              break;
-            }
-            default: {
-              oConfig = {
-                label: oFormattedColumn.label,
-                property: oFormattedColumn.property,
-                type: EDM_TYPE.String,
-              };
-              break;
-            }
-          }
-
           aConfig.push(oConfig);
-        });
-
-        return aConfig;
+          return aConfig;
+        }, []);
       },
     });
   }

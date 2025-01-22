@@ -28,12 +28,9 @@ sap.ui.define(
       },
 
       onTest: function (oEvent) {
-        var d = new Date("2024-11-05T12:55:46.315Z");
-        var d1 = new Date();
-        var d2 = new Date(d.getTime() + d.getTimezoneOffset() * 60000);
-        console.log(d2);
-        console.log(d2 > d1);
-        console.log(d > d1);
+        const test = this.getOwnerComponent().getModel("utentiModel");
+
+        console.log(test.getData());
       },
     });
   }

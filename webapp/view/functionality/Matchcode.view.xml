@@ -1,0 +1,73 @@
+<mvc:View controllerName="testenvironment.controller.functionality.Matchcode"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:f="sap.f"
+  xmlns:my="testenvironment.controls"
+  xmlns:l="sap.ui.layout"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+  <f:DynamicPage showFooter="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>labelMatchcode}" />
+        </f:heading>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:content>
+      <l:Grid>
+        <Button text="Test"
+          press="onTest"/>
+        <VBox>
+          <Label text="V1"/>
+          <Input valueHelpRequest="onMcOpenV1"
+            showValueHelp="true">
+            <layoutData>
+              <l:GridData span="XL2 L4 M6" />
+            </layoutData>
+          </Input>
+        </VBox>
+        <VBox>
+          <Label text="V2"/>
+          <Input valueHelpRequest="onMcOpen"
+            showValueHelp="true">
+            <layoutData>
+              <l:GridData span="XL2 L4 M6" />
+            </layoutData>
+          </Input>
+        </VBox>
+        <VBox>
+          <Label text="Single"/>
+          <Input valueHelpRequest="onMcOpenV3"
+            showValueHelp="true"
+            value="{Person>/Name}">
+            <layoutData>
+              <l:GridData span="XL2 L4 M6" />
+            </layoutData>
+          </Input>
+        </VBox>
+        <VBox>
+          <Label text="MultiInput"/>
+          <MultiInput valueHelpRequest="onMcOpenV4"
+            showValueHelp="true"
+            value="{Person>/Names}">
+            <layoutData>
+              <l:GridData span="XL2 L4 M6" />
+            </layoutData>
+          </MultiInput>
+        </VBox>
+        <Input value="{Person>/Name}"
+          valueHelpRequest=".onMatchcodeV2"
+          showValueHelp="true"
+          placeholder="Seleziona Valore" />
+      </l:Grid>
+    </f:content>
+    <f:footer>
+      <OverflowToolbar>
+        <Button type="Back"
+          text="{i18n>btnBack}"
+          press="onBack" />
+        <ToolbarSpacer />
+      </OverflowToolbar>
+    </f:footer>
+  </f:DynamicPage>
+</mvc:View>

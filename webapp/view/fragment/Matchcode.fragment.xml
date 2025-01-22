@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.ui.comp.valuehelpdialog"
+  xmlns:m="sap.m"
+  xmlns:fb="sap.ui.comp.filterbar"
+  xmlns:core="sap.ui.core">
+  <ValueHelpDialog title="Test V1"
+    ok=""
+    cancel="onMcClose"
+    afterClose="onMcClose"
+    supportRanges="false"
+    key="Name"
+    supportMultiselect="true">
+    <filterBar>
+      <fb:FilterBar id="fbSium"
+        advancedMode="true"
+        search="onMcFilter"
+        isRunningInValueHelpDialog="true">
+        <fb:filterGroupItems>
+          <fb:FilterGroupItem groupName="__$INTERNAL$"
+            name="Name"
+            label="Filtro 1"
+            visibleInFilterBar="true">
+            <fb:control>
+              <m:Input name="Name"
+                maxLength="4" />
+            </fb:control>
+          </fb:FilterGroupItem>
+          <fb:FilterGroupItem groupName="__$INTERNAL$"
+            name="Surname"
+            label="Filtro 2"
+            visibleInFilterBar="true">
+            <fb:control>
+              <m:Input name="Surname"
+                maxLength="30" />
+            </fb:control>
+          </fb:FilterGroupItem>
+        </fb:filterGroupItems>
+      </fb:FilterBar>
+    </filterBar>
+
+  </ValueHelpDialog>
+</core:FragmentDefinition>

@@ -28,7 +28,12 @@ sap.ui.define(
       },
 
       onTest: function (oEvent) {
-        console.log(moment().format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]"));
+        var d = new Date("2024-11-05T12:55:46.315Z");
+        var d1 = new Date();
+        var d2 = new Date(d.getTime() + d.getTimezoneOffset() * 60000);
+        console.log(d2);
+        console.log(d2 > d1);
+        console.log(d > d1);
       },
     });
   }

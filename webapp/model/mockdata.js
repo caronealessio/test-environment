@@ -9,6 +9,7 @@ sap.ui.define([], function () {
         { Text: "Esporta", Route: "Export" },
         { Text: "Form", Route: "Form" },
         { Text: "Paginatore", Route: "Paginator" },
+        { Text: "Matchcode", Route: "Matchcode" },
       ];
     },
 

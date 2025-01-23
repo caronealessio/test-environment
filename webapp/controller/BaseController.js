@@ -44,47 +44,6 @@ sap.ui.define(
         return oFragment;
       },
 
-      getFieldType: function (oComponent) {
-        var oBinding;
-        var sComponent = oComponent.getMetadata().getName();
-
-        if (oComponent?.data("type")) {
-          return oComponent?.data("type"); //integer - float
-        }
-
-        oBinding = oBinding ?? oComponent.getBindingInfo("text");
-        oBinding = oBinding ?? oComponent.getBindingInfo("value");
-
-        var oType = oBinding?.type;
-
-        if (oType) {
-          if (oType?.oFormat?.type) {
-            return oType?.oFormat?.type; //time
-          } else if (oType?.getName()) {
-            return oType?.getName().toLowerCase(); //date - currency
-          }
-        }
-
-        if (sComponent === "sap.m.CheckBox") {
-          return "boolean"; //boolean
-        }
-
-        return null;
-      },
-
-      getFieldProperty: function (oField) {
-        var sProperty;
-
-        sProperty = sProperty ?? oField.getBindingPath("value");
-        sProperty = sProperty ?? oField.getBindingPath("selectedKey");
-        sProperty = sProperty ?? oField.getBindingPath("text");
-        sProperty = sProperty ?? oField.getBindingPath("selected");
-        sProperty = sProperty ?? oField.getBindingPath("src");
-        sProperty = sProperty ?? oField?.data("property");
-
-        return sProperty;
-      },
-
       copyWithoutRef: function (oArray) {
         function json_deserialize_helper(key, value) {
           if (typeof value === "string") {

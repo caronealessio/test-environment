@@ -2,9 +2,7 @@
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
-  xmlns:my="testenvironment.controls"
-  xmlns:l="sap.ui.layout"
-  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+  xmlns:l="sap.ui.layout">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>

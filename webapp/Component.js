@@ -3,7 +3,13 @@
  */
 
 sap.ui.define(
-  ["sap/ui/core/UIComponent", "sap/ui/Device", "testenvironment/model/models", "sap/ui/model/json/JSONModel"],
+  [
+    "sap/ui/core/UIComponent",
+    "sap/ui/Device",
+    "testenvironment/model/models",
+    "sap/ui/model/json/JSONModel",
+    "testenvironment/libs/moment",
+  ],
   function (UIComponent, Device, models, JSONModel) {
     "use strict";
 
@@ -17,7 +23,7 @@ sap.ui.define(
        * @public
        * @override
        */
-      init: function () {
+      init: async function () {
         // call the base component's init function
         UIComponent.prototype.init.apply(this, arguments);
 
@@ -29,7 +35,17 @@ sap.ui.define(
 
         // // Creazione di un modello JSON dal servizio
         var oModel = new JSONModel();
-        oModel.loadData("http://localhost:3000/users/");
+        await oModel.loadData("http://localhost:3000/users/");
+
+        console.log(oModel.getData());
+
+        oModel.getData().map((item) => {
+          item.birthday = moment(item.birthday)._d;
+          item.birthtime = { ms: moment.duration(item.birthtime).asMilliseconds(), __edmType: "Edm.Time" };
+          item.created = moment(item.created)._d;
+          item.isMale = item.isMale === 1;
+        });
+
         this.setModel(oModel, "users");
       },
     });

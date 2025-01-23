@@ -3,7 +3,8 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
   xmlns:ui="sap.ui.table"
-  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns:my="testenvironment.controls">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>
@@ -14,27 +15,32 @@
     </f:title>
     <f:content>
       <ui:Table id="tblExport"
-        rows="{Export>/}">
+        rows="{users>/}">
         <ui:extension>
           <OverflowToolbar>
             <ToolbarSpacer />
-            <Button icon="sap-icon://excel-attachment"
-              tooltip="{i18n>btnExport}"
-              press="onExport" />
+            <my:ExportButton modelPath="users"
+              tableId="tblExport"/>
           </OverflowToolbar>
         </ui:extension>
         <ui:columns>
           <ui:Column autoResizable="true">
-            <Label text="{i18n>labelString}" />
+            <Label text="{i18n>labelName}" />
             <ui:template>
-              <Text text="{Export>String}" />
+              <Text text="{users>name}" />
             </ui:template>
           </ui:Column>
           <ui:Column autoResizable="true">
-            <Label text="{i18n>labelDate}" />
+            <Label text="{i18n>labelSurname}" />
+            <ui:template>
+              <Text text="{users>surname}" />
+            </ui:template>
+          </ui:Column>
+          <ui:Column autoResizable="true">
+            <Label text="{i18n>labelBirthDate}" />
             <ui:template>
               <Text text="{
-                  path: 'Export>Date',
+                  path: 'users>birthday',
                   type: 'sap.ui.model.type.Date',
                   formatOptions: {
                     pattern: 'dd.MM.yyyy'
@@ -43,20 +49,19 @@
             </ui:template>
           </ui:Column>
           <ui:Column autoResizable="true">
-            <Label text="{i18n>labelTime}" />
+            <Label text="{i18n>labelBirthTime}" />
             <ui:template>
               <Text text="{
-                  path: 'Export>Time',
+                  path: 'users>birthtime',
                   type: 'sap.ui.model.odata.type.Time'
                 }" />
             </ui:template>
           </ui:Column>
           <ui:Column autoResizable="true">
-            <Label text="{i18n>labelCurrency}" />
+            <Label text="{i18n>labelAssets}" />
             <ui:template>
-              <Input id="export_iptCurrency"
-                value="{
-                    parts: ['Export>Currency', 'EUR'],
+              <Input value="{
+                    parts: ['users>assets', 'EUR'],
                     type: 'sap.ui.model.type.Currency',
                     formatOptions: {
                       showMeasure: false
@@ -65,16 +70,16 @@
             </ui:template>
           </ui:Column>
           <ui:Column autoResizable="true">
-            <Label text="{i18n>labelBoolean}" />
+            <Label text="{i18n>labelIsMale}" />
             <ui:template>
-              <CheckBox selected="{Export>Boolean}"
+              <CheckBox selected="{users>isMale}"
                 editable="false" />
             </ui:template>
           </ui:Column>
           <ui:Column autoResizable="true">
-            <Label text="{i18n>labelInteger}" />
+            <Label text="{i18n>labelNumAssets}" />
             <ui:template>
-              <Text text="{Export>Integer}"
+              <Text text="{users>numAssets}"
                 app:type="integer" />
             </ui:template>
           </ui:Column>

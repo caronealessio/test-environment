@@ -10,14 +10,14 @@
 
 ```
 
-- Start the server
+- Start the server (1° terminal)
 
 ```
     node server.js
 
 ```
 
-- Start the application
+- Start the application (2° terminal)
 
 ```
     npm start

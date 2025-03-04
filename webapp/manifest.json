@@ -94,7 +94,7 @@
         },
         {
           "name": "Export",
-          "pattern": "functionality.Export.Dashboard",
+          "pattern": "functionality.Export",
           "target": ["Export"]
         },
         {
@@ -139,8 +139,8 @@
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "Export",
-          "viewName": "functionality.Export.Dashboard"
+          "viewId": "functionality.Export",
+          "viewName": "functionality.Export"
         },
         "Form": {
           "viewType": "XML",

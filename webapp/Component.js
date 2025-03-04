@@ -40,13 +40,16 @@ sap.ui.define(
         console.log(oModel.getData());
 
         oModel.getData().map((item) => {
-          item.birthday = moment(item.birthday)._d;
-          item.birthtime = { ms: moment.duration(item.birthtime).asMilliseconds(), __edmType: "Edm.Time" };
-          item.created = moment(item.created)._d;
+          item.birthday = moment(item.birthday).add(2, "hours")._d;
+          item.birthtime = {
+            ms: moment.duration(item.birthtime).asMilliseconds(),
+            __edmType: "Edm.Time",
+          };
+          item.created = moment(item.created).add(2, "hours")._d;
           item.isMale = item.isMale === 1;
         });
 
-        this.setModel(oModel, "users");
+        this.setModel(new JSONModel({ data: oModel.getData() }), "users");
       },
     });
   }

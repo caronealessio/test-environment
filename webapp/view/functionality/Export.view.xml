@@ -1,9 +1,9 @@
-<mvc:View controllerName="testenvironment.controller.functionality.Export.Dashboard"
+<mvc:View controllerName="testenvironment.controller.functionality.Export"
   xmlns="sap.m"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
   xmlns:ui="sap.ui.table"
-  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.Customusers/1"
   xmlns:my="testenvironment.controls">
   <f:DynamicPage showFooter="true">
     <f:title>
@@ -14,13 +14,11 @@
       </f:DynamicPageTitle>
     </f:title>
     <f:content>
-      <ui:Table id="tblExport"
-        rows="{users>/}">
+      <ui:Table rows="{users>/data}">
         <ui:extension>
           <OverflowToolbar>
             <ToolbarSpacer />
-            <my:ExportButton modelPath="users"
-              tableId="tblExport"/>
+            <my:ExportButton />
           </OverflowToolbar>
         </ui:extension>
         <ui:columns>

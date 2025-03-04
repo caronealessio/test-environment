@@ -9,7 +9,7 @@ sap.ui.define(
           text: { type: "string", defaultValue: "" },
           icon: { type: "string", defaultValue: "sap-icon://excel-attachment" },
           tooltip: { type: "string", defaultValue: "Esporta" },
-          modelPath: { type: "string" }, //Required
+          modelPath: { type: "string" },
           tableId: { type: "string" }, //Required
           fileName: { type: "string", defaultValue: "export.xlsx" },
         },
@@ -23,14 +23,6 @@ sap.ui.define(
 
       renderer: function (oRm, oButton) {
         sap.m.ButtonRenderer.render(oRm, oButton);
-
-        // Verifica che le proprietà obbligatorie siano impostate
-        if (!oButton.getModelPath()) {
-          throw new Error("La proprietà 'modelPath' è obbligatoria per il controllo ExportButton.");
-        }
-        if (!oButton.getTableId()) {
-          throw new Error("La proprietà 'tableId' è obbligatoria per il controllo ExportButton.");
-        }
       },
 
       onExportPress: async function () {
@@ -39,23 +31,18 @@ sap.ui.define(
           const sFileName = this.getFileName();
           const oModel = this.getModel(this.getModelPath());
 
-          // Verifica la presenza della tabella e dei dati
-          if (!oModel) {
-            sap.m.MessageBox.error("Modello non trovati.");
-            return;
-          }
-
-          const aData = oModel.getData(); // Ottieni tutti i dati dal modello
-
-          if (!aData.length) {
-            sap.m.MessageBox.error("Nessun dato disponibile per l'esportazione.");
-            return;
-          }
-
           const oTable = sTableId ? generalUtils.findComponentById(this, sTableId) : this.getParent().getParent();
 
           if (!oTable) {
             throw new Error("Tabella non trovata");
+          }
+
+          const oBinding = oTable.getBinding("rows");
+          const aData = oBinding.getModel().getProperty(oBinding.getPath());
+
+          if (!aData.length) {
+            sap.m.MessageBox.error("Nessun dato disponibile per l'esportazione.");
+            return;
           }
 
           const aCols = this.createMcColumnConfig(oTable.getColumns());

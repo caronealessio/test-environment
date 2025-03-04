@@ -1,6 +1,11 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "testenvironment/model/formatter"],
-  function (Controller, Fragment, formatter) {
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/core/Fragment",
+    "testenvironment/model/formatter",
+    "sap/ui/model/json/JSONModel",
+  ],
+  function (Controller, Fragment, formatter, JSONModel) {
     "use strict";
 
     return Controller.extend("testenvironment.controller.BaseController", {
@@ -57,6 +62,17 @@ sap.ui.define(
         }
 
         return JSON.parse(JSON.stringify(oArray), json_deserialize_helper);
+      },
+
+      /**
+       *
+       * @param {string} sEndpoint
+       */
+      getDataBE: async function (sEndpoint) {
+        var oModel = new JSONModel();
+        await oModel.loadData(`http://localhost:3000/${sEndpoint}/`);
+
+        return oModel.getData();
       },
     });
   }

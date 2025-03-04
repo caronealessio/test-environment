@@ -6,10 +6,10 @@
 		<Button text="TEST"
 			press="onTest" />
 		<Panel>
-			<SelectList items="{Functionalities>/}"
-				itemPress="onFunctionality">
-				<c:Item key="{Functionalities>Route}"
-					text="{Functionalities>Text}" />
+			<SelectList items="{MenuItem>/}"
+				itemPress="onMenuItemPress">
+				<c:Item key="{MenuItem>router}"
+					text="{MenuItem>title}" />
 			</SelectList>
 		</Panel>
 	</Page>

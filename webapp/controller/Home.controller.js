@@ -13,13 +13,15 @@ sap.ui.define(
     return BaseController.extend("testenvironment.controller.Home", {
       onInit: function () {
         this.getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
+
+        /** @type {MenuItemTypes[]} */
+        this.aMenuItem = [];
       },
 
       _onObjectMatched: async function () {
-        /** @type {MenuItemTypes[]} */
-        var aMenuItem = await this.getDataBE("menu-item");
+        this.aMenuItem = await this.read("menu-item");
 
-        this.setModel(new JSONModel(aMenuItem), "MenuItem");
+        this.setModel(new JSONModel(this.aMenuItem), "MenuItem");
       },
 
       onMenuItemPress: function (oEvent) {
@@ -27,6 +29,19 @@ sap.ui.define(
 
         this.getRouter().navTo(sRoute);
       },
+
+      onTest: function () {
+        this.create("add-menu-item", {
+          title: "Test",
+          router: "RouteTest",
+        }).then(async () => {
+          this.aMenuItem = await this.read("menu-item");
+
+          this.setModel(new JSONModel(this.aMenuItem), "MenuItem");
+        });
+      },
+
+      onConfigMenuItem: function () {},
     });
   }
 );

@@ -1,6 +1,11 @@
 sap.ui.define(
-  ["../BaseController", "sap/ui/model/json/JSONModel", "testenvironment/model/mockdata"],
-  function (BaseController, JSONModel, mockdata) {
+  [
+    "../BaseController",
+    "sap/ui/model/json/JSONModel",
+    "testenvironment/model/mockdata",
+    "testenvironment/util/generalUtils",
+  ],
+  function (BaseController, JSONModel, mockdata, generalUtils) {
     "use strict";
 
     return BaseController.extend("testenvironment.controller.functionality.Paginator", {
@@ -21,7 +26,7 @@ sap.ui.define(
 
         this._aArray = aArray;
 
-        var aCopy = this.copyWithoutRef(this._aArray);
+        var aCopy = generalUtils.copyWithoutRef(this._aArray);
 
         var oPaginator = {
           Top: 50,
@@ -48,7 +53,7 @@ sap.ui.define(
 
       onPaginatorChange: async function (oEvent) {
         var oPaginator = this.getModel("Paginator").getData();
-        var aCopy = this.copyWithoutRef(this._aArray);
+        var aCopy = generalUtils.copyWithoutRef(this._aArray);
 
         this.setModel(new JSONModel(aCopy.splice(oPaginator.Skip, oPaginator.Top)), "PaginatorList");
 

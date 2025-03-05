@@ -3,9 +3,15 @@
 	xmlns="sap.m"
 	xmlns:c="sap.ui.core">
 	<Page title="{i18n>title}">
-		<Button text="TEST"
-			press="onTest" />
+
 		<Panel>
+			<headerToolbar>
+				<Toolbar>
+					<ToolbarSpacer />
+					<Button icon="sap-icon://settings"
+						press="onConfigMenuItem" />
+				</Toolbar>
+			</headerToolbar>
 			<SelectList items="{MenuItem>/}"
 				itemPress="onMenuItemPress">
 				<c:Item key="{MenuItem>router}"

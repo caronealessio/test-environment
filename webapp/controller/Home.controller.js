@@ -31,7 +31,7 @@ sap.ui.define(
       },
 
       onTest: function () {
-        this.create("add-menu-item", {
+        this.create("menu-item/create", {
           title: "Test",
           router: "RouteTest",
         }).then(async () => {

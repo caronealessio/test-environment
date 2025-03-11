@@ -104,13 +104,19 @@ sap.ui.define(
        * Effettua una richiesta GET per leggere i dati da un endpoint specificato usando fetch.
        *
        * @param {string} sEndpoint L'endpoint da cui leggere i dati (es. "users", "products").
+       * @param {string|number} [id] Un ID opzionale per filtrare i dati (es. per leggere un singolo elemento).
        * @returns {Promise<Object>} Una promessa che restituisce i dati letti dall'endpoint come oggetto JSON.
        */
-      read: async function (sEndpoint) {
+      read: async function (sEndpoint, sId) {
         try {
-          const response = await fetch(`http://localhost:3000/${sEndpoint}/`);
+          let url = `http://localhost:3000/${sEndpoint}`;
 
-          // Controlla se la risposta è valida
+          if (sId) {
+            url += `/${sId}`;
+          }
+
+          const response = await fetch(url);
+
           if (!response.ok) {
             throw new Error(`Errore nel caricamento dei dati da ${sEndpoint}`);
           }
@@ -119,7 +125,7 @@ sap.ui.define(
           return data;
         } catch (error) {
           console.error("Errore nella richiesta GET:", error);
-          throw error; // Rilancia l'errore per la gestione da parte del chiamante
+          throw error;
         }
       },
 
@@ -139,16 +145,70 @@ sap.ui.define(
           body: JSON.stringify(oData),
         })
           .then((response) => {
-            // Controlla se la risposta è valida (status HTTP 2xx)
             if (!response.ok) {
               throw new Error(`Errore nella creazione dei dati su ${sEndpoint}`);
             }
-            // Restituisce la risposta come oggetto JSON
             return response.json();
           })
           .catch((error) => {
             console.error("Errore nella richiesta POST:", error);
-            throw error; // Rilancia l'errore per la gestione da parte del chiamante
+            throw error;
+          });
+      },
+
+      /**
+       * Effettua una richiesta DELETE per eliminare più elementi da un endpoint specificato.
+       *
+       * @param {string} sEndpoint L'endpoint su cui effettuare la richiesta (es. "menu-items").
+       * @param {Array<number>} aIds Array di ID degli elementi da eliminare.
+       * @returns {Promise<Object>} Una promessa che restituisce la risposta del server come oggetto JSON.
+       */
+      delete: function (sEndpoint, aIds) {
+        return fetch(`http://localhost:3000/${sEndpoint}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ids: aIds }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Errore nell'eliminazione degli elementi");
+            }
+            return response.json();
+          })
+          .catch((error) => {
+            console.error("Errore nella richiesta DELETE multipla:", error);
+            throw error;
+          });
+      },
+
+      /**
+       * Effettua una richiesta PUT per aggiornare un elemento specifico in un endpoint fornito.
+       *
+       * @param {string} sEndpoint - L'endpoint API a cui inviare la richiesta (es. "menu-items").
+       * @param {string|number} sId - L'ID dell'elemento da modificare.
+       * @param {Object} oData - I nuovi dati da aggiornare per l'elemento.
+       * @returns {Promise<Object>} - Una promessa che restituisce l'oggetto aggiornato come JSON.
+       */
+      edit: function (sEndpoint, sId, oData) {
+        return fetch(`http://localhost:3000/${sEndpoint}/${sId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(oData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Errore nella modifica dei dati su ${sEndpoint}`);
+            }
+
+            return response.json();
+          })
+          .catch((error) => {
+            console.error("Errore nella richiesta PUT:", error);
+            throw error;
           });
       },
     });

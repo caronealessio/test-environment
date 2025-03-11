@@ -16,7 +16,7 @@ sap.ui.define(
       },
 
       onBack: function () {
-        this.getRouter().navTo("RouteHome");
+        this.getRouter().navTo("home");
       },
     });
   }

@@ -18,16 +18,12 @@ sap.ui.define([], function () {
   return class MenuItem {
     /**
      * @constructor
-     * @param {number} id
      * @param {string} title
      * @param {string} router
-     * @param {string} created
      */
-    constructor(id, title, router, created) {
-      this.id = id;
+    constructor(title, router) {
       this.title = title;
       this.router = router;
-      this.created = created;
     }
   };
 });

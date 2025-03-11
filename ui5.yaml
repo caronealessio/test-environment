@@ -25,4 +25,4 @@ server:
       afterMiddleware: fiori-tools-appreload
       configuration:
         component: testenvironment
-        ui5Theme: sap_horizon
+        ui5Theme: sap_fiori_3

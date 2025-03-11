@@ -12,10 +12,10 @@
 						press="onConfigMenuItem" />
 				</Toolbar>
 			</headerToolbar>
-			<SelectList items="{MenuItem>/}"
+			<SelectList items="{MenuItems>/}"
 				itemPress="onMenuItemPress">
-				<c:Item key="{MenuItem>router}"
-					text="{MenuItem>title}" />
+				<c:Item key="{MenuItems>router}"
+					text="{MenuItems>title}" />
 			</SelectList>
 		</Panel>
 	</Page>

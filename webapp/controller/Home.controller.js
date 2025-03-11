@@ -12,16 +12,16 @@ sap.ui.define(
     "use strict";
     return BaseController.extend("testenvironment.controller.Home", {
       onInit: function () {
-        this.getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("home").attachPatternMatched(this._onObjectMatched, this);
 
         /** @type {MenuItemTypes[]} */
-        this.aMenuItem = [];
+        this.aMenuItems = [];
       },
 
       _onObjectMatched: async function () {
-        this.aMenuItem = await this.read("menu-item");
+        this.aMenuItems = await this.read("menu-items");
 
-        this.setModel(new JSONModel(this.aMenuItem), "MenuItem");
+        this.setModel(new JSONModel(this.aMenuItems), "MenuItems");
       },
 
       onMenuItemPress: function (oEvent) {
@@ -31,17 +31,26 @@ sap.ui.define(
       },
 
       onTest: function () {
-        this.create("menu-item/create", {
-          title: "Test",
-          router: "RouteTest",
-        }).then(async () => {
-          this.aMenuItem = await this.read("menu-item");
+        // this.create("menu-items/create", {
+        //   title: "Test",
+        //   router: "RouteTest",
+        // }).then(async () => {
+        //   this.aMenuItem = await this.read("menu-item");
 
-          this.setModel(new JSONModel(this.aMenuItem), "MenuItem");
-        });
+        //   this.setModel(new JSONModel(this.aMenuItems), "MenuItems");
+        // });
+        var currentTheme = sap.ui.getCore().getConfiguration().getTheme();
+
+        var newTheme = currentTheme === "sap_fiori_3" ? "sap_fiori_3_dark" : "sap_fiori_3";
+
+        sap.ui.getCore().applyTheme(newTheme);
+
+        console.log(currentTheme);
       },
 
-      onConfigMenuItem: function () {},
+      onConfigMenuItem: function () {
+        this.navTo("menuItems");
+      },
     });
   }
 );

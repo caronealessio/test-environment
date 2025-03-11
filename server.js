@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./db"); // Connessione al database
-const menuItemRoutes = require("./routes/menu-item/menuItemRoutes"); // Importa le rotte del menu
+const menuItemRoutes = require("./routes/menuItem/menuItemRoutes"); // Importa le rotte del menu
 
 const app = express();
 const PORT = 3000;
@@ -22,7 +22,7 @@ app.get("/users", (req, res) => {
   });
 });
 
-app.use("/menu-item", menuItemRoutes);
+app.use("/menu-items", menuItemRoutes);
 
 // Avvio del server
 app.listen(PORT, () => {

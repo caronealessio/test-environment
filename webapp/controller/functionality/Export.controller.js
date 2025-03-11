@@ -5,7 +5,7 @@ sap.ui.define(
 
     return BaseController.extend("testenvironment.controller.functionality.Export", {
       onBack: function () {
-        this.getRouter().navTo("RouteHome");
+        this.getRouter().navTo("home");
       },
 
       onAfterRendering: function () {

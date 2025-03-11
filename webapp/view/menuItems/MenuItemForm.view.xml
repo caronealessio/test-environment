@@ -1,0 +1,51 @@
+<mvc:View controllerName="testenvironment.controller.menuItems.MenuItemForm"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout">
+  <f:DynamicPage showFooter="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="Rotta" />
+        </f:heading>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <f:content>
+      <Panel backgroundDesign="Solid">
+        <l:Grid >
+          <HBox direction="Column">
+            <Label text="Testo"
+              required="true"/>
+            <Input value="{MenuItem>/title}"/>
+            <layoutData>
+              <l:GridData span="XL4 L6 M12 S12"/>
+            </layoutData>
+          </HBox>
+          <HBox direction="Column">
+            <Label text="Route"
+              required="true"/>
+            <Input value="{MenuItem>/router}"/>
+            <layoutData>
+              <l:GridData span="XL4 L6 M12 S12"
+                linebreak="true"/>
+            </layoutData>
+          </HBox>
+        </l:Grid>
+      </Panel>
+    </f:content>
+
+    <f:footer>
+      <OverflowToolbar >
+        <Button text="Indietro"
+          press="onNavBack"
+          type="Back"/>
+        <ToolbarSpacer />
+        <Button text="Salva"
+          press="onSave"
+          type="Emphasized"/>
+      </OverflowToolbar>
+    </f:footer>
+  </f:DynamicPage>
+</mvc:View>

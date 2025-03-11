@@ -17,6 +17,7 @@
     }
   },
   "sap.ui": {
+    "theme": "sap_fiori_3",
     "technology": "UI5",
     "icons": {
       "icon": "",
@@ -74,13 +75,26 @@
         "viewPath": "testenvironment.view",
         "controlAggregation": "pages",
         "controlId": "app",
-        "clearControlAggregation": false
+        "clearControlAggregation": false,
+        "bypassed": {
+          "target": "notFound"
+        }
       },
       "routes": [
         {
-          "name": "RouteHome",
+          "name": "home",
           "pattern": ":?query:",
-          "target": ["TargetHome"]
+          "target": ["home"]
+        },
+        {
+          "name": "menuItems",
+          "pattern": "menu-items",
+          "target": ["menuItems"]
+        },
+        {
+          "name": "menuItemForm",
+          "pattern": "menu-items/{id}",
+          "target": ["menuItemForm"]
         },
         {
           "name": "StandardTableManagement",
@@ -114,12 +128,20 @@
         }
       ],
       "targets": {
-        "TargetHome": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Home",
-          "viewName": "Home"
+        "home": {
+          "viewId": "home",
+          "viewName": "Home",
+          "viewLevel": 1
+        },
+        "menuItems": {
+          "viewId": "menuItems",
+          "viewName": "menuItems.MenuItemList",
+          "viewLevel": 2
+        },
+        "menuItemForm": {
+          "viewId": "menuItemForm",
+          "viewName": "menuItems.MenuItemForm",
+          "viewLevel": 3
         },
         "StandardTableManagement": {
           "viewType": "XML",

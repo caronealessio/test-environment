@@ -1,0 +1,75 @@
+<mvc:View controllerName="testenvironment.controller.menuItems.MenuItemList"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:ui="sap.ui.table">
+  <f:DynamicPage showFooter="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="Menu" />
+        </f:heading>
+      </f:DynamicPageTitle>
+    </f:title>
+
+    <f:content>
+      <ui:Table id="menuItemsTable"
+        rows="{MenuItems>/}"
+        rowSelectionChange="onSelectionChange">
+        <ui:extension>
+          <OverflowToolbar style="Clear">
+            <ToolbarSpacer />
+            <Button icon="sap-icon://add"
+              text="Crea"
+              press="onCreate"/>
+            <Button id="editButton"
+              icon="sap-icon://edit"
+              text="Modifica"
+              press="onEdit"
+              enabled="false"/>
+            <Button id="deleteButton"
+              icon="sap-icon://delete"
+              text="Elimina"
+              press="onDelete"
+              type="Attention"
+              enabled="false"/>
+          </OverflowToolbar>
+        </ui:extension>
+        <ui:columns>
+          <ui:Column width="3rem">
+            <Label text="ID"/>
+            <ui:template>
+              <Text text="{MenuItems>id}"/>
+            </ui:template>
+          </ui:Column>
+          <ui:Column>
+            <Label text="Testo"/>
+            <ui:template>
+              <Text text="{MenuItems>title}"/>
+            </ui:template>
+          </ui:Column>
+          <ui:Column>
+            <Label text="Route"/>
+            <ui:template>
+              <Text text="{MenuItems>router}"/>
+            </ui:template>
+          </ui:Column>
+          <ui:Column width="3rem">
+            <ui:template>
+              <Button icon="sap-icon://arrow-right"
+                type="Transparent" />
+            </ui:template>
+          </ui:Column>
+        </ui:columns>
+      </ui:Table>
+    </f:content>
+
+    <f:footer>
+      <OverflowToolbar >
+        <Button text="Indietro"
+          press="onNavBack"
+          type="Back"/>
+      </OverflowToolbar>
+    </f:footer>
+  </f:DynamicPage>
+</mvc:View>

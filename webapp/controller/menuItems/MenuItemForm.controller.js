@@ -31,7 +31,9 @@ sap.ui.define(["../BaseController", "sap/ui/model/json/JSONModel"], function (Ba
             this.navTo("menuItems");
           });
         } else {
-          // this.update("menu-items", this.sId, oMenuItem);
+          this.edit("menu-items", this.sId, oMenuItem).then(() => {
+            this.navTo("menuItems");
+          });
         }
       } catch (oError) {
         console.error(oError);

@@ -1,0 +1,22 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  controllerName="testenvironment.controller.NotAuthorized">
+
+  <Page title="Accesso Negato">
+    <content>
+      <VBox class="sapUiSmallMargin sapUiMediumPadding"
+        alignItems="Center"
+        justifyContent="Center">
+        <Icon src="sap-icon://error"
+          size="5rem"
+          color="red"/>
+        <Title text="Accesso Negato"
+          level="H1"/>
+        <Text text="Non hai i permessi per accedere a questa pagina."/>
+
+        <Button text="Torna alla Home"
+          press="onNavHome"/>
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>

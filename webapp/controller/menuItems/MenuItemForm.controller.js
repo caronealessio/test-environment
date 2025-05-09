@@ -1,47 +1,54 @@
 // @ts-check
 
-sap.ui.define(["../BaseController", "sap/ui/model/json/JSONModel"], function (BaseController, JSONModel) {
-  "use strict";
+sap.ui.define(
+  ["../BaseController", "sap/ui/model/json/JSONModel", "sap/m/MessageBox"],
+  function (BaseController, JSONModel, MessageBox) {
+    "use strict";
 
-  return BaseController.extend("testenvironment.controller.menuItems.MenuItemForm", {
-    onInit: function () {
-      this.getRouter().getRoute("menuItemForm").attachPatternMatched(this._onObjectMatched, this);
-    },
+    return BaseController.extend("testenvironment.controller.menuItems.MenuItemForm", {
+      onInit: function () {
+        this.getRouter().getRoute("menuItemForm").attachPatternMatched(this._onObjectMatched, this);
+      },
 
-    _onObjectMatched: async function (oEvent) {
-      this.sId = oEvent.getParameter("arguments").id;
+      _onObjectMatched: async function (oEvent) {
+        this.sId = oEvent.getParameter("arguments").id;
 
-      /** @type {MenuItemTypes} */
-      var oMenuItem = {};
+        /** @type {MenuItemTypes} */
+        var oMenuItem = {};
 
-      if (this.sId !== "create") {
-        oMenuItem = await this.read("menu-items", this.sId);
-      }
-
-      this.setModel(new JSONModel(oMenuItem), "MenuItem");
-    },
-
-    onSave: function () {
-      /** @type {MenuItemTypes} */
-      var oMenuItem = this.getModel("MenuItem").getData();
-
-      try {
-        if (this.sId === "create") {
-          this.create("menu-items", oMenuItem).then(() => {
-            this.navTo("menuItems");
-          });
-        } else {
-          this.edit("menu-items", this.sId, oMenuItem).then(() => {
-            this.navTo("menuItems");
-          });
+        if (this.sId !== "create") {
+          oMenuItem = await this.read("menu-items", this.sId);
         }
-      } catch (oError) {
-        console.error(oError);
-      }
-    },
 
-    onNavBack: function () {
-      this.navTo("menuItems");
-    },
-  });
-});
+        this.setModel(new JSONModel(oMenuItem), "MenuItem");
+      },
+
+      onSave: function () {
+        /** @type {MenuItemTypes} */
+        var oMenuItem = this.getModel("MenuItem").getData();
+
+        this.setBusy(true);
+
+        try {
+          if (this.sId === "create") {
+            this.create("menu-items", oMenuItem).then(() => {
+              this.navTo("menuItems");
+            });
+          } else {
+            this.edit("menu-items", this.sId, oMenuItem).then(() => {
+              this.navTo("menuItems");
+            });
+          }
+        } catch (oError) {
+          console.error(oError);
+        } finally {
+          this.setBusy(false);
+        }
+      },
+
+      onNavBack: function () {
+        this.navTo("menuItems");
+      },
+    });
+  }
+);

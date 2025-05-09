@@ -7,7 +7,7 @@
     <f:title>
       <f:DynamicPageTitle>
         <f:heading>
-          <Title text="Rotta" />
+          <Title text="{i18n>titleMenuItem}" />
         </f:heading>
       </f:DynamicPageTitle>
     </f:title>
@@ -16,17 +16,25 @@
       <Panel backgroundDesign="Solid">
         <l:Grid >
           <HBox direction="Column">
-            <Label text="Testo"
+            <Label text="{i18n>labelDescription}"
               required="true"/>
-            <Input value="{MenuItem>/title}"/>
+            <Input value="{MenuItem>/description}"/>
             <layoutData>
               <l:GridData span="XL4 L6 M12 S12"/>
             </layoutData>
           </HBox>
           <HBox direction="Column">
-            <Label text="Route"
+            <Label text="{i18n>labelKey}"
               required="true"/>
-            <Input value="{MenuItem>/router}"/>
+            <Input value="{MenuItem>/key}"/>
+            <layoutData>
+              <l:GridData span="XL4 L6 M12 S12"
+                linebreak="true"/>
+            </layoutData>
+          </HBox>
+          <HBox direction="Column">
+            <Label text="{i18n>labelIcon}"/>
+            <Input value="{MenuItem>/icon}"/>
             <layoutData>
               <l:GridData span="XL4 L6 M12 S12"
                 linebreak="true"/>
@@ -38,11 +46,11 @@
 
     <f:footer>
       <OverflowToolbar >
-        <Button text="Indietro"
+        <Button text="{i18n>btnBack}"
           press="onNavBack"
           type="Back"/>
         <ToolbarSpacer />
-        <Button text="Salva"
+        <Button text="{i18n>btnSave}"
           press="onSave"
           type="Emphasized"/>
       </OverflowToolbar>

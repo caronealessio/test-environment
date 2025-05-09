@@ -97,16 +97,6 @@
           "target": ["menuItemForm"]
         },
         {
-          "name": "fpProjectLogin",
-          "pattern": "fp-project/login",
-          "target": ["fpProjectLogin"]
-        },
-        {
-          "name": "fpProjectHome",
-          "pattern": "fp-project/home",
-          "target": ["fpProjectHome"]
-        },
-        {
           "name": "StandardTableManagement",
           "pattern": "functionality.StandardTableManagement.Dashboard",
           "target": ["StandardTableManagement"]
@@ -152,16 +142,6 @@
           "viewId": "menuItemForm",
           "viewName": "menuItems.MenuItemForm",
           "viewLevel": 3
-        },
-        "fpProjectLogin": {
-          "viewId": "fpProjectLogin",
-          "viewName": "fpProject.Login",
-          "viewLevel": 2
-        },
-        "fpProjectHome": {
-          "viewId": "fpProjectHome",
-          "viewName": "fpProject.Home",
-          "viewLevel": 2
         },
         "StandardTableManagement": {
           "viewType": "XML",

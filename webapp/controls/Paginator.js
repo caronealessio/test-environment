@@ -12,7 +12,7 @@ sap.ui.define(
           },
           top: {
             type: "int",
-            defaultValue: 100,
+            defaultValue: 10,
           },
           skip: {
             type: "int",
@@ -44,14 +44,14 @@ sap.ui.define(
         this.addContent(
           new Button(sId + "firstButton", {
             icon: "sap-icon://close-command-field",
-            tooltip: "{i18n>labelFirst}",
+            tooltip: "Prima pagina",
             press: this._onFirst.bind(this),
           })
         );
         this.addContent(
           new Button(sId + "backButton", {
             icon: "sap-icon://slim-arrow-left",
-            tooltip: "{i18n>labelBack}",
+            tooltip: "Indietro",
             press: this._onBack.bind(this),
           })
         );
@@ -59,14 +59,14 @@ sap.ui.define(
         this.addContent(
           new Button(sId + "nextButton", {
             icon: "sap-icon://slim-arrow-right",
-            tooltip: "{i18n>labelNext}",
+            tooltip: "Avanti",
             press: this._onNext.bind(this),
           })
         );
         this.addContent(
           new Button(sId + "lastButton", {
             icon: "sap-icon://open-command-field",
-            tooltip: "{i18n>labelLast}",
+            tooltip: "Ultima pagina",
             press: this._onLast.bind(this),
           })
         );
@@ -81,36 +81,6 @@ sap.ui.define(
         oToolbar._setBackEnabled();
         oToolbar._setNextEnabled();
         oToolbar._setToolbarAlign();
-      },
-
-      getTop: function () {
-        return this.getProperty("top");
-      },
-
-      getSkip: function () {
-        return this.getProperty("skip");
-      },
-
-      getRecords: function () {
-        return this.getProperty("records");
-      },
-
-      setTop: function (sValue) {
-        this.setProperty("top", sValue);
-        return this;
-      },
-
-      setSkip: function (sValue) {
-        this.setProperty("skip", sValue);
-        return this;
-      },
-
-      getPages: function () {
-        return this.getProperty("pages");
-      },
-
-      getAlign: function () {
-        return this.getProperty("align");
       },
 
       _setVisibleByRecords: function () {

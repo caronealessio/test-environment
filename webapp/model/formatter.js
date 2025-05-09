@@ -52,11 +52,11 @@ sap.ui.define([], function () {
           var bIsArray = Array.isArray(oItem[property]);
 
           if (bIsObject) {
-            oItem[property] = this.formateDateUTCRome(oItem[property]);
+            oItem[property] = this.convertVarInUTCRome(oItem[property]);
           }
 
           if (bIsArray) {
-            oItem[property] = this.formateDateUTCRome(oItem[property]);
+            oItem[property] = this.convertVarInUTCRome(oItem[property]);
           }
 
           if (oItem[property] instanceof Date) {
@@ -67,7 +67,7 @@ sap.ui.define([], function () {
 
       if (bIsArray && oItem.length > 0) {
         oItem.map((oRecord, index) => {
-          oItem[index] = this.formateDateUTCRome(oRecord);
+          oItem[index] = this.convertVarInUTCRome(oRecord);
         });
       }
 

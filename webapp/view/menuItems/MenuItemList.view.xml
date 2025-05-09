@@ -2,12 +2,13 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
   xmlns:f="sap.f"
-  xmlns:ui="sap.ui.table">
+  xmlns:ui="sap.ui.table"
+  xmlns:c="sap.ui.core">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>
         <f:heading>
-          <Title text="Menu" />
+          <Title text="{i18n>titleMenuManagement}" />
         </f:heading>
       </f:DynamicPageTitle>
     </f:title>
@@ -20,16 +21,16 @@
           <OverflowToolbar style="Clear">
             <ToolbarSpacer />
             <Button icon="sap-icon://add"
-              text="Crea"
+              text="{i18n>btnCreate}"
               press="onCreate"/>
             <Button id="editButton"
               icon="sap-icon://edit"
-              text="Modifica"
+              text="{i18n>btnEdit}"
               press="onEdit"
               enabled="false"/>
             <Button id="deleteButton"
               icon="sap-icon://delete"
-              text="Elimina"
+              text="{i18n>btnDelete}"
               press="onDelete"
               type="Attention"
               enabled="false"/>
@@ -37,39 +38,39 @@
         </ui:extension>
         <ui:columns>
           <ui:Column width="3rem">
-            <Label text="ID"/>
+            <Label text="{i18n>labelId}"/>
             <ui:template>
               <Text text="{MenuItems>id}"/>
             </ui:template>
           </ui:Column>
           <ui:Column>
-            <Label text="Testo"/>
+            <Label text="{i18n>labelDescription}"/>
             <ui:template>
-              <Text text="{MenuItems>title}"/>
+              <Text text="{MenuItems>description}"/>
             </ui:template>
           </ui:Column>
           <ui:Column>
-            <Label text="Route"/>
+            <Label text="{i18n>labelKey}"/>
             <ui:template>
-              <Text text="{MenuItems>router}"/>
+              <Text text="{MenuItems>key}"/>
             </ui:template>
           </ui:Column>
-          <ui:Column width="3rem">
+          <ui:Column width="4rem">
+            <Label text="{i18n>labelIcon}"/>
             <ui:template>
-              <Button icon="sap-icon://arrow-right"
-                type="Transparent" />
+              <c:Icon src="{MenuItems>icon}"/>
+            </ui:template>
+          </ui:Column>
+          <ui:Column width="4rem">
+            <Label text="{i18n>labelVisible}"/>
+            <ui:template>
+              <Switch state="{= ${MenuItems>isVisible} === 1 ? true : false}"
+                type="AcceptReject"
+                change="onVisibleChange"/>
             </ui:template>
           </ui:Column>
         </ui:columns>
       </ui:Table>
     </f:content>
-
-    <f:footer>
-      <OverflowToolbar >
-        <Button text="Indietro"
-          press="onNavBack"
-          type="Back"/>
-      </OverflowToolbar>
-    </f:footer>
   </f:DynamicPage>
 </mvc:View>

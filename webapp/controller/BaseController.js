@@ -64,6 +64,19 @@ sap.ui.define(
       },
 
       /**
+       * Imposta lo stato di "busy" (occupato) della vista.
+       * Quando il parametro `bBusy` è impostato su `true`, la vista viene considerata occupata
+       * e viene visualizzato un indicatore di caricamento (di solito un "busy indicator").
+       * Quando `bBusy` è impostato su `false`, l'indicatore di caricamento viene rimosso
+       * e la vista torna al suo stato normale.
+       *
+       * @param {boolean} bBusy - Stato di "busy". `true` per mostrare l'indicatore di caricamento, `false` per nasconderlo.
+       */
+      setBusy: function (bBusy) {
+        this.getView().setBusy(bBusy);
+      },
+
+      /**
        * Carica un frammento di vista (fragment) in modo asincrono e lo aggiunge come dipendente della vista corrente.
        * Se il frammento è già stato caricato, restituisce l'istanza già esistente per evitare il caricamento ripetuto.
        *
@@ -199,15 +212,23 @@ sap.ui.define(
           },
           body: JSON.stringify(oData),
         })
-          .then((response) => {
+          .then(async (response) => {
+            const responseClone = response.clone();
+
+            let data;
+            try {
+              data = await response.json();
+            } catch (error) {
+              const message = await responseClone.text();
+              throw new Error(`Errore nella modifica dei dati su ${sEndpoint}: ${message}`);
+            }
             if (!response.ok) {
-              throw new Error(`Errore nella modifica dei dati su ${sEndpoint}`);
+              throw new Error(`Errore nella modifica dei dati su ${sEndpoint}: ${data.error}`);
             }
 
-            return response.json();
+            return data;
           })
           .catch((error) => {
-            console.error("Errore nella richiesta PUT:", error);
             throw error;
           });
       },

@@ -5,8 +5,8 @@ exports.list = (req, res) => {
 
   db.query(query, (err, results) => {
     if (err) {
-      console.error("Errore durante la query:", err.stack);
-      return res.status(500).send("Errore del server");
+      console.error("Errore durante la query:", err.message);
+      return res.status(500).send(`Errore del server: ${err.message}`);
     }
 
     res.json(results);
@@ -20,8 +20,8 @@ exports.detail = (req, res) => {
 
   db.query(query, [id], (err, results) => {
     if (err) {
-      console.error("Errore durante la query:", err.stack);
-      return res.status(500).send("Errore del server");
+      console.error("Errore durante la query:", err.message);
+      return res.status(500).send(`Errore del server: ${err.message}`);
     }
 
     if (results.length === 0) {
@@ -33,16 +33,19 @@ exports.detail = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  const { title, router } = req.body;
+  const { description, key, icon, isVisible } = req.body;
 
-  db.query(`INSERT INTO menu_items (title, router) VALUES ('${title}', '${router}')`, (err, results) => {
-    if (err) {
-      console.error("Errore durante la query:", err.stack);
-      res.status(500).send("Errore del server");
-    } else {
-      res.json({ message: "Elemento aggiunto" });
+  db.query(
+    `INSERT INTO menu_items (description, key, icon, isVisible) VALUES ('${description}', '${key}', '${icon}', '${isVisible}')`,
+    (err, results) => {
+      if (err) {
+        console.error("Errore durante la query:", err.message);
+        return res.status(500).send(`Errore del server: ${err.message}`);
+      } else {
+        res.json({ message: "Elemento aggiunto" });
+      }
     }
-  });
+  );
 };
 
 exports.delete = (req, res) => {
@@ -56,8 +59,8 @@ exports.delete = (req, res) => {
 
   db.query(query, [ids], (err, results) => {
     if (err) {
-      console.error("Errore durante la query:", err.stack);
-      res.status(500).send("Errore del server");
+      console.error("Errore durante la query:", err.message);
+      return res.status(500).send(`Errore del server: ${err.message}`);
     } else {
       res.json({ message: `Eliminati ${results.affectedRows} elementi` });
     }
@@ -66,18 +69,18 @@ exports.delete = (req, res) => {
 
 exports.edit = (req, res) => {
   const { id } = req.params;
-  const { title, router } = req.body;
+  const { description, key, icon, isVisible } = req.body;
 
-  if (!title || !router) {
-    return res.status(400).json({ error: "Title e router sono obbligatori" });
+  if (!description || !key) {
+    return res.status(400).json({ error: "Descrizione e Chiave sono obbligatori" });
   }
 
-  const query = "UPDATE menu_items SET title = ?, router = ? WHERE id = ?";
+  const query = "UPDATE menu_items SET description = ?, key = ?, icon = ?, isVisible = ? WHERE id = ?";
 
-  db.query(query, [title, router, id], (err, results) => {
+  db.query(query, [description, key, icon, isVisible, id], (err, results) => {
     if (err) {
-      console.error("Errore durante la query:", err.stack);
-      return res.status(500).send("Errore del server");
+      console.error("Errore durante la query:", err.message);
+      return res.status(500).send(`Errore del server: ${err.message}`);
     }
 
     if (results.affectedRows === 0) {

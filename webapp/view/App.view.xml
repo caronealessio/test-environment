@@ -1,7 +1,40 @@
-<mvc:View controllerName="testenvironment.controller.App"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <App id="app">
-    </App>
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    xmlns="sap.m"
+    controllerName="testenvironment.controller.App"
+    displayBlock="true">
+    <tnt:ToolPage>
+        <tnt:header>
+            <tnt:ToolHeader>
+                <Button icon="sap-icon://menu2"
+                    press="onCollapseExpandPress" />
+                <Title text="{i18n>appTitle}"/>
+                <ToolbarSpacer/>
+                <!-- <Text text="{User>/FullName}"/> -->
+                <!-- <Button icon="sap-icon://bell-2"/> -->
+            </tnt:ToolHeader>
+        </tnt:header>
+
+
+        <tnt:sideContent>
+            <tnt:SideNavigation id="menu"
+                itemSelect="onMenuSelect">
+                <tnt:NavigationList id="menuList" />
+                <tnt:fixedItem>
+                    <tnt:NavigationList>
+                        <tnt:NavigationListItem key="profile"
+                            text="Profilo"
+                            icon="sap-icon://person-placeholder" />
+                    </tnt:NavigationList>
+                </tnt:fixedItem>
+            </tnt:SideNavigation>
+
+        </tnt:sideContent>
+
+        <tnt:mainContents>
+            <App id="app"/>
+        </tnt:mainContents>
+
+    </tnt:ToolPage>
+
 </mvc:View>

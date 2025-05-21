@@ -104,6 +104,33 @@
             </VBox>
           </l:Grid>
         </Panel>
+        <Panel>
+          <HBox wrap="Wrap">
+            <Text text="L'anno" />
+            <Input width="80px" />
+            <Text text="il giorno" />
+            <Input width="80px" />
+            <Text text="del mese di" />
+            <Input width="120px" />
+            <Text text="si è tenuta presso" />
+            <Input width="200px" />
+          </HBox>
+
+          <HBox wrap="Wrap"
+            class="sapUiSmallMarginTop">
+            <Text text="la riunione di coordinamento avente per oggetto" />
+            <Input width="200px" />
+            <Text text=", al fine di promuovere il coordinamento" />
+          </HBox>
+
+          <Text class="sapUiSmallMarginTop"
+            text="di cui all’Art. 92 del D.Lgs. 81/2008, nonché di assicurare l’applicazione delle disposizioni contenute nel piano di sicurezza e coordinamento e delle relative procedure di lavoro." />
+
+          <Text class="sapUiSmallMarginTop"
+            text="Sono presenti:" />
+          <TextArea width="100%"
+            rows="3" />
+        </Panel>
       </VBox>
     </f:content>
     <f:footer>

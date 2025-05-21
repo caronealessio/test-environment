@@ -1,4 +1,4 @@
-const db = require("../../db");
+const db = require("../db");
 
 exports.list = (req, res) => {
   const query = "SELECT * FROM menu_items";

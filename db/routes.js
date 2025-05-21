@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const menuItems = require("./routes/menu-items");
+const menuItems = require("./query/menu-items");
 
 router.get("/menu-items", menuItems.list);
 router.get("/menu-items/:id", menuItems.detail);

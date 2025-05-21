@@ -11,7 +11,7 @@ sap.ui.define(
   function (BaseController, JSONModel, MenuItem, tableUtils, MessageBox) {
     "use strict";
 
-    return BaseController.extend("testenvironment.controller.menuItems.MenuItemList", {
+    return BaseController.extend("testenvironment.controller.menu-items.MenuItemsList", {
       onInit: function () {
         this.getRouter().getRoute("menuItems").attachPatternMatched(this._onObjectMatched, this);
 

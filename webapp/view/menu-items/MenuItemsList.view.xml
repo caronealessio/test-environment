@@ -1,4 +1,4 @@
-<mvc:View controllerName="testenvironment.controller.menuItems.MenuItemList"
+<mvc:View controllerName="testenvironment.controller.menu-items.MenuItemsList"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
   xmlns:f="sap.f"

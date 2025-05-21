@@ -12,7 +12,7 @@
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:basic",
-      "version": "1.13.6",
+      "version": "1.17.0",
       "toolsId": "d3d7fd79-3885-4480-b2a6-dcc1c5a55cc3"
     }
   },
@@ -36,7 +36,7 @@
   "sap.ui5": {
     "flexEnabled": false,
     "dependencies": {
-      "minUI5Version": "1.125.1",
+      "minUI5Version": "1.135.0",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -70,15 +70,13 @@
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
-        "viewType": "XML",
-        "async": true,
-        "viewPath": "testenvironment.view",
         "controlAggregation": "pages",
         "controlId": "app",
-        "clearControlAggregation": false,
-        "bypassed": {
-          "target": "notFound"
-        }
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "testenvironment.view",
+        "async": true
       },
       "routes": [
         {
@@ -129,61 +127,43 @@
       ],
       "targets": {
         "home": {
-          "viewId": "home",
-          "viewName": "Home",
+          "id": "home",
+          "name": "Home",
           "viewLevel": 1
         },
         "menuItems": {
-          "viewId": "menuItems",
-          "viewName": "menuItems.MenuItemList",
+          "id": "menuItems",
+          "name": "menu-items.MenuItemsList",
           "viewLevel": 2
         },
         "menuItemForm": {
-          "viewId": "menuItemForm",
-          "viewName": "menuItems.MenuItemForm",
+          "id": "menuItemForm",
+          "name": "menu-items.MenuItem",
           "viewLevel": 3
         },
         "StandardTableManagement": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "StandardTableManagement",
-          "viewName": "functionality.StandardTableManagement.Dashboard"
+          "id": "StandardTableManagement",
+          "name": "functionality.StandardTableManagement.Dashboard"
         },
         "CustomTableManagement": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "CustomTableManagement",
-          "viewName": "functionality.CustomTableManagement.Dashboard"
+          "id": "CustomTableManagement",
+          "name": "functionality.CustomTableManagement.Dashboard"
         },
         "Export": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "functionality.Export",
-          "viewName": "functionality.Export"
+          "id": "functionality.Export",
+          "name": "functionality.Export"
         },
         "Form": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Form",
-          "viewName": "functionality.Form"
+          "id": "Form",
+          "name": "functionality.Form"
         },
         "Paginator": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Paginator",
-          "viewName": "functionality.Paginator"
+          "id": "Paginator",
+          "name": "functionality.Paginator"
         },
         "Matchcode": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Matchcode",
-          "viewName": "functionality.Matchcode"
+          "id": "Matchcode",
+          "name": "functionality.Matchcode"
         }
       }
     },

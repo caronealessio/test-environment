@@ -75,7 +75,7 @@ exports.edit = (req, res) => {
     return res.status(400).json({ error: "Descrizione e Chiave sono obbligatori" });
   }
 
-  const query = "UPDATE menu_items SET description = ?, key = ?, icon = ?, isVisible = ? WHERE id = ?";
+  const query = "UPDATE menu_items SET description = ?, `key` = ?, icon = ?, isVisible = ? WHERE id = ?";
 
   db.query(query, [description, key, icon, isVisible, id], (err, results) => {
     if (err) {

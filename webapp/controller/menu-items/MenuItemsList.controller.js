@@ -7,25 +7,33 @@ sap.ui.define(
     "testenvironment/class/MenuItem",
     "testenvironment/util/tableUtils",
     "sap/m/MessageBox",
+    "testenvironment/util/crudUtils",
   ],
-  function (BaseController, JSONModel, MenuItem, tableUtils, MessageBox) {
+  function (BaseController, JSONModel, MenuItem, tableUtils, MessageBox, crudUtils) {
     "use strict";
 
     return BaseController.extend("testenvironment.controller.menu-items.MenuItemsList", {
       onInit: function () {
         this.getRouter().getRoute("menuItems").attachPatternMatched(this._onObjectMatched, this);
 
-        this.setModel(new JSONModel({}), "MenuItems");
+        this.oModelMenuItems = this.setModel(new JSONModel([]), "MenuItems");
 
         this.oMenuItemsTable = this.byId("menuItemsTable");
-        this.oModelMenuItems = this.getModel("MenuItems");
       },
 
       _onObjectMatched: async function () {
-        /** @type {MenuItemTypes[]} */
-        this.aMenuItems = await this.read("menu-items");
+        this.setBusy(true);
 
-        this.oModelMenuItems.setData(this.aMenuItems);
+        try {
+          /** @type {MenuItemTypes[]} */
+          const oResults = await this.read("menu-items");
+
+          this.oModelMenuItems.setData(oResults);
+        } catch (error) {
+          MessageBox.error(error.message);
+        } finally {
+          this.setBusy(false);
+        }
       },
 
       onCreate: function () {
@@ -33,41 +41,61 @@ sap.ui.define(
       },
 
       onDelete: async function (oEvent) {
-        const aSelectedItems = tableUtils.getSelectedItems(this.oMenuItemsTable);
-        const aIds = aSelectedItems.map((x) => x.id);
-
-        await this.delete("menu-items", aIds);
-
-        this._onObjectMatched();
-      },
-
-      onEdit: async function (oEvent) {
-        const aSelectedItems = tableUtils.getSelectedItems(this.oMenuItemsTable);
-        const id = aSelectedItems[0].id;
-
-        this.navTo("menuItemForm", { id: id });
-      },
-
-      onSelectionChange: function (oEvent) {
-        const aSelectedIndices = this.oMenuItemsTable.getSelectedIndices();
-        const iSelectedCount = aSelectedIndices.length;
-
-        this.byId("editButton").setEnabled(iSelectedCount === 1);
-        this.byId("deleteButton").setEnabled(iSelectedCount > 0);
-      },
-
-      onVisibleChange: function (oEvent) {
-        const bState = oEvent.getParameter("state");
-        const oSwitch = oEvent.getSource();
-        const oContext = oSwitch.getBindingContext("MenuItems");
-        const oSelectedItem = oContext.getObject();
+        const oItem = oEvent.getSource().getParent().getBindingContext("MenuItems").getObject();
 
         this.setBusy(true);
 
         try {
-          this.edit("menu-items", oSelectedItem.id, { ...oSelectedItem, isVisible: bState ? 1 : 0 });
+          await this.delete("menu-items", [oItem.id]);
+          const oResults = await this.read("menu-items");
+
+          this.oModelMenuItems.setData(oResults);
+
+          sap.ui.getCore().getEventBus().publish("MenuChannel", "MenuUpdated");
         } catch (error) {
-          console.log("ciao");
+          MessageBox.error(error.message);
+        } finally {
+          this.setBusy(false);
+        }
+      },
+
+      onEdit: async function (oEvent) {
+        const oItem = oEvent.getSource().getParent().getBindingContext("MenuItems").getObject();
+
+        this.navTo("menuItemForm", { id: oItem.id });
+      },
+
+      onVisibleChange: async function (oEvent) {
+        const bState = oEvent.getParameter("state");
+        const oItem = oEvent.getSource().getParent().getBindingContext("MenuItems").getObject();
+
+        this.setBusy(true);
+
+        try {
+          await this.edit("menu-items", oItem.id, { ...oItem, isVisible: bState ? 1 : 0 });
+
+          sap.ui.getCore().getEventBus().publish("MenuChannel", "MenuUpdated");
+        } catch (error) {
+          MessageBox.error(error.message);
+        } finally {
+          this.setBusy(false);
+        }
+      },
+
+      onSearchFieldChange: async function (oEvent) {
+        let sValue = oEvent.getParameter("value");
+
+        const sQuery = crudUtils.buildQueryString({
+          search: sValue,
+        });
+
+        this.setBusy(true);
+
+        try {
+          const oResults = await this.read("menu-items", sQuery);
+
+          this.oModelMenuItems.setData(oResults);
+        } catch (error) {
           MessageBox.error(error.message);
         } finally {
           this.setBusy(false);

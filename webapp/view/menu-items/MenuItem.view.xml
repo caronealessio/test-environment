@@ -34,7 +34,9 @@
           </HBox>
           <HBox direction="Column">
             <Label text="{i18n>labelIcon}"/>
-            <Input value="{MenuItem>/icon}"/>
+            <Input value="{MenuItem>/icon}"
+              valueHelpRequest="onSelectIconOpen"
+              showValueHelp="true" />
             <layoutData>
               <l:GridData span="XL4 L6 M12 S12"
                 linebreak="true"/>

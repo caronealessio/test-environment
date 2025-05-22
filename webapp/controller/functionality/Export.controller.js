@@ -8,9 +8,7 @@ sap.ui.define(
         this.getRouter().navTo("home");
       },
 
-      onAfterRendering: function () {
-        console.log(this.getModel("users").getData());
-      },
+      onAfterRendering: function () {},
     });
   }
 );

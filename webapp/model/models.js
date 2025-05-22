@@ -25,7 +25,7 @@ sap.ui.define(["sap/ui/model/json/JSONModel", "sap/ui/Device"], function (JSONMo
           oResponse = await fetch(sUrlCurrentUser);
           oUser = await oResponse.json();
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
 
         return new JSONModel(oUser);

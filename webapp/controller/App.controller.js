@@ -1,12 +1,20 @@
 //@ts-check
 
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel", "sap/tnt/NavigationListItem"],
-  function (BaseController, JSONModel, NavigationListItem) {
+  [
+    "./BaseController",
+    "sap/ui/model/json/JSONModel",
+    "sap/tnt/NavigationListItem",
+    "sap/m/MessageBox",
+    "testenvironment/util/crudUtils",
+  ],
+  function (BaseController, JSONModel, NavigationListItem, MessageBox, crudUtils) {
     "use strict";
 
     return BaseController.extend("testenvironment.controller.App", {
       onInit: function () {
+        sap.ui.getCore().getEventBus().subscribe("MenuChannel", "MenuUpdated", this._loadMenuItems, this);
+
         this.oMenu = this.byId("menu");
         this.oMenuList = this.byId("menuList");
       },
@@ -19,13 +27,15 @@ sap.ui.define(
         this.setBusy(true);
 
         try {
-          const oMenuResults = await this.read("menu-items");
+          const sQuery = crudUtils.buildQueryString({
+            isVisible: 1,
+          });
+
+          const oMenuResults = await this.read("menu-items", sQuery);
 
           this.oMenuList.removeAllItems();
 
           let itemsMap = {};
-
-          console.log("MenuResults", oMenuResults);
 
           oMenuResults.forEach((item) => {
             const oMenuItem = new NavigationListItem({
@@ -39,7 +49,7 @@ sap.ui.define(
             this.oMenuList.addItem(oMenuItem);
           });
         } catch (error) {
-          console.error(error);
+          MessageBox.error(error.message);
         } finally {
           this.setBusy(false);
         }

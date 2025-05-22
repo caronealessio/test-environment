@@ -37,8 +37,6 @@ sap.ui.define(
         var oModel = new JSONModel();
         await oModel.loadData("http://localhost:3000/users/");
 
-        console.log(oModel.getData());
-
         oModel.getData().map((item) => {
           item.birthday = moment(item.birthday).add(2, "hours")._d;
           item.birthtime = {

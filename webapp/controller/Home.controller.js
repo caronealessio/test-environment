@@ -44,8 +44,6 @@ sap.ui.define(
         var newTheme = currentTheme === "sap_fiori_3" ? "sap_fiori_3_dark" : "sap_fiori_3";
 
         sap.ui.getCore().applyTheme(newTheme);
-
-        console.log(currentTheme);
       },
 
       onConfigMenuItem: function () {

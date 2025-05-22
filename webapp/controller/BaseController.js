@@ -13,15 +13,6 @@ sap.ui.define(
     return Controller.extend("testenvironment.controller.BaseController", {
       formatter: formatter,
       /**
-       * Get the router instance for the current component.
-       *
-       * @returns {sap.ui.core.routing.Router} The router instance associated with this component.
-       */
-      getRouter: function () {
-        return sap.ui.core.UIComponent.getRouterFor(this);
-      },
-
-      /**
        * Get the model for the view. Optionally specify the model name.
        *
        * @param {string} [sName] The name of the model. If not provided, the default model is returned.
@@ -39,16 +30,39 @@ sap.ui.define(
        * @returns {void}
        */
       setModel: function (oModel, sName) {
-        return this.getView().setModel(oModel, sName);
+        this.getView().setModel(oModel, sName);
+        return this.getModel(sName);
       },
 
       /**
-       * Get the resource bundle for internationalization (i18n).
+       * Get a global model from the core. Optionally specify the model name.
        *
-       * @returns {sap.ui.model.resource.ResourceModel} The resource model for the i18n.
+       * @param {string} [sName] The name of the model. If not provided, the default global model is returned.
+       * @returns {sap.ui.model.Model} The global model instance from the core.
        */
-      getResourceBundle: function () {
-        return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+      getGlobalModel: function (sName) {
+        return sap.ui.getCore().getModel(sName);
+      },
+
+      /**
+       * Set a global model on the core. Optionally specify a model name.
+       *
+       * @param {sap.ui.model.Model} oModel The model to be set globally on the core.
+       * @param {string} [sName] The name of the model. If not provided, the model is set as the default global model.
+       * @returns {sap.ui.model.Model} The global model instance that was set on the core.
+       */
+      setGlobalModel: function (oModel, sName) {
+        sap.ui.getCore().setModel(oModel, sName);
+        return sap.ui.getCore().getModel(sName);
+      },
+
+      /**
+       * Get the router instance for the current component.
+       *
+       * @returns {sap.ui.core.routing.Router} The router instance associated with this component.
+       */
+      getRouter: function () {
+        return sap.ui.core.UIComponent.getRouterFor(this);
       },
 
       /**
@@ -77,6 +91,18 @@ sap.ui.define(
       },
 
       /**
+       * Restituisce una stringa localizzata dal modello di risorse i18n del componente.
+       * Utilizza il modello "i18n" definito nel componente per accedere al bundle delle traduzioni,
+       * permettendo di ottenere facilmente testi localizzati in base alla chiave fornita.
+       *
+       * @param {string} sKey - La chiave della stringa localizzata da recuperare (definita nei file i18n.properties).
+       * @returns {string} La stringa tradotta corrispondente alla chiave specificata.
+       */
+      getText: function (sKey) {
+        return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sKey);
+      },
+
+      /**
        * Carica un frammento di vista (fragment) in modo asincrono e lo aggiunge come dipendente della vista corrente.
        * Se il frammento è già stato caricato, restituisce l'istanza già esistente per evitare il caricamento ripetuto.
        *
@@ -95,8 +121,8 @@ sap.ui.define(
         }
 
         // Carica il frammento in modo asincrono
-        return Fragment.load({
-          id: sId,
+        return sap.ui.core.Fragment.load({
+          id: oView.getId(),
           name: sFragmentName,
           controller: this,
         }).then(
@@ -120,24 +146,19 @@ sap.ui.define(
        * @param {string|number} [id] Un ID opzionale per filtrare i dati (es. per leggere un singolo elemento).
        * @returns {Promise<Object>} Una promessa che restituisce i dati letti dall'endpoint come oggetto JSON.
        */
-      read: async function (sEndpoint, sId) {
+      read: async function (sEndpoint, sId, sParams = "") {
         try {
-          let url = `http://localhost:3000/${sEndpoint}`;
+          let sKey = sId ? `/${sId}` : "";
 
-          if (sId) {
-            url += `/${sId}`;
-          }
-
-          const response = await fetch(url);
+          const response = await fetch(`http://localhost:3000/${sEndpoint}${sKey}${sParams}`);
 
           if (!response.ok) {
-            throw new Error(`Errore nel caricamento dei dati da ${sEndpoint}`);
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
           }
 
-          const data = await response.json();
-          return data;
+          return await response.json();
         } catch (error) {
-          console.error("Errore nella richiesta GET:", error);
           throw error;
         }
       },
@@ -149,24 +170,24 @@ sap.ui.define(
        * @param {Object} oData I dati da inviare nel corpo della richiesta (oggetto JSON).
        * @returns {Promise<Object>} Una promessa che restituisce la risposta del server, se presente, come oggetto JSON.
        */
-      create: function (sEndpoint, oData) {
-        return fetch(`http://localhost:3000/${sEndpoint}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(oData),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Errore nella creazione dei dati su ${sEndpoint}`);
-            }
-            return response.json();
-          })
-          .catch((error) => {
-            console.error("Errore nella richiesta POST:", error);
-            throw error;
+      create: async function (sEndpoint, oData) {
+        try {
+          const response = await fetch(`http://localhost:3000/${sEndpoint}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(oData),
           });
+
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+          }
+          return await response.json();
+        } catch (error) {
+          throw error;
+        }
       },
 
       /**
@@ -176,24 +197,24 @@ sap.ui.define(
        * @param {Array<number>} aIds Array di ID degli elementi da eliminare.
        * @returns {Promise<Object>} Una promessa che restituisce la risposta del server come oggetto JSON.
        */
-      delete: function (sEndpoint, aIds) {
-        return fetch(`http://localhost:3000/${sEndpoint}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ids: aIds }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Errore nell'eliminazione degli elementi");
-            }
-            return response.json();
-          })
-          .catch((error) => {
-            console.error("Errore nella richiesta DELETE multipla:", error);
-            throw error;
+      delete: async function (sEndpoint, aIds) {
+        try {
+          const response = await fetch(`http://localhost:3000/${sEndpoint}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ids: aIds }),
           });
+
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+          }
+          return await response.json();
+        } catch (error) {
+          throw error;
+        }
       },
 
       /**
@@ -204,33 +225,24 @@ sap.ui.define(
        * @param {Object} oData - I nuovi dati da aggiornare per l'elemento.
        * @returns {Promise<Object>} - Una promessa che restituisce l'oggetto aggiornato come JSON.
        */
-      edit: function (sEndpoint, sId, oData) {
-        return fetch(`http://localhost:3000/${sEndpoint}/${sId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(oData),
-        })
-          .then(async (response) => {
-            const responseClone = response.clone();
-
-            let data;
-            try {
-              data = await response.json();
-            } catch (error) {
-              const message = await responseClone.text();
-              throw new Error(`Errore nella modifica dei dati su ${sEndpoint}: ${message}`);
-            }
-            if (!response.ok) {
-              throw new Error(`Errore nella modifica dei dati su ${sEndpoint}: ${data.error}`);
-            }
-
-            return data;
-          })
-          .catch((error) => {
-            throw error;
+      edit: async function (sEndpoint, sId, oData) {
+        try {
+          const response = await fetch(`http://localhost:3000/${sEndpoint}/${sId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(oData),
           });
+
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+          }
+          return await response.json();
+        } catch (error) {
+          throw error;
+        }
       },
     });
   }

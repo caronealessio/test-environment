@@ -143,8 +143,6 @@ sap.ui.define(
           return aResult;
         }, []);
 
-        console.log(aFilters);
-
         //Recupero le colonne e creo i filtri per il SearchField
         this.getTable()
           .getColumns()

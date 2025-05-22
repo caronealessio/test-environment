@@ -3,7 +3,9 @@
   xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:ui="sap.ui.table"
-  xmlns:c="sap.ui.core">
+  xmlns:c="sap.ui.core"
+  xmlns:rowmodes="sap.ui.table.rowmodes"
+  xmlns:l="sap.ui.layout">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>
@@ -14,63 +16,84 @@
     </f:title>
 
     <f:content>
-      <ui:Table id="menuItemsTable"
-        rows="{MenuItems>/}"
-        rowSelectionChange="onSelectionChange">
-        <ui:extension>
-          <OverflowToolbar style="Clear">
-            <ToolbarSpacer />
-            <Button icon="sap-icon://add"
-              text="{i18n>btnCreate}"
-              press="onCreate"/>
-            <Button id="editButton"
-              icon="sap-icon://edit"
-              text="{i18n>btnEdit}"
-              press="onEdit"
-              enabled="false"/>
-            <Button id="deleteButton"
-              icon="sap-icon://delete"
-              text="{i18n>btnDelete}"
-              press="onDelete"
-              type="Attention"
-              enabled="false"/>
-          </OverflowToolbar>
-        </ui:extension>
-        <ui:columns>
-          <ui:Column width="3rem">
-            <Label text="{i18n>labelId}"/>
-            <ui:template>
-              <Text text="{MenuItems>id}"/>
-            </ui:template>
-          </ui:Column>
-          <ui:Column>
-            <Label text="{i18n>labelDescription}"/>
-            <ui:template>
-              <Text text="{MenuItems>description}"/>
-            </ui:template>
-          </ui:Column>
-          <ui:Column>
-            <Label text="{i18n>labelKey}"/>
-            <ui:template>
-              <Text text="{MenuItems>key}"/>
-            </ui:template>
-          </ui:Column>
-          <ui:Column width="4rem">
-            <Label text="{i18n>labelIcon}"/>
-            <ui:template>
-              <c:Icon src="{MenuItems>icon}"/>
-            </ui:template>
-          </ui:Column>
-          <ui:Column width="4rem">
-            <Label text="{i18n>labelVisible}"/>
-            <ui:template>
-              <Switch state="{= ${MenuItems>isVisible} === 1 ? true : false}"
-                type="AcceptReject"
-                change="onVisibleChange"/>
-            </ui:template>
-          </ui:Column>
-        </ui:columns>
-      </ui:Table>
+      <Panel>
+        <l:Grid>
+          <SearchField change="onSearchFieldChange">
+            <layoutData>
+              <l:GridData span="XL4 L5 M6 S12"/>
+            </layoutData>
+          </SearchField>
+        </l:Grid>
+        <ui:Table id="menuItemsTable"
+          rows="{MenuItems>/}"
+          selectionMode="None">
+          <ui:rowMode>
+            <rowmodes:Fixed rowCount="20"/>
+          </ui:rowMode>
+          <ui:extension>
+            <OverflowToolbar style="Clear">
+              <ToolbarSpacer />
+              <Button icon="sap-icon://add"
+                text="{i18n>btnCreate}"
+                press="onCreate"/>
+            </OverflowToolbar>
+          </ui:extension>
+          <ui:columns>
+            <ui:Column width="3rem">
+              <Label text="{i18n>labelId}"/>
+              <ui:template>
+                <Text text="{MenuItems>id}"/>
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
+              <Label text="{i18n>labelDescription}"/>
+              <ui:template>
+                <Text text="{MenuItems>description}"/>
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
+              <Label text="{i18n>labelKey}"/>
+              <ui:template>
+                <Text text="{MenuItems>key}"/>
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="4rem"
+              hAlign="Center">
+              <Label text="{i18n>labelIcon}"/>
+              <ui:template>
+                <c:Icon src="{MenuItems>icon}"/>
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="5rem"
+              hAlign="Center">
+              <Label text="{i18n>labelVisible}"/>
+              <ui:template>
+                <Switch state="{= ${MenuItems>isVisible} === 1 ? true : false}"
+                  type="AcceptReject"
+                  change="onVisibleChange"/>
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="3.5rem"
+              hAlign="Center">
+              <Label  />
+              <ui:template>
+                <Button icon="sap-icon://edit"
+                  press="onEdit"
+                  type="Transparent" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="3.5rem"
+              hAlign="Center">
+              <Label  />
+              <ui:template>
+                <Button icon="sap-icon://delete"
+                  press="onDelete"
+                  type="Transparent" />
+              </ui:template>
+            </ui:Column>
+          </ui:columns>
+        </ui:Table>
+      </Panel>
     </f:content>
   </f:DynamicPage>
 </mvc:View>

@@ -274,9 +274,7 @@ sap.ui.define(
         this._oMC.open();
       },
 
-      onTest: function (oEvent) {
-        console.log(this.getModel("Person").getData());
-      },
+      onTest: function (oEvent) {},
 
       onMatchcodeV2: async function (oEvent) {
         var aData = this.getModel("Users").getData();

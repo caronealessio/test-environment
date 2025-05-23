@@ -33,21 +33,14 @@ sap.ui.define(
         // set the device model
         this.setModel(models.createDeviceModel(), "device");
 
-        // // Creazione di un modello JSON dal servizio
-        var oModel = new JSONModel();
-        await oModel.loadData("http://localhost:3000/users/");
+        try {
+          var oModel = new JSONModel();
+          await oModel.loadData("http://localhost:3000/users/");
 
-        oModel.getData().map((item) => {
-          item.birthday = moment(item.birthday).add(2, "hours")._d;
-          item.birthtime = {
-            ms: moment.duration(item.birthtime).asMilliseconds(),
-            __edmType: "Edm.Time",
-          };
-          item.created = moment(item.created).add(2, "hours")._d;
-          item.isMale = item.isMale === 1;
-        });
-
-        this.setModel(new JSONModel({ data: oModel.getData() }), "users");
+          this.setModel(new JSONModel({ data: oModel.getData() }), "users");
+        } catch (error) {
+          MessageBox.error(error.message);
+        }
       },
     });
   }

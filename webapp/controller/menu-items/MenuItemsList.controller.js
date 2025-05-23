@@ -14,7 +14,7 @@ sap.ui.define(
 
     return BaseController.extend("testenvironment.controller.menu-items.MenuItemsList", {
       onInit: function () {
-        this.getRouter().getRoute("menuItems").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("menuItemsList").attachPatternMatched(this._onObjectMatched, this);
 
         this.oModelMenuItems = this.setModel(new JSONModel([]), "MenuItems");
 
@@ -37,7 +37,7 @@ sap.ui.define(
       },
 
       onCreate: function () {
-        this.navTo("menuItemForm", { id: "create" });
+        this.navTo("menuItem", { id: "create" });
       },
 
       onDelete: async function (oEvent) {
@@ -62,7 +62,7 @@ sap.ui.define(
       onEdit: async function (oEvent) {
         const oItem = oEvent.getSource().getParent().getBindingContext("MenuItems").getObject();
 
-        this.navTo("menuItemForm", { id: oItem.id });
+        this.navTo("menuItem", { id: oItem.id });
       },
 
       onVisibleChange: async function (oEvent) {

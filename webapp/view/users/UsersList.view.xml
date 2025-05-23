@@ -1,0 +1,24 @@
+<mvc:View controllerName="testenvironment.controller.users.UsersList"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:t="sap.ui.table"
+  xmlns:c="sap.ui.core"
+  xmlns:rowmodes="sap.ui.table.rowmodes"
+  xmlns:l="sap.ui.layout"
+  xmlns:my="testenvironment.controls">
+  <f:DynamicPage>
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>titleUsers}" />
+        </f:heading>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:content>
+      <Panel>
+        <VBox id="tableUserContainer"/>
+      </Panel>
+    </f:content>
+  </f:DynamicPage>
+</mvc:View>

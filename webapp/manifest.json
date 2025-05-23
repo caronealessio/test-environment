@@ -85,14 +85,24 @@
           "target": ["home"]
         },
         {
-          "name": "menuItems",
+          "name": "menuItemsList",
           "pattern": "menu-items",
-          "target": ["menuItems"]
+          "target": ["menuItemsList"]
         },
         {
-          "name": "menuItemForm",
+          "name": "menuItem",
           "pattern": "menu-items/{id}",
-          "target": ["menuItemForm"]
+          "target": ["menuItem"]
+        },
+        {
+          "name": "usersList",
+          "pattern": "users",
+          "target": ["usersList"]
+        },
+        {
+          "name": "user",
+          "pattern": "users/{id}",
+          "target": ["user"]
         },
         {
           "name": "StandardTableManagement",
@@ -131,16 +141,27 @@
           "name": "Home",
           "viewLevel": 1
         },
-        "menuItems": {
-          "id": "menuItems",
+        "menuItemsList": {
+          "id": "menuItemsList",
           "name": "menu-items.MenuItemsList",
           "viewLevel": 2
         },
-        "menuItemForm": {
-          "id": "menuItemForm",
+        "menuItem": {
+          "id": "menuItem",
           "name": "menu-items.MenuItem",
           "viewLevel": 3
         },
+        "usersList": {
+          "id": "users",
+          "name": "users.UsersList",
+          "viewLevel": 2
+        },
+        "user": {
+          "id": "users",
+          "name": "users.User",
+          "viewLevel": 3
+        },
+
         "StandardTableManagement": {
           "id": "StandardTableManagement",
           "name": "functionality.StandardTableManagement.Dashboard"

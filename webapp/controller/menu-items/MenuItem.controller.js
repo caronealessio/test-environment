@@ -7,7 +7,7 @@ sap.ui.define(
 
     return BaseController.extend("testenvironment.controller.menu-items.MenuItem", {
       onInit: function () {
-        this.getRouter().getRoute("menuItemForm").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("menuItem").attachPatternMatched(this._onObjectMatched, this);
 
         const aIcons = IconPool.getIconNames().map((icon) => {
           return `sap-icon://${icon}`;
@@ -55,7 +55,7 @@ sap.ui.define(
             actions: [sap.m.MessageBox.Action.OK],
             onClose: () => {
               sap.ui.getCore().getEventBus().publish("MenuChannel", "MenuUpdated");
-              this.navTo("menuItems");
+              this.navTo("menuItemsList");
             },
           });
         } catch (error) {
@@ -80,7 +80,7 @@ sap.ui.define(
             },
             search: function (oEvent) {
               const sValue = oEvent.getParameter("value");
-              const oFilter = new sap.ui.model.Filter("", new sap.ui.model.FilterOperator.Contains(), sValue);
+              const oFilter = new sap.ui.model.Filter("", sap.ui.model.FilterOperator.Contains, sValue);
               oEvent.getSource().getBinding("items").filter([oFilter]);
             },
             confirm: function (oEvent) {
@@ -101,7 +101,7 @@ sap.ui.define(
       },
 
       onNavBack: function () {
-        this.navTo("menuItems");
+        this.navTo("menuItemsList");
       },
     });
   }

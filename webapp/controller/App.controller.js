@@ -31,7 +31,7 @@ sap.ui.define(
             isVisible: 1,
           });
 
-          const oMenuResults = await this.read("menu-items", sQuery);
+          const oMenuResults = await this.read("menu", sQuery);
 
           this.oMenuList.removeAllItems();
 

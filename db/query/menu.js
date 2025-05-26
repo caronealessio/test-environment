@@ -4,7 +4,7 @@ exports.list = (req, res) => {
   const params = [];
   const { search, isVisible } = req.query;
 
-  let query = "SELECT * FROM menu_items WHERE 1=1";
+  let query = "SELECT * FROM menu WHERE 1=1";
 
   if (search) {
     query += " AND (description LIKE ? OR `key` LIKE ?)";
@@ -30,7 +30,7 @@ exports.list = (req, res) => {
 exports.detail = (req, res) => {
   const { id } = req.params;
 
-  const query = "SELECT * FROM menu_items WHERE id = ?";
+  const query = "SELECT * FROM menu WHERE id = ?";
 
   db.query(query, [id], (err, results) => {
     if (err) {
@@ -55,7 +55,7 @@ exports.create = (req, res) => {
     return res.status(400).send("I campi 'Descrizione' e 'Chiave' sono obbligatori");
   }
 
-  const query = "INSERT INTO menu_items (description, `key`, icon, isVisible) VALUES (?, ?, ?, 1)";
+  const query = "INSERT INTO menu (description, `key`, icon, isVisible) VALUES (?, ?, ?, 1)";
 
   const params = [description, key, icon];
 
@@ -76,7 +76,7 @@ exports.delete = (req, res) => {
     return res.status(400).send("Devi fornire un array di ID valido");
   }
 
-  const query = `DELETE FROM menu_items WHERE id IN (?)`;
+  const query = `DELETE FROM menu WHERE id IN (?)`;
 
   db.query(query, [ids], (err, results) => {
     if (err) {
@@ -100,7 +100,7 @@ exports.edit = (req, res) => {
     return res.status(400).send("I campi 'Descrizione' e 'Chiave' sono obbligatori");
   }
 
-  const query = "UPDATE menu_items SET description = ?, `key` = ?, icon = ?, isVisible = ? WHERE id = ?";
+  const query = "UPDATE menu SET description = ?, `key` = ?, icon = ?, isVisible = ? WHERE id = ?";
 
   db.query(query, [description, key, icon, isVisible, id], (err, results) => {
     if (err) {

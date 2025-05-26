@@ -85,14 +85,14 @@
           "target": ["home"]
         },
         {
-          "name": "menuItemsList",
-          "pattern": "menu-items",
-          "target": ["menuItemsList"]
+          "name": "menuList",
+          "pattern": "menu",
+          "target": ["menuList"]
         },
         {
-          "name": "menuItem",
-          "pattern": "menu-items/{id}",
-          "target": ["menuItem"]
+          "name": "menu",
+          "pattern": "menu/{id}",
+          "target": ["menu"]
         },
         {
           "name": "usersList",
@@ -141,14 +141,14 @@
           "name": "Home",
           "viewLevel": 1
         },
-        "menuItemsList": {
-          "id": "menuItemsList",
-          "name": "menu-items.MenuItemsList",
+        "menuList": {
+          "id": "menuList",
+          "name": "menu.MenuList",
           "viewLevel": 2
         },
-        "menuItem": {
-          "id": "menuItem",
-          "name": "menu-items.MenuItem",
+        "menu": {
+          "id": "menu",
+          "name": "menu.Menu",
           "viewLevel": 3
         },
         "usersList": {

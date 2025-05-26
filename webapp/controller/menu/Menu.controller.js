@@ -5,9 +5,9 @@ sap.ui.define(
   function (BaseController, JSONModel, MessageBox, IconPool) {
     "use strict";
 
-    return BaseController.extend("testenvironment.controller.menu-items.MenuItem", {
+    return BaseController.extend("testenvironment.controller.menu.Menu", {
       onInit: function () {
-        this.getRouter().getRoute("menuItem").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("menu").attachPatternMatched(this._onObjectMatched, this);
 
         const aIcons = IconPool.getIconNames().map((icon) => {
           return `sap-icon://${icon}`;
@@ -27,7 +27,7 @@ sap.ui.define(
           let oMenuItem = {};
 
           if (this.sId !== "create") {
-            oMenuItem = await this.read("menu-items", this.sId);
+            oMenuItem = await this.read("menu", this.sId);
           }
 
           this.oModelMenuItem.setData(oMenuItem);
@@ -46,9 +46,9 @@ sap.ui.define(
 
         try {
           if (this.sId === "create") {
-            await this.create("menu-items", oMenuItem);
+            await this.create("menu", oMenuItem);
           } else {
-            await this.edit("menu-items", this.sId, oMenuItem);
+            await this.edit("menu", this.sId, oMenuItem);
           }
 
           MessageBox.success(this.getText("msgSuccessSavedMenuItem"), {

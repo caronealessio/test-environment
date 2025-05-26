@@ -22,14 +22,15 @@ sap.ui.define(
 
         this._sModel = this.getBindingInfo("rows").model;
 
-        this.setRowMode(
-          new FixedRowMode({
-            rowCount: this.getRowCount(),
-          })
-        );
-
         if (!this._columnsCreated) {
           this._createColumns();
+
+          this.setRowMode(
+            new FixedRowMode({
+              rowCount: this.getRowCount(),
+            })
+          );
+
           this._columnsCreated = true;
         }
       },

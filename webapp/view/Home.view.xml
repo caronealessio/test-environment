@@ -1,5 +1,22 @@
 <mvc:View controllerName="testenvironment.controller.Home"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
-	xmlns:c="sap.ui.core">
+	xmlns:f="sap.f">
+	<f:DynamicPage showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>titleHome}" />
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<Panel>
+
+				<VBox id="boxCaptcha"/>
+				<Button text="{i18n>btnTokenCaptcha}"
+					press="onTokenCaptcha"/>
+			</Panel>
+		</f:content>
+	</f:DynamicPage>
 </mvc:View>

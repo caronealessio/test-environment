@@ -12,9 +12,9 @@ sap.ui.define(
   function (BaseController, JSONModel, MenuItem, tableUtils, MessageBox, crudUtils) {
     "use strict";
 
-    return BaseController.extend("testenvironment.controller.menu-items.MenuItemsList", {
+    return BaseController.extend("testenvironment.controller.menu.MenuList", {
       onInit: function () {
-        this.getRouter().getRoute("menuItemsList").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("menuList").attachPatternMatched(this._onObjectMatched, this);
 
         this.oModelMenuItems = this.setModel(new JSONModel([]), "MenuItems");
 
@@ -26,7 +26,7 @@ sap.ui.define(
 
         try {
           /** @type {MenuItemTypes[]} */
-          const oResults = await this.read("menu-items");
+          const oResults = await this.read("menu");
 
           this.oModelMenuItems.setData(oResults);
         } catch (error) {
@@ -46,8 +46,8 @@ sap.ui.define(
         this.setBusy(true);
 
         try {
-          await this.delete("menu-items", [oItem.id]);
-          const oResults = await this.read("menu-items");
+          await this.delete("menu", [oItem.id]);
+          const oResults = await this.read("menu");
 
           this.oModelMenuItems.setData(oResults);
 
@@ -72,7 +72,7 @@ sap.ui.define(
         this.setBusy(true);
 
         try {
-          await this.edit("menu-items", oItem.id, { ...oItem, isVisible: bState ? 1 : 0 });
+          await this.edit("menu", oItem.id, { ...oItem, isVisible: bState ? 1 : 0 });
 
           sap.ui.getCore().getEventBus().publish("MenuChannel", "MenuUpdated");
         } catch (error) {
@@ -92,7 +92,7 @@ sap.ui.define(
         this.setBusy(true);
 
         try {
-          const oResults = await this.read("menu-items", sQuery);
+          const oResults = await this.read("menu", sQuery);
 
           this.oModelMenuItems.setData(oResults);
         } catch (error) {

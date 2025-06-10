@@ -143,14 +143,28 @@ sap.ui.define(
        * Effettua una richiesta GET per leggere i dati da un endpoint specificato usando fetch.
        *
        * @param {string} sEndpoint L'endpoint da cui leggere i dati (es. "users", "products").
-       * @param {string|number} [id] Un ID opzionale per filtrare i dati (es. per leggere un singolo elemento).
+       * @param {Object} [params] Oggetto con top, skip, order e filters (es. { key, top, skip, order, filters: { search, isVisible } }).
        * @returns {Promise<Object>} Una promessa che restituisce i dati letti dall'endpoint come oggetto JSON.
        */
-      read: async function (sEndpoint, sId, sParams = "") {
+      read: async function (sEndpoint, params = {}) {
         try {
-          let sKey = sId ? `/${sId}` : "";
+          let sKey = params?.key ? `/${params.key}` : "";
 
-          const response = await fetch(`http://localhost:3000/${sEndpoint}${sKey}${sParams}`);
+          // Decomponi top, skip, order e filters
+          const { top, skip, order, filters = {} } = params;
+
+          // Costruisci query params
+          const queryObject = {
+            ...filters, // es. search, isVisible, ecc.
+            ...(top !== undefined && { top }),
+            ...(skip !== undefined && { skip }),
+            ...(order && { order }),
+          };
+
+          const queryString = new URLSearchParams(queryObject).toString();
+          const query = queryString ? `?${queryString}` : "";
+
+          const response = await fetch(`http://localhost:3000/${sEndpoint}${sKey}${query}`);
 
           if (!response.ok) {
             const errorMessage = await response.text();

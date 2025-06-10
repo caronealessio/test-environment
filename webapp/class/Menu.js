@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @typedef {Object} MenuItemTypes
+ * @typedef {Object} MenuTypes
  * @property {number} id - ID univoco dell'elemento del menu
  * @property {string} title - Titolo visualizzato nell'interfaccia
  * @property {string} router - Route di navigazione UI5
@@ -12,10 +12,10 @@ sap.ui.define([], function () {
   "use strict";
 
   /**
-   * @class MenuItem
+   * @class Menu
    * @description Classe che rappresenta un elemento del menu
    */
-  return class MenuItem {
+  return class Menu {
     /**
      * @constructor
      * @param {string} title

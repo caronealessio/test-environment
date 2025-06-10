@@ -1,4 +1,4 @@
-<mvc:View controllerName="testenvironment.controller.menu.MenuItemsList"
+<mvc:View controllerName="testenvironment.controller.menu.MenuList"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
   xmlns:f="sap.f"
@@ -26,11 +26,11 @@
               </layoutData>
             </SearchField>
           </l:Grid>
-          <ui:Table id="menuItemsTable"
-            rows="{MenuItems>/}"
+          <ui:Table id="menuTable"
+            rows="{Menu>/data}"
             selectionMode="None">
             <ui:rowMode>
-              <rowmodes:Fixed rowCount="20"/>
+              <rowmodes:Fixed rowCount="10"/>
             </ui:rowMode>
             <ui:extension>
               <OverflowToolbar style="Clear">
@@ -44,33 +44,33 @@
               <ui:Column width="3rem">
                 <Label text="{i18n>labelId}"/>
                 <ui:template>
-                  <Text text="{MenuItems>id}"/>
+                  <Text text="{Menu>id}"/>
                 </ui:template>
               </ui:Column>
               <ui:Column>
                 <Label text="{i18n>labelDescription}"/>
                 <ui:template>
-                  <Text text="{MenuItems>description}"/>
+                  <Text text="{Menu>description}"/>
                 </ui:template>
               </ui:Column>
               <ui:Column>
-                <Label text="{i18n>labelKey}"/>
+                <Label text="{i18n>labelTarget}"/>
                 <ui:template>
-                  <Text text="{MenuItems>key}"/>
+                  <Text text="{Menu>target}"/>
                 </ui:template>
               </ui:Column>
               <ui:Column width="4rem"
                 hAlign="Center">
                 <Label text="{i18n>labelIcon}"/>
                 <ui:template>
-                  <c:Icon src="{MenuItems>icon}"/>
+                  <c:Icon src="{Menu>icon}"/>
                 </ui:template>
               </ui:Column>
               <ui:Column width="5rem"
                 hAlign="Center">
                 <Label text="{i18n>labelVisible}"/>
                 <ui:template>
-                  <Switch state="{= ${MenuItems>isVisible} === 1 ? true : false}"
+                  <Switch state="{= ${Menu>isVisible} === 1 ? true : false}"
                     type="AcceptReject"
                     change="onVisibleChange"/>
                 </ui:template>
@@ -97,23 +97,18 @@
           </ui:Table>
         </Panel>
         <Panel class="sapUiTinyMarginTop">
-          <OverflowToolbar style="Clear">
-            <Title text="Menù" />
-          </OverflowToolbar>
           <ScrollContainer height="40vh"
             vertical="true">
             <Tree id="menuTree"
-              items="{MenuItems>/}"
-              selectionChange="onFeaturePress"
-              mode="SingleSelectMaster">
+              items="{MenuTree>/}">
               <dragDropConfig>
                 <dnd:DragDropInfo sourceAggregation="items"
                   targetAggregation="items"
                   drop="onDrop"
-                  dropPosition="OnOrBetween" />
+                  dropPosition="Between" />
               </dragDropConfig>
-              <StandardTreeItem title="{MenuItems>description}"
-                icon="{MenuItems>icon}"/>
+              <StandardTreeItem title="{MenuTree>description}"
+                icon="{MenuTree>icon}"/>
             </Tree>
           </ScrollContainer>
         </Panel>

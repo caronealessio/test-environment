@@ -13,40 +13,41 @@ sap.ui.define(
 
     return BaseController.extend("testenvironment.controller.App", {
       onInit: function () {
-        sap.ui.getCore().getEventBus().subscribe("MenuChannel", "MenuUpdated", this._loadMenuItems, this);
+        sap.ui.getCore().getEventBus().subscribe("MenuChannel", "MenuUpdated", this._loadMenu, this);
 
         this.oMenu = this.byId("menu");
         this.oMenuList = this.byId("menuList");
       },
 
       onAfterRendering: function () {
-        this._loadMenuItems();
+        this._loadMenu();
       },
 
-      async _loadMenuItems() {
+      async _loadMenu() {
         this.setBusy(true);
 
         try {
-          const sQuery = crudUtils.buildQueryString({
-            isVisible: 1,
+          const oMenuResults = await this.read("menu", {
+            filters: {
+              isVisible: 1,
+            },
+            order: "pos:asc",
           });
-
-          const oMenuResults = await this.read("menu", sQuery);
 
           this.oMenuList.removeAllItems();
 
           let itemsMap = {};
 
-          oMenuResults.forEach((item) => {
-            const oMenuItem = new NavigationListItem({
-              key: item.key,
+          oMenuResults.data.forEach((item) => {
+            const oMenu = new NavigationListItem({
+              key: item.target,
               text: item.description,
               icon: item.icon,
             });
 
-            itemsMap[item.id] = oMenuItem;
+            itemsMap[item.id] = oMenu;
 
-            this.oMenuList.addItem(oMenuItem);
+            this.oMenuList.addItem(oMenu);
           });
         } catch (error) {
           MessageBox.error(error.message);

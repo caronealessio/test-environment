@@ -7,6 +7,7 @@ router.get("/menu", menu.list);
 router.get("/menu/:id", menu.detail);
 router.post("/menu", menu.create);
 router.delete("/menu", menu.delete);
+router.put("/menu/update-positions", menu.updatePositions);
 router.put("/menu/:id", menu.edit);
 router.get("/users", users.list);
 

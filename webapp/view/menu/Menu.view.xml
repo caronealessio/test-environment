@@ -1,4 +1,4 @@
-<mvc:View controllerName="testenvironment.controller.menu.MenuItem"
+<mvc:View controllerName="testenvironment.controller.menu.Menu"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
   xmlns:f="sap.f"
@@ -7,7 +7,7 @@
     <f:title>
       <f:DynamicPageTitle>
         <f:heading>
-          <Title text="{i18n>titleMenuItem}" />
+          <Title text="{i18n>titleMenu}" />
         </f:heading>
       </f:DynamicPageTitle>
     </f:title>
@@ -18,7 +18,7 @@
           <HBox direction="Column">
             <Label text="{i18n>labelDescription}"
               required="true"/>
-            <Input value="{MenuItem>/description}"/>
+            <Input value="{Menu>/description}"/>
             <layoutData>
               <l:GridData span="XL4 L6 M12 S12"/>
             </layoutData>
@@ -26,7 +26,7 @@
           <HBox direction="Column">
             <Label text="{i18n>labelKey}"
               required="true"/>
-            <Input value="{MenuItem>/key}"/>
+            <Input value="{Menu>/key}"/>
             <layoutData>
               <l:GridData span="XL4 L6 M12 S12"
                 linebreak="true"/>
@@ -34,7 +34,7 @@
           </HBox>
           <HBox direction="Column">
             <Label text="{i18n>labelIcon}"/>
-            <Input value="{MenuItem>/icon}"
+            <Input value="{Menu>/icon}"
               valueHelpRequest="onSelectIconOpen"
               showValueHelp="true" />
             <layoutData>

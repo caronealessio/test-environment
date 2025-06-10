@@ -13,7 +13,7 @@ sap.ui.define(
           return `sap-icon://${icon}`;
         });
 
-        this.oModelMenuItem = this.setModel(new JSONModel({}), "MenuItem");
+        this.oModelMenu = this.setModel(new JSONModel({}), "Menu");
         this.oModelIcon = this.setModel(new JSONModel(aIcons), "Icons");
       },
 
@@ -23,14 +23,14 @@ sap.ui.define(
         this.setBusy(true);
 
         try {
-          /** @type {MenuItemTypes} */
-          let oMenuItem = {};
+          /** @type {MenuTypes} */
+          let oMenu = {};
 
           if (this.sId !== "create") {
-            oMenuItem = await this.read("menu", this.sId);
+            oMenu = await this.read("menu", { key: this.sId });
           }
 
-          this.oModelMenuItem.setData(oMenuItem);
+          this.oModelMenu.setData(oMenu);
         } catch (error) {
           MessageBox.error(error.message);
         } finally {
@@ -39,23 +39,23 @@ sap.ui.define(
       },
 
       onSave: async function () {
-        /** @type {MenuItemTypes} */
-        var oMenuItem = this.getModel("MenuItem").getData();
+        /** @type {MenuTypes} */
+        var oMenu = this.getModel("Menu").getData();
 
         this.setBusy(true);
 
         try {
           if (this.sId === "create") {
-            await this.create("menu", oMenuItem);
+            await this.create("menu", oMenu);
           } else {
-            await this.edit("menu", this.sId, oMenuItem);
+            await this.edit("menu", this.sId, oMenu);
           }
 
-          MessageBox.success(this.getText("msgSuccessSavedMenuItem"), {
+          MessageBox.success(this.getText("msgSuccessSavedMenu"), {
             actions: [sap.m.MessageBox.Action.OK],
             onClose: () => {
               sap.ui.getCore().getEventBus().publish("MenuChannel", "MenuUpdated");
-              this.navTo("menuItemsList");
+              this.navTo("menuList");
             },
           });
         } catch (error) {
@@ -101,7 +101,7 @@ sap.ui.define(
       },
 
       onNavBack: function () {
-        this.navTo("menuItemsList");
+        this.navTo("menuList");
       },
     });
   }

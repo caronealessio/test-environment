@@ -81,7 +81,10 @@ exports.create = (req, res) => {
     return res.status(400).send("I campi 'Descrizione' e 'Chiave' sono obbligatori");
   }
 
-  const query = "INSERT INTO menu (description, target, icon, isVisible) VALUES (?, ?, ?, 1)";
+  const query = `
+    INSERT INTO menu (description, target, icon, isVisible, pos)
+    SELECT ?, ?, ?, 1, COUNT(*) FROM (SELECT * FROM menu) AS temp
+  `;
 
   const params = [description, target, icon];
 

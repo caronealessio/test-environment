@@ -19,7 +19,17 @@ sap.ui.define(
       onInit: function () {
         this.getRouter().getRoute("menuList").attachPatternMatched(this._onObjectMatched, this);
 
-        this.oModelMenu = this.setModel(new JSONModel(null), "Menu");
+        this.oModelMenu = this.setModel(
+          new JSONModel({
+            skip: DEFAULT_SKIP,
+            top: DEFAULT_TOP,
+            order: "",
+            total: 0,
+            data: [],
+            filters: {},
+          }),
+          "Menu"
+        );
         this.oModelMenuTree = this.setModel(new JSONModel([]), "MenuTree");
       },
 
@@ -27,15 +37,8 @@ sap.ui.define(
         this.setBusy(true);
 
         try {
-          /** @type {MenuTypes[]} */
-          const oResults = await this.read("menu", {
-            order: "pos:asc",
-            top: DEFAULT_TOP,
-            skip: DEFAULT_SKIP,
-          });
-
-          this.oModelMenu.setData({ ...oResults, skip: DEFAULT_SKIP, top: DEFAULT_SKIP });
-          this.oModelMenuTree.setData(oResults.data);
+          await this._loadMenu();
+          await this._loadMenuTree();
         } catch (error) {
           MessageBox.error(error.message);
         } finally {
@@ -54,10 +57,8 @@ sap.ui.define(
 
         try {
           await this.delete("menu", [oItem.id]);
-          const oResults = await this.read("menu");
-
-          this.oModelMenu.setData(oResults);
-          this.oModelMenuTree.setData(oResults.data);
+          await this._loadMenu();
+          await this._loadMenuTree();
 
           sap.ui.getCore().getEventBus().publish("MenuChannel", "MenuUpdated");
         } catch (error) {
@@ -96,14 +97,14 @@ sap.ui.define(
         this.setBusy(true);
 
         try {
-          const oResults = await this.read("menu", {
-            filters: {
-              description: sValue,
-              target: sValue,
-            },
+          this.oModelMenu.setProperty("/filters", {
+            description: sValue,
+            target: sValue,
           });
+          this.oModelMenu.setProperty("/top", DEFAULT_TOP);
+          this.oModelMenu.setProperty("/skip", DEFAULT_SKIP);
 
-          this.oModelMenu.setData(oResults);
+          await this._loadMenu();
         } catch (error) {
           MessageBox.error(error.message);
         } finally {
@@ -176,6 +177,38 @@ sap.ui.define(
         } finally {
           this.setBusy(false);
         }
+      },
+
+      onPaginatorChange: async function (oEvent) {
+        this.setBusy(true);
+
+        try {
+          await this._loadMenu();
+        } catch (error) {
+          MessageBox.error(error.message);
+        } finally {
+          this.setBusy(false);
+        }
+      },
+
+      _loadMenu: async function () {
+        const oResults = await this.read("menu", {
+          filters: this.oModelMenu.getProperty("/filters"),
+          order: this.oModelMenu.getProperty("/order"),
+          top: this.oModelMenu.getProperty("/top"),
+          skip: this.oModelMenu.getProperty("/skip"),
+        });
+
+        this.oModelMenu.setProperty("/data", oResults.data);
+        this.oModelMenu.setProperty("/total", oResults.total);
+      },
+
+      _loadMenuTree: async function () {
+        const oResults = await this.read("menu", {
+          order: "pos:asc",
+        });
+
+        this.oModelMenuTree.setData(oResults.data);
       },
     });
   }

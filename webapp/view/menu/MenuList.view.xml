@@ -6,7 +6,8 @@
   xmlns:c="sap.ui.core"
   xmlns:rowmodes="sap.ui.table.rowmodes"
   xmlns:l="sap.ui.layout"
-  xmlns:dnd="sap.ui.core.dnd">
+  xmlns:dnd="sap.ui.core.dnd"
+  xmlns:my="testenvironment.controls">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>
@@ -94,6 +95,13 @@
                 </ui:template>
               </ui:Column>
             </ui:columns>
+            <ui:footer>
+              <my:Paginator id="tblPaginatorMenu"
+                top="{Menu>/top}"
+                skip="{Menu>/skip}"
+                records="{Menu>/total}"
+                press="onPaginatorChange" />
+            </ui:footer>
           </ui:Table>
         </Panel>
         <Panel class="sapUiTinyMarginTop">

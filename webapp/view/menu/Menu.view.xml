@@ -24,9 +24,9 @@
             </layoutData>
           </HBox>
           <HBox direction="Column">
-            <Label text="{i18n>labelKey}"
+            <Label text="{i18n>labelTarget}"
               required="true"/>
-            <Input value="{Menu>/key}"/>
+            <Input value="{Menu>/target}"/>
             <layoutData>
               <l:GridData span="XL4 L6 M12 S12"
                 linebreak="true"/>

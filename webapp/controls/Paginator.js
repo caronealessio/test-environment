@@ -35,6 +35,31 @@ sap.ui.define(
         },
       },
 
+      onAfterRendering: function () {
+        OverflowToolbar.prototype.onAfterRendering.apply(this, arguments);
+
+        // Recupera il binding della proprietà "records"
+        var oBinding = this.getBinding("records");
+
+        if (oBinding) {
+          // Aggiunge un listener per il cambio di valore
+          oBinding.attachChange(
+            function () {
+              this._setVisibleByRecords();
+              this._setLabel();
+              this._setBackEnabled();
+              this._setNextEnabled();
+            }.bind(this)
+          );
+        }
+
+        // Anche nel caso il binding sia già pronto e non scatta l'evento
+        this._setVisibleByRecords();
+        this._setLabel();
+        this._setBackEnabled();
+        this._setNextEnabled();
+      },
+
       init: function (a) {
         OverflowToolbar.prototype.init.call(this);
 
@@ -76,10 +101,6 @@ sap.ui.define(
       renderer: function (oRm, oToolbar) {
         sap.m.OverflowToolbarRenderer.render(oRm, oToolbar);
 
-        oToolbar._setVisibleByRecords();
-        oToolbar._setLabel();
-        oToolbar._setBackEnabled();
-        oToolbar._setNextEnabled();
         oToolbar._setToolbarAlign();
       },
 
@@ -143,7 +164,11 @@ sap.ui.define(
       },
 
       _onLast: function () {
-        this.setSkip(Math.floor(this.getRecords() / this.getTop()) * this.getTop());
+        const iRecords = this.getRecords();
+        const iTop = this.getTop();
+        const iLastSkip = iRecords % iTop === 0 ? iRecords - iTop : iRecords - (iRecords % iTop);
+
+        this.setSkip(iLastSkip);
         this.firePress();
       },
 

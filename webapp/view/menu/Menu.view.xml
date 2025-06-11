@@ -2,7 +2,8 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
   xmlns:f="sap.f"
-  xmlns:l="sap.ui.layout">
+  xmlns:l="sap.ui.layout"
+  xmlns:c="sap.ui.core">
   <f:DynamicPage showFooter="true">
     <f:title>
       <f:DynamicPageTitle>
@@ -38,8 +39,16 @@
               valueHelpRequest="onSelectIconOpen"
               showValueHelp="true" />
             <layoutData>
-              <l:GridData span="XL4 L6 M12 S12"
+              <l:GridData span="XL4 L6 M11 S11"
                 linebreak="true"/>
+            </layoutData>
+          </HBox>
+          <HBox direction="Column">
+            <Label/>
+            <c:Icon src="{Menu>/icon}"
+              class="sapUiTinyMarginTop"/>
+            <layoutData>
+              <l:GridData span="XL1 L1 M1 S1"/>
             </layoutData>
           </HBox>
         </l:Grid>

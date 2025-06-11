@@ -83,8 +83,8 @@ exports.create = (req, res) => {
 
   const query = `
     INSERT INTO menu (description, target, icon, isVisible, pos)
-    SELECT ?, ?, ?, 1, COUNT(*) FROM (SELECT * FROM menu) AS temp
-  `;
+    SELECT ?, ?, ?, 1, IFNULL(MAX(pos), -1) + 1 FROM (SELECT pos FROM menu) AS temp
+      `;
 
   const params = [description, target, icon];
 

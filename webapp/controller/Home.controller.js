@@ -1,15 +1,9 @@
 // @ts-check
 
 sap.ui.define(
-  [
-    "./BaseController",
-    "sap/ui/model/json/JSONModel",
-    "testenvironment/controller/functionality/StandardTableManagement/library.controller",
-    "testenvironment/model/formatter",
-    "sap/m/MessageToast",
-  ],
+  ["./BaseController", "sap/ui/model/json/JSONModel", "testenvironment/model/formatter", "sap/m/MessageToast"],
 
-  function (BaseController, JSONModel, LibraryController, formatter, MessageToast) {
+  function (BaseController, JSONModel, formatter, MessageToast) {
     "use strict";
 
     const CAPTCHA_KEY = "6Lfp4EkrAAAAAGAzLu6Roj_bWDxRvdADpsVQTYlx";

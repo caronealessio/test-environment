@@ -3,13 +3,7 @@
  */
 
 sap.ui.define(
-  [
-    "sap/ui/core/UIComponent",
-    "sap/ui/Device",
-    "testenvironment/model/models",
-    "sap/ui/model/json/JSONModel",
-    "testenvironment/libs/moment",
-  ],
+  ["sap/ui/core/UIComponent", "sap/ui/Device", "testenvironment/model/models", "sap/ui/model/json/JSONModel"],
   function (UIComponent, Device, models, JSONModel) {
     "use strict";
 

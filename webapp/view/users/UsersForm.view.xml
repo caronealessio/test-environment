@@ -1,0 +1,24 @@
+<mvc:View controllerName="testenvironment.controller.users.UsersForm"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:f="sap.f">
+  <f:DynamicPage showFooter="true">
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="{i18n>labelUser}:" />
+        </f:heading>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:content>
+    </f:content>
+    <f:footer>
+      <OverflowToolbar>
+        <Button type="Back"
+          text="{i18n>btnBack}"
+          press="onNavBack" />
+        <ToolbarSpacer />
+      </OverflowToolbar>
+    </f:footer>
+  </f:DynamicPage>
+</mvc:View>

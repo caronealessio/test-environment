@@ -13,6 +13,7 @@
 - Start the server (1° terminal)
 
 ```
+    cd db
     node server.js
 
 ```

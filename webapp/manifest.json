@@ -100,9 +100,9 @@
           "target": ["usersList"]
         },
         {
-          "name": "user",
+          "name": "usersForm",
           "pattern": "users/{id}",
-          "target": ["user"]
+          "target": ["usersForm"]
         },
         {
           "name": "StandardTableManagement",
@@ -137,29 +137,19 @@
       ],
       "targets": {
         "home": {
-          "id": "home",
-          "name": "Home",
-          "viewLevel": 1
+          "name": "Home"
         },
         "menuList": {
-          "id": "menuList",
-          "name": "menu.MenuList",
-          "viewLevel": 2
+          "name": "menu.MenuList"
         },
         "menu": {
-          "id": "menu",
-          "name": "menu.Menu",
-          "viewLevel": 3
+          "name": "menu.Menu"
         },
         "usersList": {
-          "id": "users",
-          "name": "users.UsersList",
-          "viewLevel": 2
+          "name": "users.UsersList"
         },
-        "user": {
-          "id": "users",
-          "name": "users.User",
-          "viewLevel": 3
+        "usersForm": {
+          "name": "users.UsersForm"
         },
 
         "StandardTableManagement": {

@@ -37,6 +37,10 @@ sap.ui.define(
         const aUsers = this.oModelUsers.getData();
         const oTableUserContainer = this.byId("tableUserContainer");
 
+        if (oTableUserContainer.getItems().length > 0) {
+          return;
+        }
+
         const oTable = new Table({
           rows: "{Users>/}",
           selectionMode: "None",
@@ -60,10 +64,11 @@ sap.ui.define(
               icon: "sap-icon://edit",
               type: "Transparent",
               press: function (oEvent) {
-                this.navTo("user", {
+                console.log("ciao");
+                this.navTo("usersForm", {
                   id: oEvent.getSource().getParent().getBindingContext("Users").getObject("id"),
                 });
-              },
+              }.bind(this),
               width: "3.5rem",
               hAlign: "Center",
             },
@@ -73,7 +78,7 @@ sap.ui.define(
               icon: "sap-icon://delete",
               type: "Transparent",
               press: function (oEvent) {
-                this.navTo("user", {
+                this.navTo("userForm", {
                   id: oEvent.getSource().getParent().getBindingContext("Users").getObject("id"),
                 });
               },

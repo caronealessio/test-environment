@@ -87,4 +87,9 @@ function buildEqualFilters(query, fields) {
   };
 }
 
-module.exports = { buildOrderByClause, buildPaginationClause, buildLikeFilters, buildEqualFilters };
+module.exports = {
+  buildOrderByClause,
+  buildPaginationClause,
+  buildLikeFilters,
+  buildEqualFilters,
+};

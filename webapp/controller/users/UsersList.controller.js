@@ -22,8 +22,6 @@ sap.ui.define(
             user.birthday = new Date(user.birthday);
           });
 
-          console.log(oResponse);
-
           this.oModelUsers.setData(oResponse);
           this._createUsersTable();
         } catch (error) {
@@ -64,7 +62,6 @@ sap.ui.define(
               icon: "sap-icon://edit",
               type: "Transparent",
               press: function (oEvent) {
-                console.log("ciao");
                 this.navTo("usersForm", {
                   id: oEvent.getSource().getParent().getBindingContext("Users").getObject("id"),
                 });

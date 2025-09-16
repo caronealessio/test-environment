@@ -117,5 +117,37 @@ sap.ui.define([], function () {
 
       return oDate;
     },
+
+    /**
+     * Controlla se una stringa è in formato ISO 8601 (con Z finale)
+     * @param {string} value
+     * @returns {boolean}
+     */
+    isIsoDateString: function (value) {
+      return typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(value);
+    },
+
+    /**
+     * Funzione ricorsiva per convertire tutte le stringhe ISO in oggetti Date
+     * @param {any} obj
+     * @returns {any}
+     */
+    convertIsoStringsToDate: function (obj) {
+      if (Array.isArray(obj)) {
+        return obj.map(this.convertIsoStringsToDate.bind(this));
+      } else if (obj && typeof obj === "object") {
+        for (const key in obj) {
+          if (!obj.hasOwnProperty(key)) continue;
+          obj[key] = this.convertIsoStringsToDate(obj[key]);
+        }
+        return obj;
+      } else if (typeof obj === "string") {
+        if (this.isIsoDateString(obj)) {
+          return new Date(obj);
+        }
+        return obj;
+      }
+      return obj;
+    },
   };
 });

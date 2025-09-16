@@ -148,8 +148,6 @@ sap.ui.define(
         this.oModelMenuTree.setData(aMenuTree);
         this.oModelMenuTree.refresh(true);
 
-        console.log(aMenuTree);
-
         aMenuTree.map((item, index) => {
           item.pos = index;
         });

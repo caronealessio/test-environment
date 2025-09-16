@@ -6,12 +6,24 @@ sap.ui.define(
     "sap/ui/core/Fragment",
     "testenvironment/model/formatter",
     "sap/ui/model/json/JSONModel",
+    "testenvironment/util/generalUtils",
+    "testenvironment/util/tableUtils",
+    "testenvironment/util/exportUtils",
+    "testenvironment/util/crudUtils",
   ],
-  function (Controller, Fragment, formatter, JSONModel) {
+  function (Controller, Fragment, formatter, JSONModel, generalUtils, tableUtils, exportUtils, crudUtils) {
     "use strict";
 
     return Controller.extend("testenvironment.controller.BaseController", {
       formatter: formatter,
+
+      constructor: function () {
+        Controller.apply(this, arguments);
+        this.generalUtils = generalUtils;
+        this.tableUtils = tableUtils;
+        this.exportUtils = exportUtils;
+        this.crudUtils = crudUtils;
+      },
       /**
        * Get the model for the view. Optionally specify the model name.
        *
@@ -171,7 +183,9 @@ sap.ui.define(
             throw new Error(errorMessage);
           }
 
-          return await response.json();
+          let data = await response.json();
+
+          return formatter.convertIsoStringsToDate(data);
         } catch (error) {
           throw error;
         }

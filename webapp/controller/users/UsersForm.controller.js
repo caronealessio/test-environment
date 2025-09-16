@@ -24,8 +24,6 @@ sap.ui.define(
       phone: "",
       role_id: "",
       surname: "",
-      role: null,
-      gender: null,
       created: null,
       modified: null,
     };
@@ -43,6 +41,7 @@ sap.ui.define(
 
       _onObjectMatched: async function (oEvent) {
         this.sId = oEvent.getParameter("arguments").id;
+        this.bIsNew = this.sId === "create";
         this.generalUtils.clearAllValueStates(this.getView());
 
         this.setBusy(true);
@@ -50,7 +49,7 @@ sap.ui.define(
         try {
           let oUser = this.generalUtils.copyWithoutRef(INIT_MODEL_USER);
 
-          if (this.sId !== "create") {
+          if (!this.bIsNew) {
             oUser = await this.read("users", { key: this.sId });
           }
 
@@ -66,7 +65,7 @@ sap.ui.define(
         this.navTo("usersList");
       },
 
-      onSavePress: function () {
+      onSavePress: async function () {
         const oView = this.getView();
         const aControls = oView.findAggregatedObjects(true);
 
@@ -75,6 +74,27 @@ sap.ui.define(
         if (!oValidation.valid) {
           MessageBox.error(oValidation.message);
           return;
+        }
+
+        try {
+          this.setBusy(true);
+
+          if (!this.bIsNew) {
+            // oUser = await this.read("users", { key: this.sId });
+          }
+
+          await this.create("users", this.oModelUser.getData());
+
+          MessageBox.success(this.getText("msgSuccessSavedUser"), {
+            actions: [sap.m.MessageBox.Action.OK],
+            onClose: () => {
+              this.navTo("userList");
+            },
+          });
+        } catch (error) {
+          MessageBox.error(error.message);
+        } finally {
+          this.setBusy(false);
         }
       },
 

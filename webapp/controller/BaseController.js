@@ -199,6 +199,8 @@ sap.ui.define(
        * @returns {Promise<Object>} Una promessa che restituisce la risposta del server, se presente, come oggetto JSON.
        */
       create: async function (sEndpoint, oData) {
+        oData = formatter.convertDatesToMySQL(oData, { utc: false });
+
         try {
           const response = await fetch(`http://localhost:3000/${sEndpoint}`, {
             method: "POST",

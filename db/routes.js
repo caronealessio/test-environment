@@ -5,18 +5,19 @@ const users = require("./query/users");
 const genders = require("./query/genders");
 const roles = require("./query/roles");
 
-router.get("/menu", menu.list);
-router.get("/menu/:id", menu.detail);
+router.get("/menu", menu.readAll);
+router.get("/menu/:id", menu.readSingle);
 router.post("/menu", menu.create);
 router.delete("/menu", menu.delete);
 router.put("/menu/update-positions", menu.updatePositions);
-router.put("/menu/:id", menu.edit);
+router.put("/menu/:id", menu.update);
 
-router.get("/users", users.list);
-router.get("/users/:id", users.readUser);
+router.get("/users", users.readAll);
+router.get("/users/:id", users.readSingle);
+router.post("/users", users.create);
 
-router.get("/genders", genders.readGenders);
+router.get("/genders", genders.readAll);
 
-router.get("/roles", roles.readRoles);
+router.get("/roles", roles.readAll);
 
 module.exports = router;

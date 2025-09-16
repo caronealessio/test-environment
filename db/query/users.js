@@ -1,7 +1,7 @@
 const db = require("../db");
 const { readSingle } = require("../utils/queryDefaults");
 
-exports.list = (req, res) => {
+exports.readAll = (req, res) => {
   const params = [];
 
   let query = "SELECT * FROM users WHERE 1=1";
@@ -16,19 +16,28 @@ exports.list = (req, res) => {
   });
 };
 
-exports.readUser = (req, res) => {
+exports.readSingle = (req, res) => {
   const { id } = req.params;
 
   const query = `
     SELECT 
-      t1.*, 
-      JSON_OBJECT('id', t2.id, 'name', t2.name, 'code', t2.code) AS role,
-      JSON_OBJECT('id', t3.id, 'name', t3.name, 'code', t3.code) AS gender
+      t1.*  
     FROM users t1
     INNER JOIN roles t2 ON t1.role_id = t2.id
     INNER JOIN genders t3 ON t1.gender_id = t3.id
     WHERE t1.id = ?
   `;
+
+  // const query = `
+  //   SELECT
+  //     t1.*,
+  //     JSON_OBJECT('id', t2.id, 'name', t2.name, 'code', t2.code) AS role,
+  //     JSON_OBJECT('id', t3.id, 'name', t3.name, 'code', t3.code) AS gender
+  //   FROM users t1
+  //   INNER JOIN roles t2 ON t1.role_id = t2.id
+  //   INNER JOIN genders t3 ON t1.gender_id = t3.id
+  //   WHERE t1.id = ?
+  // `;
 
   db.query(query, [id], (err, results) => {
     if (err) {
@@ -41,5 +50,25 @@ exports.readUser = (req, res) => {
     }
 
     res.json(results[0]);
+  });
+};
+
+exports.create = (req, res) => {
+  const { address, birth_date, cap, city, email, fiscal_code, gender_id, name, phone, role_id, surname } = req.body;
+
+  const query = `
+    INSERT INTO users (address, birth_date, cap, city, email, fiscal_code, gender_id, name, phone, role_id, surname)
+    SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+      `;
+
+  const params = [address, birth_date, cap, city, email, fiscal_code, gender_id, name, phone, role_id, surname];
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error("Errore durante la query:", err.message);
+      return res.status(500).send(err.message);
+    }
+
+    res.json({ message: "Elemento aggiunto" });
   });
 };

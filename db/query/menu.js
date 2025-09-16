@@ -7,7 +7,7 @@ const {
   buildEqualFilters,
 } = require("../utils/queryHelpers");
 
-exports.list = (req, res) => {
+exports.readAll = (req, res) => {
   const { top, skip, order } = req.query;
 
   let baseQuery = "FROM menu WHERE 1=1";
@@ -53,7 +53,7 @@ exports.list = (req, res) => {
   });
 };
 
-exports.detail = (req, res) => {
+exports.readSingle = (req, res) => {
   const { id } = req.params;
 
   const query = "SELECT * FROM menu WHERE id = ?";
@@ -117,7 +117,7 @@ exports.delete = (req, res) => {
   });
 };
 
-exports.edit = (req, res) => {
+exports.update = (req, res) => {
   const { id } = req.params;
 
   const description = req.body.description ?? "";

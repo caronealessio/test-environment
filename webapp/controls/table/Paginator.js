@@ -1,15 +1,11 @@
 sap.ui.define(
-  ["sap/m/OverflowToolbar", "sap/m/ToolbarSpacer", "sap/m/Label", "sap/m/Button"],
-  function (OverflowToolbar, ToolbarSpacer, Label, Button) {
+  ["sap/m/HBox", "sap/m/ToolbarSpacer", "sap/m/Label", "sap/m/Button"],
+  function (HBox, ToolbarSpacer, Label, Button) {
     "use strict";
 
-    return OverflowToolbar.extend("testenvironment.controls.table.Paginator", {
+    return HBox.extend("testenvironment.controls.table.Paginator", {
       metadata: {
         properties: {
-          style: {
-            type: "string",
-            defaultValue: "Clear",
-          },
           top: {
             type: "int",
             defaultValue: 10,
@@ -21,179 +17,106 @@ sap.ui.define(
           records: {
             type: "int",
           },
-          pages: {
-            type: "boolean",
-            defaultValue: true,
-          },
-          align: {
-            type: "string",
-            defaultValue: "End",
-          },
         },
         events: {
           press: {},
         },
       },
 
-      onAfterRendering: function () {
-        OverflowToolbar.prototype.onAfterRendering.apply(this, arguments);
-
-        // Recupera il binding della proprietà "records"
-        var oBinding = this.getBinding("records");
-
-        if (oBinding) {
-          // Aggiunge un listener per il cambio di valore
-          oBinding.attachChange(
-            function () {
-              this._setVisibleByRecords();
-              this._setLabel();
-              this._setBackEnabled();
-              this._setNextEnabled();
-            }.bind(this)
-          );
-        }
-
-        // Anche nel caso il binding sia già pronto e non scatta l'evento
-        this._setVisibleByRecords();
-        this._setLabel();
-        this._setBackEnabled();
-        this._setNextEnabled();
-      },
-
       init: function (a) {
-        OverflowToolbar.prototype.init.call(this);
-
-        var sId = this._getId(this);
-
-        this.addContent(new ToolbarSpacer(sId + "beginSpacer"));
-        this.addContent(
-          new Button(sId + "firstButton", {
-            icon: "sap-icon://close-command-field",
-            tooltip: "Prima pagina",
-            press: this._onFirst.bind(this),
-          })
-        );
-        this.addContent(
-          new Button(sId + "backButton", {
-            icon: "sap-icon://slim-arrow-left",
-            tooltip: "Indietro",
-            press: this._onBack.bind(this),
-          })
-        );
-        this.addContent(new Label(sId + "label"));
-        this.addContent(
-          new Button(sId + "nextButton", {
-            icon: "sap-icon://slim-arrow-right",
-            tooltip: "Avanti",
-            press: this._onNext.bind(this),
-          })
-        );
-        this.addContent(
-          new Button(sId + "lastButton", {
-            icon: "sap-icon://open-command-field",
-            tooltip: "Ultima pagina",
-            press: this._onLast.bind(this),
-          })
-        );
-        this.addContent(new ToolbarSpacer(sId + "endSpacer"));
+        HBox.prototype.init.call(this);
       },
 
-      renderer: function (oRm, oToolbar) {
-        sap.m.OverflowToolbarRenderer.render(oRm, oToolbar);
-
-        oToolbar._setToolbarAlign();
+      renderer: function (oRm, oHBox) {
+        sap.m.HBoxRenderer.render(oRm, oHBox);
       },
 
-      _setVisibleByRecords: function () {
-        var bVisible = this.getRecords() ? true : false;
+      applySettings: function () {
+        HBox.prototype.applySettings.apply(this, arguments);
 
-        this.setVisible(bVisible);
+        const oFirstButton = new Button(`${this.getId()}_firstButton`, {
+          icon: "sap-icon://close-command-field",
+          tooltip: "Prima pagina",
+          press: function (e) {
+            this.setSkip(0);
+            this.firePress();
+          }.bind(this),
+        });
+
+        const oBackButton = new Button(`${this.getId()}_backButton`, {
+          icon: "sap-icon://slim-arrow-left",
+          tooltip: "Indietro",
+          press: function () {
+            this.setSkip(this.getSkip() - this.getTop());
+            this.firePress();
+          }.bind(this),
+        });
+
+        const oLabel = new Label(`${this.getId()}_label`).addStyleClass("sapUiTinyMarginTop");
+
+        const oNextButton = new Button(`${this.getId()}_nextButton`, {
+          icon: "sap-icon://slim-arrow-right",
+          tooltip: "Avanti",
+          press: function () {
+            this.setSkip(this.getSkip() + this.getTop());
+            this.firePress();
+          }.bind(this),
+        });
+
+        const oLastButton = new Button(`${this.getId()}_lastButton`, {
+          icon: "sap-icon://open-command-field",
+          tooltip: "Ultima pagina",
+          press: function () {
+            const iRecords = this.getRecords();
+            const iTop = this.getTop();
+            const iLastSkip = iRecords % iTop === 0 ? iRecords - iTop : iRecords - (iRecords % iTop);
+
+            this.setSkip(iLastSkip);
+            this.firePress();
+          }.bind(this),
+        });
+
+        this.addItem(oFirstButton);
+        this.addItem(oBackButton);
+        this.addItem(oLabel);
+        this.addItem(oNextButton);
+        this.addItem(oLastButton);
       },
 
-      _setLabel: function () {
-        var oLabel = this.getContent().filter((x) => x.getId() === this._getId(this) + "label")[0];
-        var sLabel = "";
+      onAfterRendering: function (oEvent) {
+        HBox.prototype.onAfterRendering.apply(this, arguments);
 
-        if (this.getPages()) {
-          var sCurrentPage = this.getSkip() / this.getTop() + 1;
-          var sTotalPage = Math.floor(this.getRecords() / this.getTop());
-          var sRemainder = this.getRecords() % this.getTop();
-
-          sTotalPage = sRemainder !== 0 ? sTotalPage + 1 : sTotalPage;
-          sLabel = sCurrentPage + " di " + sTotalPage;
-        } else {
-          var sFrom = this.getSkip() + 1;
-          var sTo = this.getSkip() + this.getTop();
-
-          sTo = sTo < this.getRecords() ? sTo : this.getRecords();
-          sLabel = sFrom + " - " + sTo;
-        }
-
-        oLabel.setText(sLabel);
+        this._setLabelText();
+        this._setButtonsEnabled();
       },
 
-      _setBackEnabled: function () {
-        var oButton = this.getContent().filter((x) => x.getId() === this._getId(this) + "backButton")[0];
-        oButton.setEnabled(this.getSkip() > 0);
+      _setLabelText: function () {
+        const sId = `${this.getId()}_label`;
+        const aItems = this.getItems();
+        const oLabel = aItems.filter((i) => i.getId() === sId)[0];
+        let sText = "";
 
-        oButton = this.getContent().filter((x) => x.getId() === this._getId(this) + "firstButton")[0];
-        oButton.setEnabled(this.getSkip() > 0);
+        const sCurrentPage = this.getSkip() / this.getTop() + 1;
+        const sTotalPage = Math.ceil(this.getRecords() / this.getTop());
+
+        sText = sCurrentPage + " di " + sTotalPage;
+
+        oLabel.setText(sText);
       },
 
-      _setNextEnabled: function () {
-        var oButton = this.getContent().filter((x) => x.getId() === this._getId(this) + "nextButton")[0];
-        oButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
+      _setButtonsEnabled: function () {
+        const sId = this.getId();
+        const aItems = this.getItems();
 
-        oButton = this.getContent().filter((x) => x.getId() === this._getId(this) + "lastButton")[0];
-        oButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
-      },
+        const oFirstButton = aItems.filter((i) => i.getId() === `${sId}_firstButton`)[0];
+        const oBackButton = aItems.filter((i) => i.getId() === `${sId}_backButton`)[0];
+        const oNextButton = aItems.filter((i) => i.getId() === `${sId}_nextButton`)[0];
+        const oLastButton = aItems.filter((i) => i.getId() === `${sId}_lastButton`)[0];
 
-      _onNext: function () {
-        this.setSkip(this.getSkip() + this.getTop());
-        this.firePress();
-      },
-
-      _onBack: function () {
-        this.setSkip(this.getSkip() - this.getTop());
-        this.firePress();
-      },
-
-      _onFirst: function () {
-        this.setSkip(0);
-        this.firePress();
-      },
-
-      _onLast: function () {
-        const iRecords = this.getRecords();
-        const iTop = this.getTop();
-        const iLastSkip = iRecords % iTop === 0 ? iRecords - iTop : iRecords - (iRecords % iTop);
-
-        this.setSkip(iLastSkip);
-        this.firePress();
-      },
-
-      _setToolbarAlign: function () {
-        var oBeginSpacer = this.getContent().filter((x) => x.getId() === this._getId(this) + "beginSpacer")[0];
-        var oEndSpacer = this.getContent().filter((x) => x.getId() === this._getId(this) + "endSpacer")[0];
-
-        switch (this.getAlign()) {
-          case "Begin":
-            oBeginSpacer.setVisible(false);
-            oEndSpacer.setVisible(true);
-            break;
-          case "Center":
-            oBeginSpacer.setVisible(true);
-            oEndSpacer.setVisible(true);
-            break;
-          default:
-            oBeginSpacer.setVisible(true);
-            oEndSpacer.setVisible(false);
-            break;
-        }
-      },
-
-      _getId: function (self) {
-        return self.getId().split("-").pop();
+        oFirstButton.setEnabled(this.getSkip() > 0);
+        oBackButton.setEnabled(this.getSkip() > 0);
+        oNextButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
+        oLastButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
       },
     });
   }

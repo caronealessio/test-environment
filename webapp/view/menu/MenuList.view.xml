@@ -96,11 +96,15 @@
               </ui:Column>
             </ui:columns>
             <ui:footer>
-              <my:Paginator id="tblPaginatorMenu"
-                top="{Menu>/top}"
-                skip="{Menu>/skip}"
-                records="{Menu>/total}"
-                press="onPaginatorChange" />
+              <OverflowToolbar style="Clear">
+                <ToolbarSpacer />
+                <my:table.Paginator id="tblPaginatorMenu"
+                  top="{Menu>/top}"
+                  skip="{Menu>/skip}"
+                  records="{Menu>/total}"
+                  press="onPaginatorChange">
+                </my:table.Paginator>
+              </OverflowToolbar>
             </ui:footer>
           </ui:Table>
         </Panel>

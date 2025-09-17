@@ -76,19 +76,21 @@ sap.ui.define(
           return;
         }
 
+        let oUser = this.oModelUser.getData();
+
         try {
           this.setBusy(true);
 
-          if (!this.bIsNew) {
-            // oUser = await this.read("users", { key: this.sId });
+          if (this.bIsNew) {
+            await this.create("users", oUser);
+          } else {
+            await this.edit("users", oUser.id, oUser);
           }
-
-          await this.create("users", this.oModelUser.getData());
 
           MessageBox.success(this.getText("msgSuccessSavedUser"), {
             actions: [sap.m.MessageBox.Action.OK],
             onClose: () => {
-              this.navTo("userList");
+              this.navTo("usersList");
             },
           });
         } catch (error) {
@@ -153,6 +155,33 @@ sap.ui.define(
 
         this.oModelUser.setProperty("/city", oCity.nome);
         this.oModelUser.setProperty("/cap", oCity.cap);
+      },
+
+      onDeletePress: function () {
+        const oUser = this.oModelUser.getData();
+
+        const deleteUser = async () => {
+          try {
+            this.setBusy(true);
+
+            await this.delete("users", [oUser.id]);
+
+            this.navTo("usersList");
+          } catch (error) {
+            MessageBox.error(error.message);
+          } finally {
+            this.setBusy(false);
+          }
+        };
+
+        MessageBox.warning(`${this.getText("msgWarningDeleteUser")} ${oUser.surname} ${oUser.name}?`, {
+          actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+          onClose: async function (sAction) {
+            if (sAction === MessageBox.Action.YES) {
+              await deleteUser();
+            }
+          }.bind(this),
+        });
       },
     });
   }

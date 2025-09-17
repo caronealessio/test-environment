@@ -110,6 +110,10 @@
           text="{i18n>btnBack}"
           press="onNavBack" />
         <ToolbarSpacer />
+        <Button type="Reject"
+          text="{i18n>btnDelete}"
+          press="onDeletePress"
+          visible="{= ${User>/id} !== ''}" />
         <Button type="Emphasized"
           text="{i18n>btnSave}"
           press="onSavePress" />

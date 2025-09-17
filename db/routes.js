@@ -15,6 +15,8 @@ router.put("/menu/:id", menu.update);
 router.get("/users", users.readAll);
 router.get("/users/:id", users.readSingle);
 router.post("/users", users.create);
+router.delete("/users", users.delete);
+router.put("/users/:id", users.update);
 
 router.get("/genders", genders.readAll);
 

@@ -18,10 +18,6 @@ sap.ui.define(
         try {
           let oResponse = await this.read("users");
 
-          oResponse.map((user) => {
-            user.birthday = new Date(user.birthday);
-          });
-
           this.oModelUsers.setData(oResponse);
           this._createUsersTable();
         } catch (error) {
@@ -47,13 +43,16 @@ sap.ui.define(
             { label: this.getText("labelId"), property: "id", width: "3rem", hAlign: "Center" },
             { label: this.getText("labelName"), property: "name" },
             { label: this.getText("labelSurname"), property: "surname" },
+            { label: this.getText("labelFiscalCode"), property: "fiscal_code", align: "Center", width: "10rem" },
             { label: this.getText("labelEmail"), property: "email", align: "Center" },
+            { label: this.getText("labelPhone"), property: "phone", align: "Center", width: "6rem" },
+            { label: this.getText("labelRole"), property: "role", align: "Center" },
             {
               label: this.getText("labelBirthDate"),
-              property: "birthday",
+              property: "birth_date",
               type: "sap.ui.model.type.Date",
-              pattern: "dd/MM/yyyy HH:mm",
-              width: "10rem",
+              pattern: "dd/MM/yyyy",
+              width: "6rem",
               hAlign: "Center",
             },
             {
@@ -68,24 +67,52 @@ sap.ui.define(
               }.bind(this),
               width: "3.5rem",
               hAlign: "Center",
+              tooltip: this.getText("btnEdit"),
             },
             {
               label: "",
               component: "button",
               icon: "sap-icon://delete",
               type: "Transparent",
-              press: function (oEvent) {
-                this.navTo("userForm", {
-                  id: oEvent.getSource().getParent().getBindingContext("Users").getObject("id"),
+              press: async function (oEvent) {
+                const oUser = oEvent.getSource().getParent().getBindingContext("Users").getObject();
+
+                const deleteUser = async () => {
+                  try {
+                    this.setBusy(true);
+
+                    await this.delete("users", [oUser.id]);
+
+                    const oResponse = await this.read("users");
+                    this.oModelUsers.setData(oResponse);
+                  } catch (error) {
+                    MessageBox.error(error.message);
+                  } finally {
+                    this.setBusy(false);
+                  }
+                };
+
+                MessageBox.warning(`${this.getText("msgWarningDeleteUser")} ${oUser.surname} ${oUser.name}?`, {
+                  actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                  onClose: async function (sAction) {
+                    if (sAction === MessageBox.Action.YES) {
+                      await deleteUser();
+                    }
+                  }.bind(this),
                 });
-              },
+              }.bind(this),
               width: "3.5rem",
               hAlign: "Center",
+              tooltip: this.getText("btnDelete"),
             },
           ],
         });
 
         oTableUserContainer.addItem(oTable);
+      },
+
+      onCreatePress: function () {
+        this.navTo("usersForm", { id: "create" });
       },
     });
   }

@@ -256,6 +256,8 @@ sap.ui.define(
        * @returns {Promise<Object>} - Una promessa che restituisce l'oggetto aggiornato come JSON.
        */
       edit: async function (sEndpoint, sId, oData) {
+        oData = formatter.convertDatesToMySQL(oData, { utc: false });
+
         try {
           const response = await fetch(`http://localhost:3000/${sEndpoint}/${sId}`, {
             method: "PUT",

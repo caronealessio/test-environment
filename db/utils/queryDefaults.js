@@ -29,7 +29,7 @@ function readSingle(tableName, id, res) {
  * @param {object} res - risposta Express per gestire errori direttamente
  */
 function readAll(tableName, res) {
-  let query = "SELECT * FROM ??";
+  const query = "SELECT * FROM ??";
 
   db.query(query, [tableName], (err, results) => {
     if (err) {
@@ -41,4 +41,28 @@ function readAll(tableName, res) {
   });
 }
 
-module.exports = { readSingle, readAll };
+/**
+ * Elimina uno o più record da una tabella generica.
+ *
+ * @param {string} tableName - Nome della tabella da cui eliminare i record.
+ * @param {Array<number|string>} ids - Array contenente gli ID da eliminare.
+ * @param {object} res - Oggetto di risposta Express per inviare l'esito o l'errore.
+ */
+function deleteRecords(tableName, ids, res) {
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).send("Devi fornire un array di ID valido");
+  }
+
+  const query = `DELETE FROM ?? WHERE id IN (?)`;
+
+  db.query(query, [tableName, ids], (err, results) => {
+    if (err) {
+      console.error(`Errore durante la query su ${tableName}:`, err.message);
+      return res.status(500).send(err.message);
+    } else {
+      res.json({ message: `Eliminati ${results.affectedRows} elementi da ${tableName}` });
+    }
+  });
+}
+
+module.exports = { readSingle, readAll, deleteRecords };

@@ -11,9 +11,19 @@
       </f:DynamicPageTitle>
     </f:title>
     <f:content>
-      <Panel>
-        <VBox id="tableUserContainer"/>
-      </Panel>
+      <VBox>
+        <Panel>
+          <OverflowToolbar style="Clear">
+            <ToolbarSpacer />
+            <Button text="{i18n>btnNew}"
+              press="onCreatePress"
+              type="Emphasized"/>
+          </OverflowToolbar>
+        </Panel>
+        <Panel class="sapUiTinyMarginTop">
+          <VBox id="tableUserContainer"/>
+        </Panel>
+      </VBox>
     </f:content>
   </f:DynamicPage>
 </mvc:View>

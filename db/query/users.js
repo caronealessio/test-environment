@@ -1,32 +1,32 @@
 const db = require("../db");
-const { readSingle, deleteRecords } = require("../utils/queryDefaults");
+const { readSingle, deleteRecords, readAllDynamic } = require("../utils/queryDefaults");
 
 /**
- * Legge tutti gli utenti dal database.
+ * Legge tutti gli utenti dal database e restituisce anche il conteggio dei record.
  *
  * @param {express.Request} req - Richiesta HTTP.
  * @param {express.Response} res - Risposta HTTP.
  *
- * @returns {Promise<void>} Una promessa che restituisce i dati letti come oggetto JSON.
+ * @returns {Promise<void>} Una promessa che restituisce i dati letti come oggetto JSON, inclusi il conteggio dei record.
  */
 exports.readAll = (req, res) => {
-  const params = [];
-
-  let query = `
-    SELECT
-      u.*,
-      r.name as role
-    FROM users as u
-    INNER JOIN roles as r ON u.role_id = r.id
-    `;
-
-  db.query(query, params, (err, results) => {
-    if (err) {
-      console.error("Errore durante la query:", err.message);
-      return res.status(500).send(err.message);
-    }
-    res.json(results);
-  });
+  readAllDynamic(
+    "users",
+    {
+      likeFilters: [],
+      equalFilters: [],
+      innerJoin: [
+        {
+          table: "roles",
+          alias: "r",
+          on: "t.role_id = r.id",
+        },
+      ],
+      select: "t.*, r.name as role",
+    },
+    req,
+    res
+  );
 };
 
 /**

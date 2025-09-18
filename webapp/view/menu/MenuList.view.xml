@@ -101,7 +101,7 @@
                 <my:table.Paginator id="tblPaginatorMenu"
                   top="{Menu>/top}"
                   skip="{Menu>/skip}"
-                  records="{Menu>/total}"
+                  count="{Menu>/total}"
                   press="onPaginatorChange">
                 </my:table.Paginator>
               </OverflowToolbar>

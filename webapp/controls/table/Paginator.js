@@ -14,7 +14,7 @@ sap.ui.define(
             type: "int",
             defaultValue: 0,
           },
-          records: {
+          count: {
             type: "int",
           },
         },
@@ -67,9 +67,9 @@ sap.ui.define(
           icon: "sap-icon://open-command-field",
           tooltip: "Ultima pagina",
           press: function () {
-            const iRecords = this.getRecords();
+            const iCount = this.getCount();
             const iTop = this.getTop();
-            const iLastSkip = iRecords % iTop === 0 ? iRecords - iTop : iRecords - (iRecords % iTop);
+            const iLastSkip = iCount % iTop === 0 ? iCount - iTop : iCount - (iCount % iTop);
 
             this.setSkip(iLastSkip);
             this.firePress();
@@ -97,7 +97,7 @@ sap.ui.define(
         let sText = "";
 
         const sCurrentPage = this.getSkip() / this.getTop() + 1;
-        const sTotalPage = Math.ceil(this.getRecords() / this.getTop());
+        const sTotalPage = Math.ceil(this.getCount() / this.getTop());
 
         sText = sCurrentPage + " di " + sTotalPage;
 
@@ -115,8 +115,8 @@ sap.ui.define(
 
         oFirstButton.setEnabled(this.getSkip() > 0);
         oBackButton.setEnabled(this.getSkip() > 0);
-        oNextButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
-        oLastButton.setEnabled(this.getTop() + this.getSkip() < this.getRecords());
+        oNextButton.setEnabled(this.getTop() + this.getSkip() < this.getCount());
+        oLastButton.setEnabled(this.getTop() + this.getSkip() < this.getCount());
       },
     });
   }

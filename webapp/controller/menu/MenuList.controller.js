@@ -12,7 +12,7 @@ sap.ui.define(
   function (BaseController, JSONModel, tableUtils, MessageBox, crudUtils, generalUtils) {
     "use strict";
 
-    const DEFAULT_TOP = 2;
+    const DEFAULT_TOP = 10;
     const DEFAULT_SKIP = 0;
 
     return BaseController.extend("testenvironment.controller.menu.MenuList", {

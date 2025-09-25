@@ -53,7 +53,7 @@ function buildLikeFilters(query, fields) {
 
   for (const field of fields) {
     if (query[field]) {
-      clauses.push(`(${field} LIKE ?)`);
+      clauses.push(`(t.${field} LIKE ?)`);
       params.push(`%${query[field]}%`);
     }
   }

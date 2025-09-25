@@ -276,5 +276,43 @@ sap.ui.define([], function () {
       // valore primitivo (string/number/null/undefined) -> lascialo così com'è
       return obj;
     },
+
+    /**
+     * Rimuove le proprietà vuote da un oggetto.
+     * Una proprietà è considerata vuota se:
+     * - è undefined o null
+     * - è una stringa vuota ""
+     * - è un array vuoto []
+     * - è un numero 0 o un booleano false
+     *
+     * Gli oggetti e gli array non saranno ricorsivamente esaminati.
+     *
+     * @param {object} obj - L'oggetto dal quale rimuovere le proprietà vuote
+     * @returns {object} - L'oggetto senza le proprietà vuote
+     */
+    removeEmptyProperties: function (obj) {
+      if (typeof obj !== "object" || obj === null) {
+        return obj; // Non è un oggetto, ritorna così com'è
+      }
+
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const value = obj[key];
+
+          // Rimuove la proprietà se è una stringa vuota, un numero 0, un booleano false, null o undefined
+          if (
+            value === "" || // Stringa vuota
+            value === 0 || // Numero 0
+            value === false || // Booleano false
+            value === null || // null
+            value === undefined || // undefined
+            (Array.isArray(value) && value.length === 0) // Array vuoto
+          ) {
+            delete obj[key]; // Rimuove la proprietà
+          }
+        }
+      }
+      return obj;
+    },
   };
 });

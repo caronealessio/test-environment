@@ -167,7 +167,7 @@ sap.ui.define(
 
           // Costruisci query params
           const queryObject = {
-            ...filters, // es. search, isVisible, ecc.
+            ...formatter.removeEmptyProperties(filters),
             ...(top !== undefined && { top }),
             ...(skip !== undefined && { skip }),
             ...(order && { order }),

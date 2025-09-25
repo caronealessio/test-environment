@@ -13,8 +13,8 @@ exports.readAll = (req, res) => {
   readAllDynamic(
     "users",
     {
-      likeFilters: [],
-      equalFilters: [],
+      likeFilters: ["name", "surname", "fiscal_code", "email"],
+      equalFilters: ["role_id"],
       innerJoin: [
         {
           table: "roles",

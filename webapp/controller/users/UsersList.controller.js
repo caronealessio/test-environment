@@ -6,29 +6,43 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "testenvironment/controls/table/Table",
-    "sap/m/Button",
-    "sap/m/HBox",
+    "testenvironment/model/models",
   ],
-  function (BaseController, JSONModel, MessageBox, Table, Button, HBox) {
+  function (BaseController, JSONModel, MessageBox, Table, models) {
     "use strict";
 
     const DEFAULT_TOP = 20;
     const DEFAULT_SKIP = 0;
 
     return BaseController.extend("testenvironment.controller.users.UsersList", {
-      onInit: function () {
+      onInit: async function () {
         this.getRouter().getRoute("usersList").attachPatternMatched(this._onObjectMatched, this);
 
         this.oModelUsers = this.setModel(
-          new JSONModel({ data: [], top: DEFAULT_TOP, skip: DEFAULT_SKIP, count: 0 }),
+          new JSONModel({
+            data: [],
+            top: DEFAULT_TOP,
+            skip: DEFAULT_SKIP,
+            count: 0,
+            filters: {
+              search: "",
+              role_id: "",
+            },
+          }),
           "Users"
         );
+
+        this.oModelRoles = this.setModel(await models.createRolesModel(), "Roles");
       },
 
       _onObjectMatched: async function (oEvent) {
         this.setBusy(true);
 
         try {
+          this.oModelUsers.setProperty("/filters", { search: "", role_id: "" });
+          this.oModelUsers.setProperty("/top", DEFAULT_TOP);
+          this.oModelUsers.setProperty("/skip", DEFAULT_SKIP);
+
           await this._loadUsers();
 
           this._createUsersTable();
@@ -52,7 +66,6 @@ sap.ui.define(
           selectionMode: "None",
           rowCount: DEFAULT_TOP,
           cols: [
-            { label: this.getText("labelId"), property: "id", width: "3rem", hAlign: "Center" },
             { label: this.getText("labelName"), property: "name" },
             { label: this.getText("labelSurname"), property: "surname" },
             { label: this.getText("labelFiscalCode"), property: "fiscal_code", width: "10rem" },
@@ -95,8 +108,7 @@ sap.ui.define(
 
                     await this.delete("users", [oUser.id]);
 
-                    const oResponse = await this.read("users");
-                    this.oModelUsers.setData(oResponse);
+                    await this._loadUsers();
                   } catch (error) {
                     MessageBox.error(error.message);
                   } finally {
@@ -137,13 +149,29 @@ sap.ui.define(
       },
 
       _loadUsers: async function () {
+        const oFilters = this.oModelUsers.getProperty("/filters");
+
         const oResults = await this.read("users", {
+          filters: {
+            name: oFilters.search,
+            surname: oFilters.search,
+            fiscal_code: oFilters.search,
+            email: oFilters.search,
+            role_id: oFilters.role_id,
+          },
           top: this.oModelUsers.getProperty("/top"),
           skip: this.oModelUsers.getProperty("/skip"),
         });
 
         this.oModelUsers.setProperty("/data", oResults.data);
         this.oModelUsers.setProperty("/count", oResults.count);
+      },
+
+      onFiltersChange: async function (oEvent) {
+        this.oModelUsers.setProperty("/top", DEFAULT_TOP);
+        this.oModelUsers.setProperty("/skip", DEFAULT_SKIP);
+
+        await this._loadUsers();
       },
     });
   }

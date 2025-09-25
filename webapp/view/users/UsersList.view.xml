@@ -1,7 +1,9 @@
 <mvc:View controllerName="testenvironment.controller.users.UsersList"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
-  xmlns:f="sap.f">
+  xmlns:f="sap.f"
+  xmlns:l="sap.ui.layout"
+  xmlns:c="sap.ui.core">
   <f:DynamicPage>
     <f:title>
       <f:DynamicPageTitle>
@@ -13,12 +15,43 @@
     <f:content>
       <VBox>
         <Panel>
-          <OverflowToolbar style="Clear">
-            <ToolbarSpacer />
-            <Button text="{i18n>btnNew}"
-              press="onCreatePress"
-              type="Emphasized"/>
-          </OverflowToolbar>
+          <l:Grid>
+            <VBox>
+              <Label text="{i18n>labelFilterSearchFieldUsers}"
+                showColon="true" />
+              <SearchField value="{Users>/filters/search}"
+                search="onFiltersChange"/>
+              <layoutData>
+                <l:GridData span="XL5 L8 M9"/>
+              </layoutData>
+            </VBox>
+            <VBox>
+              <Label text="{i18n>labelRole}"
+                showColon="true"/>
+              <ComboBox selectedKey="{Users>/filters/role_id}"
+                selectionChange="onFiltersChange"
+                width="100%"
+                items="{
+                  path: 'Roles>/'
+                }">
+                <c:Item key="{Roles>id}"
+                  text="{Roles>name}" />
+              </ComboBox>
+              <layoutData>
+                <l:GridData span="XL2 L3 M3"/>
+              </layoutData>
+            </VBox>
+            <VBox>
+              <Label />
+              <Button text="{i18n>btnNew}"
+                press="onCreatePress"
+                type="Emphasized"/>
+              <layoutData>
+                <l:GridData span="XL1 L1 M1"
+                  indent="XL4 M11" />
+              </layoutData>
+            </VBox>
+          </l:Grid>
         </Panel>
         <Panel class="sapUiTinyMarginTop">
           <VBox id="tableUserContainer"/>

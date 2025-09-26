@@ -170,7 +170,7 @@ sap.ui.define(
             ...formatter.removeEmptyProperties(filters),
             ...(top !== undefined && { top }),
             ...(skip !== undefined && { skip }),
-            ...(order.length > 0 && { order: order.map((o) => `${o.name}:${o.order}`).join(";") }),
+            ...(order?.length > 0 && { order: order.map((o) => `${o.name}:${o.order}`).join(";") }),
           };
 
           const queryString = new URLSearchParams(queryObject).toString();

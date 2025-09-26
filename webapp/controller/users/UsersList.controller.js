@@ -60,7 +60,6 @@ sap.ui.define(
         const oTableUserContainer = this.byId("tableUserContainer");
 
         if (oTableUserContainer.getItems().length > 0) {
-          // console.log("table", oTableUserContainer.getItems()[0].getBinding().sort(null););
           oTableUserContainer.getItems()[0].getBinding().sort(null);
           return;
         }

@@ -28,6 +28,7 @@ sap.ui.define(
               search: "",
               role_id: "",
             },
+            order: [],
           }),
           "Users"
         );
@@ -40,6 +41,7 @@ sap.ui.define(
 
         try {
           this.oModelUsers.setProperty("/filters", { search: "", role_id: "" });
+          this.oModelUsers.setProperty("/order", [{ name: "name", order: "asc" }]);
           this.oModelUsers.setProperty("/top", DEFAULT_TOP);
           this.oModelUsers.setProperty("/skip", DEFAULT_SKIP);
 
@@ -58,6 +60,8 @@ sap.ui.define(
         const oTableUserContainer = this.byId("tableUserContainer");
 
         if (oTableUserContainer.getItems().length > 0) {
+          // console.log("table", oTableUserContainer.getItems()[0].getBinding().sort(null););
+          oTableUserContainer.getItems()[0].getBinding().sort(null);
           return;
         }
 
@@ -65,13 +69,17 @@ sap.ui.define(
           rows: "{Users>/data}",
           selectionMode: "None",
           rowCount: DEFAULT_TOP,
+          order: "{Users>/order}",
+          sorting: async function (oEvent) {
+            await this._loadUsers();
+          }.bind(this),
           cols: [
-            { label: this.getText("labelName"), property: "name" },
-            { label: this.getText("labelSurname"), property: "surname" },
+            { label: this.getText("labelName"), property: "name", sortProperty: "name" },
+            { label: this.getText("labelSurname"), property: "surname", sortProperty: "surname" },
             { label: this.getText("labelFiscalCode"), property: "fiscal_code", width: "10rem" },
             { label: this.getText("labelEmail"), property: "email" },
             { label: this.getText("labelPhone"), property: "phone", width: "6rem" },
-            { label: this.getText("labelRole"), property: "role" },
+            { label: this.getText("labelRole"), property: "role", sortProperty: "role_id" },
             {
               label: this.getText("labelBirthDate"),
               property: "birth_date",
@@ -79,6 +87,7 @@ sap.ui.define(
               pattern: "dd/MM/yyyy",
               width: "6rem",
               hAlign: "Center",
+              sortProperty: "birth_date",
             },
             {
               label: "",
@@ -161,6 +170,7 @@ sap.ui.define(
           },
           top: this.oModelUsers.getProperty("/top"),
           skip: this.oModelUsers.getProperty("/skip"),
+          order: this.oModelUsers.getProperty("/order"),
         });
 
         this.oModelUsers.setProperty("/data", oResults.data);

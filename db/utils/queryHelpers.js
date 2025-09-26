@@ -1,15 +1,22 @@
 /**
- * Costruisce una clausola ORDER BY sicura
- * @param {string} orderParam - es: 'description:asc' o 'id:desc'
+ * Costruisce una clausola ORDER BY sicura a partire da uno o più criteri.
+ * @param {string} orderParam - es: 'description:asc', 'id:desc', o 'name:asc;surname:asc'
  * @returns {string} - parte della query SQL ORDER BY, oppure stringa vuota
  */
 function buildOrderByClause(orderParam) {
   if (!orderParam) return "";
 
-  const [column, dir] = orderParam.split(":");
-  const direction = dir?.toUpperCase() === "DESC" ? "DESC" : "ASC";
+  const clauses = orderParam
+    .split(";")
+    .map((part) => {
+      const [column, dir] = part.split(":");
+      if (!column) return null;
+      const direction = dir?.toUpperCase() === "DESC" ? "DESC" : "ASC";
+      return `\`${column.trim()}\` ${direction}`;
+    })
+    .filter(Boolean);
 
-  return ` ORDER BY \`${column}\` ${direction}`;
+  return clauses.length ? ` ORDER BY ${clauses.join(", ")}` : "";
 }
 
 /**

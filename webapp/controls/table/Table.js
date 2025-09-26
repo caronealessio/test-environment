@@ -7,9 +7,13 @@ sap.ui.define(
     "sap/m/OverflowToolbar",
     "testenvironment/controls/table/Paginator",
     "sap/m/ToolbarSpacer",
+    "sap/ui/core/library",
   ],
-  function (Table, Column, Control, Fixed, OverflowToolbar, Paginator, ToolbarSpacer) {
+
+  function (Table, Column, Control, Fixed, OverflowToolbar, Paginator, ToolbarSpacer, coreLibrary) {
     "use strict";
+
+    const SortOrder = coreLibrary.SortOrder;
 
     return Table.extend("testenvironment.controls.table.Table", {
       metadata: {
@@ -17,6 +21,10 @@ sap.ui.define(
           cols: { type: "object[]", defaultValue: "[]" },
           rowCount: { type: "int", defaultValue: 20 },
           paginator: { type: "object" },
+          order: { type: "object[]", defaultValue: [] },
+        },
+        events: {
+          sorting: {},
         },
       },
 
@@ -60,10 +68,61 @@ sap.ui.define(
         );
 
         this._createColumns();
+
+        this.attachSort((oEvent) => {
+          if (this?.mEventRegistry?.sorting) {
+            this._customSort(oEvent);
+          }
+        });
       },
 
       renderer: function (oRm, oTable) {
         sap.ui.table.TableRenderer.render(oRm, oTable);
+      },
+
+      setOrder: function (aOrder) {
+        aOrder.forEach((o) => {
+          const oColumn = this.getColumns().filter(
+            (c) => c.getAggregation("template").getBindingPath("text") === o.name
+          )?.[0];
+
+          if (oColumn) {
+            oColumn.setSortOrder(o.order === "asc" ? SortOrder.Ascending : SortOrder.Descending);
+            oColumn.setSorted(true);
+          }
+        });
+
+        this.setProperty("order", aOrder);
+      },
+
+      _customSort: function (oEvent) {
+        oEvent.preventDefault();
+        const oColumn = oEvent.getParameter("column");
+        const sSortProperty = oColumn.getSortProperty();
+        const sSortOrder = oEvent.getParameter("sortOrder") === sap.ui.core.SortOrder.Ascending ? "asc" : "desc";
+        const bIsNone = oColumn.getSortOrder() === oEvent.getParameter("sortOrder");
+
+        oColumn.setSortOrder(bIsNone ? sap.ui.core.SortOrder.None : oEvent.getParameter("sortOrder"));
+        oColumn.setSorted(!bIsNone);
+
+        const oSortObject = { name: sSortProperty, order: sSortOrder };
+
+        let aOrder = this.getOrder();
+
+        if (bIsNone) {
+          aOrder = aOrder.filter((i) => i.name !== oSortObject.name);
+        } else {
+          const iIndex = aOrder.findIndex((o) => o.name === oSortObject.name);
+
+          if (iIndex !== -1) {
+            aOrder[iIndex].order = oSortObject.order;
+          } else {
+            aOrder.push(oSortObject);
+          }
+        }
+
+        this.setOrder(aOrder);
+        this.fireEvent("sorting");
       },
 
       _createColumns: function () {

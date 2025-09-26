@@ -31,7 +31,7 @@ sap.ui.define(
             filters: {
               isVisible: 1,
             },
-            order: "pos:asc",
+            order: [{ name: "pos", order: "asc" }],
           });
 
           this.oMenuList.removeAllItems();

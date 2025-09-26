@@ -23,7 +23,7 @@ sap.ui.define(
           new JSONModel({
             skip: DEFAULT_SKIP,
             top: DEFAULT_TOP,
-            order: "",
+            order: [],
             total: 0,
             data: [],
             filters: {},
@@ -203,7 +203,7 @@ sap.ui.define(
 
       _loadMenuTree: async function () {
         const oResults = await this.read("menu", {
-          order: "pos:asc",
+          order: [{ name: "pos", order: "asc" }],
         });
 
         this.oModelMenuTree.setData(oResults.data);

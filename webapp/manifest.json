@@ -113,26 +113,6 @@
           "name": "CustomTableManagement",
           "pattern": "functionality.CustomTableManagement.Dashboard",
           "target": ["CustomTableManagement"]
-        },
-        {
-          "name": "Export",
-          "pattern": "functionality.Export",
-          "target": ["Export"]
-        },
-        {
-          "name": "Form",
-          "pattern": "functionality.Form",
-          "target": ["Form"]
-        },
-        {
-          "name": "Paginator",
-          "pattern": "functionality.Paginator",
-          "target": ["Paginator"]
-        },
-        {
-          "name": "Matchcode",
-          "pattern": "functionality.Matchcode",
-          "target": ["Matchcode"]
         }
       ],
       "targets": {
@@ -151,7 +131,6 @@
         "usersForm": {
           "name": "users.UsersForm"
         },
-
         "StandardTableManagement": {
           "id": "StandardTableManagement",
           "name": "functionality.StandardTableManagement.Dashboard"
@@ -159,22 +138,6 @@
         "CustomTableManagement": {
           "id": "CustomTableManagement",
           "name": "functionality.CustomTableManagement.Dashboard"
-        },
-        "Export": {
-          "id": "functionality.Export",
-          "name": "functionality.Export"
-        },
-        "Form": {
-          "id": "Form",
-          "name": "functionality.Form"
-        },
-        "Paginator": {
-          "id": "Paginator",
-          "name": "functionality.Paginator"
-        },
-        "Matchcode": {
-          "id": "Matchcode",
-          "name": "functionality.Matchcode"
         }
       }
     },

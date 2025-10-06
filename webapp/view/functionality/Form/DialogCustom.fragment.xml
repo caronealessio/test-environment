@@ -1,9 +1,0 @@
-<c:FragmentDefinition xmlns="sap.m"
-	xmlns:c="sap.ui.core"
-	xmlns:my="testenvironment.controls">
-	<my:Dialog contentWidth="50%"
-		contentHeight="50%"
-		title="Custom">
-		<Text text="Test"/>
-	</my:Dialog>
-</c:FragmentDefinition>

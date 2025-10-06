@@ -150,5 +150,21 @@ sap.ui.define(["sap/m/Input", "sap/m/Label", "sap/ui/core/format/NumberFormat"],
       oInput.getAggregation("_label").setVisible(oInput.getLabel() ? true : false);
       oInput.getAggregation("_label").setText(oInput.getLabel());
     },
+
+    //  <my:Currency value="{
+    //             parts: ['Form>/Currency', 'EUR'],
+    //             type: 'sap.ui.model.type.Currency',
+    //             formatOptions: {
+    //               showMeasure: false
+    //             }
+    //           }"
+    //           label="Custom"
+    //           maxIntegerDigits="5"
+    //           maxDecimalDigits="2"
+    //           enableNull="true">
+    //           <my:layoutData>
+    //             <l:GridData span="XL3 L4 M6" />
+    //           </my:layoutData>
+    //         </my:Currency>
   });
 });

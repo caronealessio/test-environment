@@ -45,10 +45,20 @@
               <Label />
               <Button text="{i18n>btnNew}"
                 press="onCreatePress"
-                type="Emphasized"/>
+                type="Emphasized"
+                width="100%"/>
               <layoutData>
                 <l:GridData span="XL1 L1 M1"
-                  indent="XL4 M11" />
+                  indent="XL3 M10" />
+              </layoutData>
+            </VBox>
+            <VBox>
+              <Label />
+              <Button text="{i18n>btnExport}"
+                press="onExportPress"
+                width="100%"/>
+              <layoutData>
+                <l:GridData span="XL1 L1 M1" />
               </layoutData>
             </VBox>
           </l:Grid>

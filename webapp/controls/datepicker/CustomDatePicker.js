@@ -3,7 +3,7 @@ sap.ui.define(
   function (DatePicker, DatePickerRenderer, DateType) {
     "use strict";
 
-    return DatePicker.extend("testenvironment.controls.datepicker.DatePickerCustom", {
+    return DatePicker.extend("testenvironment.controls.datepicker.CustomDatePicker", {
       metadata: {
         properties: {
           /**

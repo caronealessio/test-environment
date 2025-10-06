@@ -1,13 +1,13 @@
 sap.ui.define(
   [
-    "testenvironment/controls/datepicker/DatePickerCustom", // 👈 importo il tuo CustomInput
+    "testenvironment/controls/input/CustomInput", // 👈 importo il tuo CustomInput
     "sap/m/Label",
-    "sap/m/DatePickerRenderer",
+    "sap/m/InputRenderer",
   ],
-  function (DatePickerCustom, Label, DatePickerRenderer) {
+  function (CustomInput, Label, InputRenderer) {
     "use strict";
 
-    return DatePickerCustom.extend("testenvironment.controls.datepicker.LabeledDatePickerCustom", {
+    return CustomInput.extend("testenvironment.controls.input.LabeledCustomInput", {
       metadata: {
         properties: {
           text: { type: "string", defaultValue: "" }, // label text
@@ -20,7 +20,7 @@ sap.ui.define(
       },
 
       init: function () {
-        DatePickerCustom.prototype.init.apply(this, arguments);
+        CustomInput.prototype.init.apply(this, arguments);
 
         this.setAggregation(
           "_label",
@@ -59,7 +59,7 @@ sap.ui.define(
 
           // Label sopra
           oRm.renderControl(oControl.getAggregation("_label"));
-          DatePickerRenderer.render(oRm, oControl);
+          InputRenderer.render(oRm, oControl);
 
           oRm.close("div");
         },

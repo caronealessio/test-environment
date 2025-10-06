@@ -1,4 +1,4 @@
-sap.ui.define([], function () {
+sap.ui.define(["sap/ui/export/Spreadsheet", "sap/ui/export/library"], function (Spreadsheet, exportLib) {
   "use strict";
 
   return {
@@ -76,6 +76,24 @@ sap.ui.define([], function () {
         oField?.data("property") || // Verifica proprietà personalizzata
         null // Restituisce null se nessuna proprietà è trovata
       );
+    },
+
+    EdmType: exportLib.EdmType,
+
+    generateSpreadsheet: function (aColumns, aData, sFileName) {
+      return new Promise((resolve, reject) => {
+        const oSheet = new Spreadsheet({
+          workbook: { columns: aColumns },
+          dataSource: aData,
+          fileName: sFileName,
+        });
+
+        oSheet
+          .build()
+          .then(resolve)
+          .catch(reject)
+          .finally(() => oSheet.destroy());
+      });
     },
   };
 });

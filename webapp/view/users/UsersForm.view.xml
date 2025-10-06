@@ -16,11 +16,11 @@
     <f:content>
       <Panel>
         <l:Grid defaultSpan="XL3 L4 M6">
-          <my:input.LabeledInputCustom text="{i18n>labelName}"
+          <my:input.LabeledCustomInput text="{i18n>labelName}"
             required="true"
             maxLength="50"
             value="{User>/name}" />
-          <my:input.LabeledInputCustom text="{i18n>labelSurname}"
+          <my:input.LabeledCustomInput text="{i18n>labelSurname}"
             required="true"
             maxLength="50"
             value="{User>/surname}" />
@@ -38,15 +38,15 @@
                 text="{Genders>name}" />
             </Select>
           </VBox>
-          <my:input.LabeledInputCustom text="{i18n>labelFiscalCode}"
+          <my:input.LabeledCustomInput text="{i18n>labelFiscalCode}"
             required="true"
             type="FiscalCode"
             value="{User>/fiscal_code}">
             <my:layoutData>
               <l:GridData linebreak="true"/>
             </my:layoutData>
-          </my:input.LabeledInputCustom>
-          <my:input.LabeledInputCustom text="{i18n>labelEmail}"
+          </my:input.LabeledCustomInput>
+          <my:input.LabeledCustomInput text="{i18n>labelEmail}"
             required="true"
             type="Email"
             maxLength="100"
@@ -54,28 +54,28 @@
             <my:layoutData>
               <l:GridData linebreak="true"/>
             </my:layoutData>
-          </my:input.LabeledInputCustom>
-          <my:datepicker.LabeledDatePickerCustom text="{i18n>labelBirthDate}"
+          </my:input.LabeledCustomInput>
+          <my:datepicker.LabeledCustomDatePicker text="{i18n>labelBirthDate}"
             required="true"
             path="User>/birth_date" />
-          <my:input.LabeledInputCustom text="{i18n>labelPhone}"
+          <my:input.LabeledCustomInput text="{i18n>labelPhone}"
             required="true"
             type="Phone"
             value="{User>/phone}" />
-          <my:input.LabeledInputCustom text="{i18n>labelAddress}"
+          <my:input.LabeledCustomInput text="{i18n>labelAddress}"
             maxLength="50"
             value="{User>/address}">
             <my:layoutData>
               <l:GridData linebreak="true"/>
             </my:layoutData>
-          </my:input.LabeledInputCustom>
-          <my:input.LabeledInputCustom text="{i18n>labelCity}"
+          </my:input.LabeledCustomInput>
+          <my:input.LabeledCustomInput text="{i18n>labelCity}"
             maxLength="50"
             value="{User>/city}"
             valueHelpRequest="onMcCity"
             showValueHelp="true"
             change="onCityChange"/>
-          <my:input.LabeledInputCustom text="{i18n>labelCap}"
+          <my:input.LabeledCustomInput text="{i18n>labelCap}"
             type="Integer"
             maxLength="5"
             value="{User>/cap}"
@@ -83,7 +83,7 @@
             <my:layoutData>
               <l:GridData span="XL1 L4 M6"/>
             </my:layoutData>
-          </my:input.LabeledInputCustom>
+          </my:input.LabeledCustomInput>
           <VBox>
             <Label text="{i18n>labelRole}"
               showColon="true"

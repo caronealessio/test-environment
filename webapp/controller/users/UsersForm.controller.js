@@ -6,9 +6,9 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "testenvironment/model/models",
-    "testenvironment/controls/valueHelpRequest/ValueHelpRequestCustom",
+    "testenvironment/controls/valueHelpRequest/CustomValueHelpRequest",
   ],
-  function (BaseController, JSONModel, MessageBox, models, ValueHelpRequestCustom) {
+  function (BaseController, JSONModel, MessageBox, models, CustomValueHelpRequest) {
     "use strict";
 
     const INIT_MODEL_USER = {
@@ -123,7 +123,7 @@ sap.ui.define(
           { label: this.getText("labelProvince"), property: "provincia/sigla" },
         ];
 
-        this._oMC = new ValueHelpRequestCustom("", {
+        this._oMC = new CustomValueHelpRequest("", {
           title: this.getText("labelCity"),
           key: "nome",
           filters: aFilters,

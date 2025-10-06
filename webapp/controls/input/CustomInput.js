@@ -9,7 +9,7 @@ sap.ui.define(["sap/m/Input", "sap/m/InputRenderer"], function (Input, InputRend
     Phone: "Phone",
   };
 
-  return Input.extend("testenvironment.controls.input.InputCustom", {
+  return Input.extend("testenvironment.controls.input.CustomInput", {
     metadata: {
       properties: {
         /**

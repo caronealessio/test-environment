@@ -15,7 +15,7 @@ sap.ui.define(
 
     const SortOrder = coreLibrary.SortOrder;
 
-    return Table.extend("testenvironment.controls.table.Table", {
+    return Table.extend("testenvironment.controls.table.TableCustom", {
       metadata: {
         properties: {
           cols: { type: "object[]", defaultValue: "[]" },

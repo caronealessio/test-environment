@@ -31,7 +31,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    return ValueHelpDialog.extend("testenvironment.controls.valueHelpRequest.ValueHelpRequestCustom", {
+    return ValueHelpDialog.extend("testenvironment.controls.valueHelpRequest.CustomValueHelpRequest", {
       metadata: {
         properties: {
           filters: {

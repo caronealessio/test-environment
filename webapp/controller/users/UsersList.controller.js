@@ -5,10 +5,10 @@ sap.ui.define(
     "../BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "testenvironment/controls/table/Table",
+    "testenvironment/controls/table/TableCustom",
     "testenvironment/model/models",
   ],
-  function (BaseController, JSONModel, MessageBox, Table, models) {
+  function (BaseController, JSONModel, MessageBox, TableCustom, models) {
     "use strict";
 
     const DEFAULT_TOP = 20;
@@ -41,7 +41,7 @@ sap.ui.define(
 
         try {
           this.oModelUsers.setProperty("/filters", { search: "", role_id: "" });
-          this.oModelUsers.setProperty("/order", [{ name: "name", order: "asc" }]);
+          this.oModelUsers.setProperty("/order", []);
           this.oModelUsers.setProperty("/top", DEFAULT_TOP);
           this.oModelUsers.setProperty("/skip", DEFAULT_SKIP);
 
@@ -55,16 +55,59 @@ sap.ui.define(
         }
       },
 
+      onCreatePress: function () {
+        this.navTo("usersForm", { id: "create" });
+      },
+
+      onFiltersChange: async function (oEvent) {
+        this.oModelUsers.setProperty("/top", DEFAULT_TOP);
+        this.oModelUsers.setProperty("/skip", DEFAULT_SKIP);
+
+        await this._loadUsers();
+      },
+
+      onExportPress: async function () {
+        try {
+          this.setBusy(true);
+
+          const oData = await this.read("users");
+          const aColumns = [
+            { label: this.getText("labelName"), property: "name" },
+            { label: this.getText("labelSurname"), property: "surname" },
+            { label: this.getText("labelFiscalCode"), property: "fiscal_code" },
+            { label: this.getText("labelEmail"), property: "email" },
+            { label: this.getText("labelPhone"), property: "phone" },
+            { label: this.getText("labelRole"), property: "role" },
+            {
+              label: this.getText("labelBirthDate"),
+              property: "birth_date",
+              type: this.exportUtils.EdmType.Date,
+              format: "dd/mm/yyyy",
+            },
+          ];
+
+          await this.exportUtils.generateSpreadsheet(aColumns, oData.data, "utenti.xlsx");
+        } catch (error) {
+          MessageBox.error(error.message);
+        } finally {
+          this.setBusy(false);
+        }
+      },
+
       _createUsersTable() {
         const aUsers = this.oModelUsers.getData();
         const oTableUserContainer = this.byId("tableUserContainer");
 
-        if (oTableUserContainer.getItems().length > 0) {
-          oTableUserContainer.getItems()[0].getBinding().sort(null);
+        if (this.oTable) {
+          this.oTable.getColumns().forEach((c) => {
+            c.setSortOrder(null);
+            c.setSorted(false);
+          });
+
           return;
         }
 
-        const oTable = new Table({
+        this.oTable = new TableCustom({
           rows: "{Users>/data}",
           selectionMode: "None",
           rowCount: DEFAULT_TOP,
@@ -149,11 +192,7 @@ sap.ui.define(
           },
         });
 
-        oTableUserContainer.addItem(oTable);
-      },
-
-      onCreatePress: function () {
-        this.navTo("usersForm", { id: "create" });
+        oTableUserContainer.addItem(this.oTable);
       },
 
       _loadUsers: async function () {
@@ -174,13 +213,6 @@ sap.ui.define(
 
         this.oModelUsers.setProperty("/data", oResults.data);
         this.oModelUsers.setProperty("/count", oResults.count);
-      },
-
-      onFiltersChange: async function (oEvent) {
-        this.oModelUsers.setProperty("/top", DEFAULT_TOP);
-        this.oModelUsers.setProperty("/skip", DEFAULT_SKIP);
-
-        await this._loadUsers();
       },
     });
   }
